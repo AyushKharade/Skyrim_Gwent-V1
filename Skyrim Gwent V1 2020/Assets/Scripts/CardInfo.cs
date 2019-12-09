@@ -14,7 +14,9 @@ public class CardInfo
     
 
     public string name;
+    [Range(0,15)]
     public int strength;
+    [Range(0, 15)]
     public int originalStrength;       // incase of buffs and debuffs
 
     public bool isHero;          // doesnt affect heros
