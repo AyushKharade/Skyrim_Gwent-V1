@@ -60,7 +60,8 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0) && hit.collider != null)
         {
             //place card
-            DeployUnitCard(hit.collider.gameObject);
+            if(hit.collider.gameObject.GetComponent<Card>().GetCardStatus() == "Hand")
+                DeployUnitCard(hit.collider.gameObject);
         }
 
     }
@@ -78,22 +79,23 @@ public class Player : MonoBehaviour
     {
         //delete, spawn as a child of respective zone.
 
-        //set scaler's status to deployed
-        card.GetComponent<CardScaler>().deployed = true;
 
         //reset position:
-        Vector3 newCardPos = new Vector3(0,0,0);
-        card.GetComponent<RectTransform>().position = newCardPos; 
+        //Vector3 newCardPos = new Vector3(0,0,0);
+        //card.GetComponent<RectTransform>().position = newCardPos; 
         
 
         //save a temp ref to script
         Card cardRef = card.GetComponent<Card>();
+
         if (cardRef.info.GetUnitType() == "Warrior")
         {
             // place on frontline
-            Instantiate(cardRef, P1Frontlines.transform);
-
-
+            Card temp=Instantiate(cardRef, P1Frontlines.transform);
+            temp.GetComponent<Card>().SetCardStatus("Deployed");
+            temp.GetComponent<CardScaler>().deployed = true;
+            
+            
             // delete
             Destroy(card.gameObject);
         }
