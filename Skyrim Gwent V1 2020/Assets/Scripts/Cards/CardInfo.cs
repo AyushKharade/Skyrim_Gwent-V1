@@ -54,6 +54,12 @@ public class CardInfo
                 strength = 1;
         }
                
-    }   
+    }
 
+
+    //getters
+    public string GetUnitType()
+    {
+        return unitType + "";
+    }
 }

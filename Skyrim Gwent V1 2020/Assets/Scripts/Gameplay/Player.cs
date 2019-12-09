@@ -1,13 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
 
 
     GameObject raycastTarget;
-    bool displayed;
+
+    public GameObject P1Frontlines;
+    public GameObject P1Vantage;
+    public GameObject P1Shadow;
+
+    // ui
+    public Text P1Frontlines_Score;
+    public Text P1Vantage_Score;
+    public Text P1Shadow_Score;
+    public Text Total_Score;
+
+    
+
 
     void Start()
     {
@@ -35,6 +48,15 @@ public class Player : MonoBehaviour
         {
             raycastTarget = null;
         }
+
+
+        // input
+        if (Input.GetMouseButton(0) && hit.collider != null)
+        {
+            //place card
+            DeployUnitCard(hit.collider.gameObject);
+        }
+
     }
 
 
@@ -42,7 +64,40 @@ public class Player : MonoBehaviour
     {
         if (raycastTarget != null)
             Debug.Log("Card: " + raycastTarget.transform.name);
-        else
-            Debug.Log("No card:");
+        //else
+            //Debug.Log("No card:");
+    }
+
+    void DeployUnitCard(GameObject card)
+    {
+        //delete, spawn as a child of respective zone.
+
+        //reset position:
+        
+        Vector3 newCardPos = new Vector3(0,0,0);
+        card.GetComponent<RectTransform>().position = newCardPos; ;
+        
+
+        //save a temp ref to script
+        Card cardRef = card.GetComponent<Card>();
+        if (cardRef.info.GetUnitType() == "Warrior")
+        {
+            // place on frontline
+            Instantiate(cardRef, P1Frontlines.transform);
+
+
+            // delete
+            Destroy(card.gameObject);
+        }
+        else if (cardRef.info.GetUnitType() == "Mage" || cardRef.info.GetUnitType() == "Spellsword")
+        {
+            // place on Vantage
+        }
+        else if (cardRef.info.GetUnitType() == "Shadow")
+        {
+            // place on shadow
+        }
+       
+
     }
 }
