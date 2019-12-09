@@ -6,10 +6,13 @@ using UnityEngine;
 public class CardInfo
 {
     public enum UnitType { Warrior,Mage,Spellsword,Shadow};
-    public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer};
+    public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer, Archer, Assassin, Thief};
 
 
     public enum Faction { Whiterun, Riften, Dark_Brotherhood};
+
+
+    public enum TrainingLevel { Novice, Apprentice, Adept, Expert, Master};
 
     
 
@@ -20,6 +23,9 @@ public class CardInfo
     public int originalStrength;       // incase of buffs and debuffs
 
     public bool isHero;          // doesnt affect heros
+
+
+    public TrainingLevel trainingLevel = new TrainingLevel();
 
     public UnitType unitType = new UnitType();
     public Faction faction = new Faction();
