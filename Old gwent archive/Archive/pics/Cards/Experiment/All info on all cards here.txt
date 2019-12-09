@@ -1,0 +1,39 @@
+1) Adept Spellsword
+Lvl 5 Spellsword : Conjurer (Conjure one magical atronarch half their power when used)
+Fire Atronarch   Lvl 2 Mage
+Ice Atronarch    Lvl 2 Warrior
+Spark Atronarch  Lvl 2 Spellsword
+Bone Warrior     Lvl 2 Archer
+
+
+2) Akaviri Samurai
+Lvl 8 Warrior : Heavy Armor
+
+
+3) Bandit
+Lvl 2 : Light Armor
+
+
+4) Vampire Lord HERO
+Lvl 10 : Blood Magic
+
+
+5) Cultist Mage
+Lvl 3 : Frost mage
+
+
+6) Dovahkhiin HERO
+Lvl 15 : Heavy Armor, Thu'um
+
+
+7) Dragon Priest : Nahkriin
+Lvl 8 : Frost mage & Necromancer
+
+
+8) Draugr Archer
+
+
+
+22) Posh Mudcrab
+Lvl 0 Warrior:
+Passive ability : Bites a random arse on the opponents battlefield every turn. Each turn -1 from total opponents strength. -2 When buffed. Any debuffs will kill the mudcrab.
