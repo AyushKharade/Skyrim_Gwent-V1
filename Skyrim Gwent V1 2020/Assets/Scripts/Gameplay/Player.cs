@@ -32,6 +32,12 @@ public class Player : MonoBehaviour
     {
         GetCameraRaycast();
         //DisplayRaycastTarget();
+
+        //for scaling
+        if (raycastTarget != null)
+        {
+            raycastTarget.GetComponent<CardScaler>().underCursor=true;
+        }
       
     }
 
@@ -72,10 +78,12 @@ public class Player : MonoBehaviour
     {
         //delete, spawn as a child of respective zone.
 
+        //set scaler's status to deployed
+        card.GetComponent<CardScaler>().deployed = true;
+
         //reset position:
-        
         Vector3 newCardPos = new Vector3(0,0,0);
-        card.GetComponent<RectTransform>().position = newCardPos; ;
+        card.GetComponent<RectTransform>().position = newCardPos; 
         
 
         //save a temp ref to script
