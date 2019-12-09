@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 6422683962857419224}
   - component: {fileID: 6422683962857419175}
   - component: {fileID: -6877067935023523037}
+  - component: {fileID: 5101435991591490524}
   m_Layer: 5
   m_Name: Skjor
   m_TagString: Untagged
@@ -243,6 +244,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 386.8647, y: 532.1204}
   m_EdgeRadius: 0
+--- !u!114 &5101435991591490524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6422683962857419229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847ba94fd7d10ab48839a0395c6fbdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  underCursor: 0
+  deployed: 0
 --- !u!1 &6422683962857673598
 GameObject:
   m_ObjectHideFlags: 0

@@ -662,6 +662,7 @@ GameObject:
   - component: {fileID: 4221713335808114435}
   - component: {fileID: 4221713335808114556}
   - component: {fileID: 2163168695147398533}
+  - component: {fileID: 1543977746828642667}
   m_Layer: 5
   m_Name: Ilireth
   m_TagString: Untagged
@@ -815,6 +816,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 386.8647, y: 532.1204}
   m_EdgeRadius: 0
+--- !u!114 &1543977746828642667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4221713335808114438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847ba94fd7d10ab48839a0395c6fbdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  underCursor: 0
+  deployed: 0
 --- !u!1 &4221713336134728722
 GameObject:
   m_ObjectHideFlags: 0

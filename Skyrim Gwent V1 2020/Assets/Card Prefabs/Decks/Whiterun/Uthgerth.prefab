@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 6157192114025581527}
   - component: {fileID: 6157192114025581480}
   - component: {fileID: -7649182704615654671}
+  - component: {fileID: 4878151321857270370}
   m_Layer: 5
   m_Name: Uthgerth
   m_TagString: Untagged
@@ -282,6 +283,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 386.8647, y: 532.1204}
   m_EdgeRadius: 0
+--- !u!114 &4878151321857270370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157192114025581522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847ba94fd7d10ab48839a0395c6fbdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  underCursor: 0
+  deployed: 0
 --- !u!1 &6157192114025851249
 GameObject:
   m_ObjectHideFlags: 0
