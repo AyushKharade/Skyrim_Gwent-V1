@@ -790,6 +790,7 @@ GameObject:
   - component: {fileID: 959902908}
   - component: {fileID: 959902907}
   - component: {fileID: 959902911}
+  - component: {fileID: 959902912}
   m_Layer: 5
   m_Name: Farkas
   m_TagString: Untagged
@@ -891,6 +892,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontRef: {fileID: 0}
   backRef: {fileID: 0}
+--- !u!114 &959902912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959902906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa41b5c58cdb22b47ad3a0bc04011c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+    name: Farkas
+    strength: 7
+    originalStrength: 7
+    isHero: 0
+    unitType: 0
+    faction: 0
+    subUnitType: 0
 --- !u!1 &960157209
 GameObject:
   m_ObjectHideFlags: 0

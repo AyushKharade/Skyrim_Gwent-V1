@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    
+    public CardInfo info = new CardInfo();
+    enum State{Alive,Dead,Discarded};
+
+    private void Start()
     {
+        State cardState = new State();
+        cardState = State.Alive;
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
     }

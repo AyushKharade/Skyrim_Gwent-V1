@@ -2,17 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardInfo : MonoBehaviour
+[System.Serializable]
+public class CardInfo
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum UnitType { Warrior,Mage,Spellsword,Shadow};
+    public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer};
+
+
+    public enum Faction { Whiterun, Riften, Dark_Brotherhood};
+
+    
+
+    public string name;
+    public int strength;
+    public int originalStrength;       // incase of buffs and debuffs
+
+    public bool isHero;          // doesnt affect heros
+
+    public UnitType unitType = new UnitType();
+    public Faction faction = new Faction();
+    public SubUnitType subUnitType = new SubUnitType();
+
+
+
+    // functions
+    public void AddBuff(int buff)
     {
-        
+        if(!isHero)
+            strength += buff;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddDeBuff(int debuff)
     {
-        
-    }
+        if (!isHero)
+        {
+            strength -= debuff;
+            if (strength < 1)
+                strength = 1;
+        }
+               
+    }   
+
 }
