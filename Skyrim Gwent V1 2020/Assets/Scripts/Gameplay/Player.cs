@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 
 
     GameObject raycastTarget;
-
+    bool displayed;
 
     void Start()
     {
@@ -17,17 +17,32 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetCameraRaycast();  
+        GetCameraRaycast();
+        //DisplayRaycastTarget();
+      
     }
 
 
     void GetCameraRaycast()
     {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100.0f))
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+        if (hit.collider != null)
         {
-            Debug.Log("Hovering on: " + hit.transform.name);
+            raycastTarget = hit.collider.gameObject;
         }
+        else
+        {
+            raycastTarget = null;
+        }
+    }
+
+
+    void DisplayRaycastTarget()
+    {
+        if (raycastTarget != null)
+            Debug.Log("Card: " + raycastTarget.transform.name);
+        else
+            Debug.Log("No card:");
     }
 }

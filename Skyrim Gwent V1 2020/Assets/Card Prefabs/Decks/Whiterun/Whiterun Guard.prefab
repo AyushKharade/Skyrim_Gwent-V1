@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 7162381907500842493}
   - component: {fileID: 7162381907500842489}
   - component: {fileID: 7162381907500842374}
+  - component: {fileID: 4261474501956645717}
   m_Layer: 5
   m_Name: Whiterun Guard
   m_TagString: Untagged
@@ -190,7 +191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -6.17}
+  m_AnchoredPosition: {x: 0, y: -6.1700134}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7162381907500842491
@@ -292,6 +293,32 @@ MonoBehaviour:
     Ability_Details: +1 to strength when place with other guards.
   cardState: 0
   unitStrength: {fileID: 7162381907703167550}
+--- !u!61 &4261474501956645717
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7162381907500842492}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0036849976, y: 5.417328}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 386.8647, y: 532.1204}
+  m_EdgeRadius: 0
 --- !u!1 &7162381907501096799
 GameObject:
   m_ObjectHideFlags: 0

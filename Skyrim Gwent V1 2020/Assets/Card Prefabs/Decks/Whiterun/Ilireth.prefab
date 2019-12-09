@@ -661,6 +661,7 @@ GameObject:
   - component: {fileID: 4221713335808114439}
   - component: {fileID: 4221713335808114435}
   - component: {fileID: 4221713335808114556}
+  - component: {fileID: 2163168695147398533}
   m_Layer: 5
   m_Name: Ilireth
   m_TagString: Untagged
@@ -788,6 +789,32 @@ MonoBehaviour:
       turn, up to 4 maximum guards.
   cardState: 0
   unitStrength: {fileID: 4221713336545212612}
+--- !u!61 &2163168695147398533
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4221713335808114438}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0036849976, y: 5.417328}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 386.8647, y: 532.1204}
+  m_EdgeRadius: 0
 --- !u!1 &4221713336134728722
 GameObject:
   m_ObjectHideFlags: 0
