@@ -8,6 +8,7 @@ public class CardInfo
     public enum UnitType { Warrior,Mage,Spellsword,Shadow};
     public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer, Archer, Assassin, Thief};
 
+    public enum Race { Imperial, Nord, Redguard, Khajit, Argonian, Wood_Elf, Dark_Elf, Vampire, Breton };
 
     public enum Faction { Whiterun, Riften, Dark_Brotherhood};
 
@@ -30,6 +31,10 @@ public class CardInfo
     public UnitType unitType = new UnitType();
     public Faction faction = new Faction();
     public SubUnitType subUnitType = new SubUnitType();
+    public Race race=new Race();
+
+    [TextArea]
+    public string Ability_Details;
 
 
 

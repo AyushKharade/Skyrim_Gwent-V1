@@ -533,7 +533,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5.49, y: 0}
+  m_AnchoredPosition: {x: 5.4900055, y: 0}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5154112046503552521
@@ -631,6 +631,8 @@ MonoBehaviour:
     unitType: 0
     faction: 0
     subUnitType: 0
+    race: 1
+    Ability_Details: Doubles Strength if place together with Vilkas
   cardState: 0
   unitStrength: {fileID: 5154112047376933324}
 --- !u!1 &5154112046503806125

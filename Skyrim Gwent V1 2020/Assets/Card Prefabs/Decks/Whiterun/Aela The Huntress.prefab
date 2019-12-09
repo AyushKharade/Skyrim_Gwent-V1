@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5.49, y: 6.46}
+  m_AnchoredPosition: {x: 5.4900055, y: 6.4599915}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3877954423680544118
@@ -251,6 +251,9 @@ MonoBehaviour:
     unitType: 3
     faction: 0
     subUnitType: 6
+    race: 1
+    Ability_Details: Able to one shot an enemy non-hero target who is below level
+      10.
   cardState: 0
   unitStrength: {fileID: 3877954424419871411}
 --- !u!1 &3877954423681322962
