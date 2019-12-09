@@ -1,32 +1,4 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+Skyrim Gwent V1 2020/Library
+Skyrim Gwent V1 2020/Logs/Packages-Update.log
+Skyrim Gwent V1 2020/Packages/manifest.json
+Skyrim Gwent V1 2020/Temp
