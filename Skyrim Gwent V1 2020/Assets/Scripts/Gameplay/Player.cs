@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -17,13 +18,28 @@ public class Player : MonoBehaviour
 
     // ui done from p1_battlefield
 
-   // references to both player decks
+    // references to both player decks
+
+
+    // references to pass buttons
+    public Button P1PassRef; 
+    public Button P2PassRef;
+    Button P1Pass;
+    Button P2Pass;
 
     
     void Start()
     {
         P1BFRef = P1Battlefield.GetComponent<Battlefield>();
         P2BFRef = P2Battlefield.GetComponent<Battlefield>();
+
+        /*
+        P1Pass = P1PassRef.GetComponent<Button>();
+        P1Pass.onClick.AddListener(PassClick);
+
+        P2Pass = P1PassRef.GetComponent<Button>();
+        P2Pass.onClick.AddListener(PassClick);
+        */
     }
 
 
@@ -137,4 +153,16 @@ public class Player : MonoBehaviour
             raycastTarget.GetComponent<CardScaler>().underCursor = true;
 
     }
+
+
+
+    // pass buttons
+    void PassClick()
+    {
+        if(turn==1)
+            Debug.Log("Player 1 passed");
+        if (turn == 2)
+            Debug.Log("Player 2 passed");
+    }
+    
 }
