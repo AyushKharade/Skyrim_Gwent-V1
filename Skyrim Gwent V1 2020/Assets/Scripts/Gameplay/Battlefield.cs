@@ -141,4 +141,13 @@ public class Battlefield : MonoBehaviour
         totalScore = frontlineScore + vantageScore + shadowScore;
         totalScoreUI.text = "" + totalScore;
     }
+
+
+
+    // passing
+    public void SetPassed()
+    {
+        playerPassed = true;
+        Debug.Log("Pass value set");
+    }
 }

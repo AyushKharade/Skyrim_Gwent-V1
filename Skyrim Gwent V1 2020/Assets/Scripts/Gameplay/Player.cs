@@ -33,13 +33,8 @@ public class Player : MonoBehaviour
         P1BFRef = P1Battlefield.GetComponent<Battlefield>();
         P2BFRef = P2Battlefield.GetComponent<Battlefield>();
 
-        /*
         P1Pass = P1PassRef.GetComponent<Button>();
-        P1Pass.onClick.AddListener(PassClick);
-
         P2Pass = P1PassRef.GetComponent<Button>();
-        P2Pass.onClick.AddListener(PassClick);
-        */
     }
 
 
@@ -50,7 +45,7 @@ public class Player : MonoBehaviour
 
         //for scaling
         CardScaling();
-
+        PassButtonController();
       
     }
 
@@ -142,7 +137,24 @@ public class Player : MonoBehaviour
     }
 
 
+    void ChangeTurn()
+    {
+        if (turn == 1)
+            turn = 2;
+        else if (turn == 2)
+            turn = 2;
 
+        if (P1BFRef.playerPassed)
+            turn = 2;
+        if (P2BFRef.playerPassed)
+            turn = 1;
+
+        if (P1BFRef.playerPassed && P2BFRef.playerPassed)
+        {
+            //call end of round function
+            Debug.Log("End of round.");
+        }
+    }
 
 
 
@@ -154,6 +166,20 @@ public class Player : MonoBehaviour
 
     }
 
+    // to disable clicking if player's turn isnt there or if they passed.
+    void PassButtonController()
+    {
+        if (turn == 1 && !P1BFRef.playerPassed)
+        {
+            P1PassRef.interactable = true;
+            P2PassRef.interactable = false;
+        }
+        else if (turn == 2 && !P2BFRef.playerPassed)
+        {
+            P1PassRef.interactable = false;
+            P2PassRef.interactable = true;
+        }
+    }
 
 
     // pass buttons
