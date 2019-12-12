@@ -38,5 +38,7 @@ public class PassRound : MonoBehaviour
 
         //disable clicking
         buttonRef.interactable = false;
+
+        playableRef.ChangeTurn();
     }
 }

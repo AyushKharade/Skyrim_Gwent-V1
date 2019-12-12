@@ -79,7 +79,7 @@ public class Battlefield : MonoBehaviour
         UnitCard.GetComponent<CardScaler>().deployed = true;                            // set cardrotator to deployed
         UnitCard.GetComponent<Card>().SetCardStatus("Deployed");                        // set status deployed
 
-        Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
+        //Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
         UnitCard.transform.Translate(new Vector3(0, frontlinePosY, 0));
         UnitCard.transform.position = new Vector3(frontlinePosX,UnitCard.transform.position.y,0);
         frontlinePosX += additionOffsetX;

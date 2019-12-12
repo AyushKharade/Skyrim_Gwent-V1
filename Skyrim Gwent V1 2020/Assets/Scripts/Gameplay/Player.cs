@@ -27,6 +27,11 @@ public class Player : MonoBehaviour
     Button P1Pass;
     Button P2Pass;
 
+
+    //temp card count:
+    int P1Cards = 8;
+    int P2Cards = 8;
+
     
     void Start()
     {
@@ -89,12 +94,12 @@ public class Player : MonoBehaviour
             if (turn == 1 && card.transform.parent.name=="Player1_Hand")
             {
                 P1BFRef.AddUnitToFrontline(card);
-                turn = 2;
+                ChangeTurn();
             }
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToFrontline(card);
-                turn = 1;
+                ChangeTurn(); 
             }
         }
 
@@ -107,12 +112,12 @@ public class Player : MonoBehaviour
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
                 P1BFRef.AddUnitToVantage(card);
-                turn = 2;
+                ChangeTurn();
             }
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToVantage(card);
-                turn = 1;
+                ChangeTurn();
             }
         }
 
@@ -124,12 +129,12 @@ public class Player : MonoBehaviour
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
                 P1BFRef.AddUnitToShadow(card);
-                turn = 2;
+                ChangeTurn();
             }
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToShadow(card);
-                turn = 1;
+                ChangeTurn();
             }
         }
        
@@ -137,23 +142,28 @@ public class Player : MonoBehaviour
     }
 
 
-    void ChangeTurn()
+    public void ChangeTurn()
     {
-        if (turn == 1)
-            turn = 2;
-        else if (turn == 2)
-            turn = 2;
+        //Debug.Log("Change Turn Called: current turn: "+turn);
 
-        if (P1BFRef.playerPassed)
-            turn = 2;
-        if (P2BFRef.playerPassed)
-            turn = 1;
+        if (turn == 2)
+        {
+            if (!P1BFRef.playerPassed)
+                turn = 1;
+        }
+        else if (turn == 1)
+        {
+            if(!P2BFRef.playerPassed)
+                turn = 2;
+        }
 
+        
         if (P1BFRef.playerPassed && P2BFRef.playerPassed)
         {
             //call end of round function
             Debug.Log("End of round.");
         }
+        
     }
 
 
@@ -182,13 +192,6 @@ public class Player : MonoBehaviour
     }
 
 
-    // pass buttons
-    void PassClick()
-    {
-        if(turn==1)
-            Debug.Log("Player 1 passed");
-        if (turn == 2)
-            Debug.Log("Player 2 passed");
-    }
+  
     
 }
