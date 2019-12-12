@@ -7,7 +7,7 @@ public class Card : MonoBehaviour
 {
     
     public CardInfo info = new CardInfo();
-    public enum State{Alive,Dead,Discarded};
+    public enum State{Hand,Deployed,Dead,Discard,Resurrected};
     public State cardState = new State();
 
     //UI References:
@@ -16,7 +16,7 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
-        cardState = State.Alive;
+        cardState = State.Hand;
     }
 
     private void Update()
@@ -28,4 +28,35 @@ public class Card : MonoBehaviour
     {
         unitStrength.text = "" + info.strength;
     }
+
+
+
+    //getters
+    public string GetCardStatus()
+    {
+        return cardState + "";
+    }
+
+
+
+    //setters
+    public void SetCardStatus(string state)
+    {
+        if (state == "Hand")
+            cardState = State.Hand;
+        else if (state == "Deployed")
+            cardState = State.Deployed;
+        else if (state == "Dead")
+            cardState = State.Dead;
+        else if (state == "Discard")
+            cardState = State.Discard;
+        else if (state == "Resurrected")
+            cardState = State.Resurrected;
+        else
+            Debug.Log("Invalid state parameter.");
+
+        Debug.Log("Done changed state to: "+ cardState);
+        
+    }
+
 }

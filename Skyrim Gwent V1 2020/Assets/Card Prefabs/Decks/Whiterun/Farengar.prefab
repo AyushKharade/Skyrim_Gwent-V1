@@ -282,6 +282,7 @@ GameObject:
   - component: {fileID: 4895052041531861965}
   - component: {fileID: 4895052041531861938}
   - component: {fileID: -9091299981794634967}
+  - component: {fileID: -2343079024635549612}
   m_Layer: 5
   m_Name: Farengar
   m_TagString: Untagged
@@ -434,6 +435,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 386.8647, y: 532.1204}
   m_EdgeRadius: 0
+--- !u!114 &-2343079024635549612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4895052041531861960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847ba94fd7d10ab48839a0395c6fbdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  underCursor: 0
+  deployed: 0
 --- !u!1 &4895052041841764572
 GameObject:
   m_ObjectHideFlags: 0
