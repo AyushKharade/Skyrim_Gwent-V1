@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         P2BFRef = P2Battlefield.GetComponent<Battlefield>();
 
         P1Pass = P1PassRef.GetComponent<Button>();
-        P2Pass = P1PassRef.GetComponent<Button>();
+        P2Pass = P2PassRef.GetComponent<Button>();
     }
 
 
@@ -235,12 +235,14 @@ public class Player : MonoBehaviour
             //P1BFRef.SetPassed();
             //P1Pass.interactable = false;
             P1Pass.gameObject.GetComponent<PassRound>().Pass();
+            //Debug.Log("Force Passed on button ID: "+P1Pass.GetComponent<PassRound>().PlayerID);
         }
         else if (ID==2)
         {
             //P2BFRef.SetPassed();
             //P2Pass.interactable = false;
             P2Pass.gameObject.GetComponent<PassRound>().Pass();
+            //Debug.Log("Force Passed on button ID: " + P2Pass.GetComponent<PassRound>().PlayerID);
         }
         //ChangeTurn();             //Pass () does it
     }
