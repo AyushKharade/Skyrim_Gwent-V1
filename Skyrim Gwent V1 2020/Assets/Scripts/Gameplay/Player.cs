@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     GameObject raycastTarget;
 
     [Range(1,2)]
-    public int turn;
+    public int turn=1;
 
     public GameObject P1Battlefield;
     public GameObject P2Battlefield;
@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     Battlefield P2BFRef;
 
     // ui done from p1_battlefield
+
+   // references to both player decks
+
     
     void Start()
     {
@@ -72,8 +75,16 @@ public class Player : MonoBehaviour
         Card cardRef = card.GetComponent<Card>();
         if (cardRef.info.GetUnitType() == "Warrior" && cardRef.GetCardStatus()=="Hand")
         {
-            P1BFRef.AddUnitToFrontline(card);
-            // swap turn
+            if (turn == 1 && card.transform.parent.name=="Player1_Hand")
+            {
+                P1BFRef.AddUnitToFrontline(card);
+                turn = 2;
+            }
+            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
+            {
+                P2BFRef.AddUnitToFrontline(card);
+                turn = 1;
+            }
         }
 
 
@@ -82,7 +93,16 @@ public class Player : MonoBehaviour
         else if ((cardRef.info.GetUnitType() == "Mage" || cardRef.info.GetUnitType() == "Spellsword") && cardRef.GetCardStatus() == "Hand")
         {
             // place on Vantage -- for now place spellswords on vantage too
-            P1BFRef.AddUnitToVantage(card);
+            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
+            {
+                P1BFRef.AddUnitToVantage(card);
+                turn = 2;
+            }
+            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
+            {
+                P2BFRef.AddUnitToVantage(card);
+                turn = 1;
+            }
         }
 
         
@@ -90,7 +110,16 @@ public class Player : MonoBehaviour
         else if (cardRef.info.GetUnitType() == "Shadow" && cardRef.GetCardStatus() == "Hand")
         {
             // place on shadow
-            P1BFRef.AddUnitToShadow(card);
+            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
+            {
+                P1BFRef.AddUnitToShadow(card);
+                turn = 2;
+            }
+            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
+            {
+                P2BFRef.AddUnitToShadow(card);
+                turn = 1;
+            }
         }
        
 
