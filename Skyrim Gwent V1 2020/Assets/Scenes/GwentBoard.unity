@@ -502,11 +502,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bcc60f2630596409ad342e9baf00fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turn: 0
-  P1Battlefield: {fileID: 0}
-  P2Battlefield: {fileID: 0}
-  P1BFRef: {fileID: 0}
-  P2BFRef: {fileID: 0}
+  turn: 1
+  P1Battlefield: {fileID: 2049786700}
+  P2Battlefield: {fileID: 719846837}
 --- !u!4 &282115613
 Transform:
   m_ObjectHideFlags: 0
@@ -1169,7 +1167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &719846838
 Transform:
   m_ObjectHideFlags: 0
@@ -1191,7 +1189,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719846837}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b71007029f762bf46be1b9f709193815, type: 3}
   m_Name: 
@@ -1199,9 +1197,13 @@ MonoBehaviour:
   PlayerName: Player2
   PlayerID: 2
   frontlineScore: 0
-  vantagelineScore: 0
+  vantageScore: 0
   shadowScore: 0
   totalScore: 0
+  frontlineScoreUI: {fileID: 0}
+  vantageScoreUI: {fileID: 0}
+  shadowScoreUI: {fileID: 0}
+  totalScoreUI: {fileID: 0}
 --- !u!1001 &755709254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2672,6 +2674,10 @@ MonoBehaviour:
   PlayerName: Player1
   PlayerID: 1
   frontlineScore: 0
-  vantagelineScore: 0
+  vantageScore: 0
   shadowScore: 0
   totalScore: 0
+  frontlineScoreUI: {fileID: 569770346}
+  vantageScoreUI: {fileID: 447102660}
+  shadowScoreUI: {fileID: 647823592}
+  totalScoreUI: {fileID: 1830444039}

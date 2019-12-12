@@ -70,33 +70,27 @@ public class Player : MonoBehaviour
     void DeployUnitCard(GameObject card)
     {
         Card cardRef = card.GetComponent<Card>();
-        if (cardRef.info.GetUnitType() == "Warrior")
+        if (cardRef.info.GetUnitType() == "Warrior" && cardRef.GetCardStatus()=="Hand")
         {
             P1BFRef.AddUnitToFrontline(card);
+            // swap turn
         }
 
 
+        
 
-
-
-
-
-
-
-        else if (cardRef.info.GetUnitType() == "Mage" || cardRef.info.GetUnitType() == "Spellsword")
+        else if ((cardRef.info.GetUnitType() == "Mage" || cardRef.info.GetUnitType() == "Spellsword") && cardRef.GetCardStatus() == "Hand")
         {
-            // place on Vantage
+            // place on Vantage -- for now place spellswords on vantage too
+            P1BFRef.AddUnitToVantage(card);
         }
 
+        
 
-
-
-
-
-
-        else if (cardRef.info.GetUnitType() == "Shadow")
+        else if (cardRef.info.GetUnitType() == "Shadow" && cardRef.GetCardStatus() == "Hand")
         {
             // place on shadow
+            P1BFRef.AddUnitToShadow(card);
         }
        
 
