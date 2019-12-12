@@ -95,11 +95,20 @@ public class Player : MonoBehaviour
             {
                 P1BFRef.AddUnitToFrontline(card);
                 ChangeTurn();
+
+                P1Cards--;
+                if (P1Cards == 0)
+                    ForcePass(1);
+
             }
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToFrontline(card);
-                ChangeTurn(); 
+                ChangeTurn();
+
+                P2Cards--;
+                if (P2Cards == 0)
+                    ForcePass(2);
             }
         }
 
@@ -113,11 +122,19 @@ public class Player : MonoBehaviour
             {
                 P1BFRef.AddUnitToVantage(card);
                 ChangeTurn();
+
+                P1Cards--;
+                if (P1Cards == 0)
+                    ForcePass(1);
             }
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToVantage(card);
                 ChangeTurn();
+
+                P2Cards--;
+                if (P2Cards == 0)
+                    ForcePass(2);
             }
         }
 
@@ -130,11 +147,19 @@ public class Player : MonoBehaviour
             {
                 P1BFRef.AddUnitToShadow(card);
                 ChangeTurn();
+
+                P1Cards--;
+                if (P1Cards == 0)
+                    ForcePass(1);
             }
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToShadow(card);
                 ChangeTurn();
+
+                P2Cards--;
+                if (P2Cards == 0)
+                    ForcePass(2);
             }
         }
        
@@ -162,6 +187,18 @@ public class Player : MonoBehaviour
         {
             //call end of round function
             Debug.Log("End of round.");
+            if (P1BFRef.totalScore > P2BFRef.totalScore)
+            {
+                Debug.Log("Player 1 Won!");
+            }
+            else if (P1BFRef.totalScore == P2BFRef.totalScore)
+            {
+                Debug.Log("Tied");
+            }
+            else if( P1BFRef.totalScore < P2BFRef.totalScore)
+            {
+                Debug.Log("Player 2 Won!");
+            }
         }
         
     }
@@ -189,6 +226,23 @@ public class Player : MonoBehaviour
             P1PassRef.interactable = false;
             P2PassRef.interactable = true;
         }
+    }
+
+    void ForcePass(int ID)
+    {
+        if (ID == 1)
+        {
+            //P1BFRef.SetPassed();
+            //P1Pass.interactable = false;
+            P1Pass.gameObject.GetComponent<PassRound>().Pass();
+        }
+        else if (ID==2)
+        {
+            //P2BFRef.SetPassed();
+            //P2Pass.interactable = false;
+            P2Pass.gameObject.GetComponent<PassRound>().Pass();
+        }
+        //ChangeTurn();             //Pass () does it
     }
 
 

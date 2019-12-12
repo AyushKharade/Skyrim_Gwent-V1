@@ -148,6 +148,5 @@ public class Battlefield : MonoBehaviour
     public void SetPassed()
     {
         playerPassed = true;
-        Debug.Log("Pass value set");
     }
 }

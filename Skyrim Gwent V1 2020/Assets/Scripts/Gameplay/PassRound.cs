@@ -13,6 +13,9 @@ public class PassRound : MonoBehaviour
 
     Player playableRef;
 
+    //ui ref
+    public GameObject PassedUI;
+
     void Start()
     {
         playableRef = GameObject.FindGameObjectWithTag("Playable").GetComponent<Player>();
@@ -28,7 +31,7 @@ public class PassRound : MonoBehaviour
         
     }
 
-    void Pass()
+    public void Pass()
     {
         Debug.Log("Player "+PlayerID+" Passed.");
         if (PlayerID == 1)
@@ -38,7 +41,9 @@ public class PassRound : MonoBehaviour
 
         //disable clicking
         buttonRef.interactable = false;
+        PassedUI.SetActive(true);
 
         playableRef.ChangeTurn();
+
     }
 }
