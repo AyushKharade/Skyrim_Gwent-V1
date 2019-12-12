@@ -25,6 +25,11 @@ public class Battlefield : MonoBehaviour
     [HideInInspector] public LinkedList<GameObject> discardpile;
 
 
+    // weather effects
+    bool frostbite;     // affects melee units
+    bool baneAetherius; // affects mages
+    bool storm;         // affects archers, thiefs and assassins.
+
     [HideInInspector]public int frontlineScore=0;
     [HideInInspector] public int vantageScore=0;
     [HideInInspector] public int shadowScore=0;
