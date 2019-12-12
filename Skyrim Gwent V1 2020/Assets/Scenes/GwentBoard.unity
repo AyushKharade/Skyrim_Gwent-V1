@@ -1279,6 +1279,9 @@ MonoBehaviour:
   vantageScoreUI: {fileID: 0}
   shadowScoreUI: {fileID: 0}
   totalScoreUI: {fileID: 0}
+  frontlinePosY: 0
+  vantagePosY: 0
+  shadowPosY: 0
 --- !u!1001 &755709254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2757,3 +2760,6 @@ MonoBehaviour:
   vantageScoreUI: {fileID: 447102660}
   shadowScoreUI: {fileID: 647823592}
   totalScoreUI: {fileID: 1830444039}
+  frontlinePosY: 3.7
+  vantagePosY: 2.4
+  shadowPosY: 1.3
