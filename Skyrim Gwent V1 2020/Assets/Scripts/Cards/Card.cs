@@ -55,7 +55,7 @@ public class Card : MonoBehaviour
         else
             Debug.Log("Invalid state parameter.");
 
-        Debug.Log("Done changed state to: "+ cardState);
+        //Debug.Log("Done changed state to: "+ cardState);
         
     }
 

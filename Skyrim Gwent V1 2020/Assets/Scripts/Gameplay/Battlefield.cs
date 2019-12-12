@@ -18,6 +18,7 @@ public class Battlefield : MonoBehaviour
     public string PlayerName;
     [Range(1, 2)]
     public int PlayerID;
+    public bool playerPassed=false;
 
     [HideInInspector] public LinkedList<GameObject> frontline;
     [HideInInspector] public LinkedList<GameObject> vantage;
@@ -25,12 +26,18 @@ public class Battlefield : MonoBehaviour
     [HideInInspector] public LinkedList<GameObject> discardpile;
 
 
-    public int frontlineScore=0;
-    public int vantageScore=0;
-    public int shadowScore=0;
-    public int totalScore=0;
+    // weather effects
+    bool frostbite;     // affects melee units
+    bool baneAetherius; // affects mages
+    bool storm;         // affects archers, thiefs and assassins.
+
+    [HideInInspector]public int frontlineScore=0;
+    [HideInInspector] public int vantageScore=0;
+    [HideInInspector] public int shadowScore=0;
+    [HideInInspector] public int totalScore=0;
 
     //UI
+    [Header("Score UI")]
     public Text frontlineScoreUI;
     public Text vantageScoreUI;
     public Text shadowScoreUI;
@@ -38,8 +45,16 @@ public class Battlefield : MonoBehaviour
 
 
     // card position adjustment parameters
-    float x;
-    float y;
+    [Header("Placement Offsets")]
+    public float frontlinePosY;
+    public float vantagePosY;
+    public float shadowPosY;
+
+    //x
+    float frontlinePosX=-0.5f;
+    float vantagePosX=-0.5f;
+    float shadowPosX=-0.5f;
+    public float additionOffsetX = 0.75f;
 
     private void Start()
     {
@@ -65,7 +80,10 @@ public class Battlefield : MonoBehaviour
         UnitCard.GetComponent<Card>().SetCardStatus("Deployed");                        // set status deployed
 
         //Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
-        UnitCard.transform.Translate(new Vector3(0, 3, 0));
+        UnitCard.transform.Translate(new Vector3(0, frontlinePosY, 0));
+        UnitCard.transform.position = new Vector3(frontlinePosX,UnitCard.transform.position.y,0);
+        frontlinePosX += additionOffsetX;
+
 
         frontline.AddLast(UnitCard);
         frontlineScore += UnitCard.GetComponent<Card>().info.strength;
@@ -81,7 +99,9 @@ public class Battlefield : MonoBehaviour
         UnitCard.GetComponent<Card>().SetCardStatus("Deployed");                        // set status deployed
 
         //Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
-        UnitCard.transform.Translate(new Vector3(0, 2, 0));
+        UnitCard.transform.Translate(new Vector3(0, vantagePosY, 0));
+        UnitCard.transform.position = new Vector3(vantagePosX, UnitCard.transform.position.y, 0);
+        vantagePosX += additionOffsetX;
 
         vantage.AddLast(UnitCard);
         vantageScore += UnitCard.GetComponent<Card>().info.strength;
@@ -94,7 +114,9 @@ public class Battlefield : MonoBehaviour
         UnitCard.GetComponent<Card>().SetCardStatus("Deployed");                        // set status deployed
 
         //Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
-        UnitCard.transform.Translate(new Vector3(0, 1, 0));
+        UnitCard.transform.Translate(new Vector3(0, shadowPosY, 0));
+        UnitCard.transform.position = new Vector3(shadowPosX, UnitCard.transform.position.y, 0);
+        shadowPosX += additionOffsetX;
 
         shadow.AddLast(UnitCard);
         shadowScore += UnitCard.GetComponent<Card>().info.strength;
@@ -118,5 +140,13 @@ public class Battlefield : MonoBehaviour
         // total score
         totalScore = frontlineScore + vantageScore + shadowScore;
         totalScoreUI.text = "" + totalScore;
+    }
+
+
+
+    // passing
+    public void SetPassed()
+    {
+        playerPassed = true;
     }
 }
