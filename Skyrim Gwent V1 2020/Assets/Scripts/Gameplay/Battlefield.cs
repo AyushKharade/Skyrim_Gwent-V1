@@ -114,7 +114,7 @@ public class Battlefield : MonoBehaviour
 
         //Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
         UnitCard.transform.Translate(new Vector3(0, shadowPosY, 0));
-        UnitCard.transform.position = new Vector3(frontlinePosX, UnitCard.transform.position.y, 0);
+        UnitCard.transform.position = new Vector3(shadowPosX, UnitCard.transform.position.y, 0);
         shadowPosX += additionOffsetX;
 
         shadow.AddLast(UnitCard);
