@@ -18,6 +18,7 @@ public class Battlefield : MonoBehaviour
     public string PlayerName;
     [Range(1, 2)]
     public int PlayerID;
+    public bool playerPassed=false;
 
     [HideInInspector] public LinkedList<GameObject> frontline;
     [HideInInspector] public LinkedList<GameObject> vantage;
