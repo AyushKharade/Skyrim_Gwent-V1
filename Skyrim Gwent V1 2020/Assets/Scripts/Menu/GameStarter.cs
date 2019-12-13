@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class GameStarter : MonoBehaviour
 {
     [Header("GameObject Refernces")]
+    public GameObject DeckInfoObj;
+    DeckInfo DeckInfoRef;
     public GameObject P1Deck;
     public GameObject P2Deck;
 
@@ -33,7 +35,8 @@ public class GameStarter : MonoBehaviour
 
     void Start()
     {
-        PlayUIRef.onClick.AddListener(StartGame);    
+        PlayUIRef.onClick.AddListener(StartGame);
+        DeckInfoRef = DeckInfoObj.GetComponent<DeckInfo>();
     }
 
     private void Awake()
@@ -44,13 +47,13 @@ public class GameStarter : MonoBehaviour
     void Update()
     {
         CheckDeckSelection();
-        //Debug.Log(""+P1DeckUI.value);
     }
 
     void StartGame()
     {
         AssignName();
         AssignDeck();
+        AcquireDeck();
         Debug.Log("Starting Game, Information Collected:");
         Debug.Log("Player 1: "+P1Name+" starting with deck "+P1DeckName);
         Debug.Log("Player 2: "+P2Name+" starting with deck "+P2DeckName);
@@ -111,6 +114,12 @@ public class GameStarter : MonoBehaviour
                 }
 
         }
+    }
+
+    void AcquireDeck()
+    {
+        P1Deck = DeckInfoRef.FetchDeck(P1DeckName);
+        P2Deck = DeckInfoRef.FetchDeck(P2DeckName);
     }
 
     void CheckDeckSelection()

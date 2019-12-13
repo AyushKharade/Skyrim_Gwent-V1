@@ -11,6 +11,7 @@ public class DeckInfo : MonoBehaviour
     public GameObject WhiterunDeck;
     public GameObject DraugrDeck;
     // others when they are available.
+
     void Start()
     {
         
@@ -19,5 +20,23 @@ public class DeckInfo : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public GameObject FetchDeck(string name)
+    {
+        switch(name)
+        {
+            case "Whiterun Warriors":
+                {
+                    return WhiterunDeck;
+                    //break;
+                };
+            case "Undead Draugrs":
+                {
+                    return DraugrDeck;
+                    //break;
+                };
+        }
+        return null;
     }
 }
