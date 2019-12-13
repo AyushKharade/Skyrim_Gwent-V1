@@ -35,9 +35,16 @@ public class Player : MonoBehaviour
     // game info ref
     GameStarter gameinfo;
 
+    // hand instantiation references.
+    public Transform p1HandRef;
+    public Transform p2HandRef;
     
     void Start()
     {
+
+        // random turn
+        turn = Random.Range(1, 2);
+
         P1BFRef = P1Battlefield.GetComponent<Battlefield>();
         P2BFRef = P2Battlefield.GetComponent<Battlefield>();
 
@@ -47,11 +54,24 @@ public class Player : MonoBehaviour
         // fetch info
         gameinfo = GameObject.FindGameObjectWithTag("GameInfo").GetComponent<GameStarter>();
 
-        // random turn
-        turn = Random.Range(1,2);
+
 
 
         //init
+        InitializeGame();
+        //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
+    }
+
+    private void InitializeGame()
+    {
+        // randomly select cards from respective decks.
+
+        // for now instantiate it on the field
+        //p1
+        GenerateHand(1);
+        GenerateHand(2);
+        
+        //p2
     }
 
 
@@ -96,6 +116,42 @@ public class Player : MonoBehaviour
     }
 
 
+    private void GenerateHand(int PlayerID)
+    {
+        int count = 10;
+        float yOffset;
+        float xOffset=-1;
+        GameObject deck;
+
+        if (PlayerID == 1)
+        {
+            deck = gameinfo.P1Deck;
+            yOffset = 0;
+        }
+        else
+        {
+            deck = gameinfo.P2Deck;
+            yOffset = 6;
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            // fetch signature:
+            //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
+            GameObject card;
+            //card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, deck.GetComponent<Deck>().totalCards)];
+            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, 7)];
+            // instantiate
+            if (PlayerID == 1)
+            {
+                Instantiate(card, p1HandRef);
+            }
+            else
+            {
+                Instantiate(card, p2HandRef);
+            }
+        }
+    }
 
 
     void DeployUnitCard(GameObject card)

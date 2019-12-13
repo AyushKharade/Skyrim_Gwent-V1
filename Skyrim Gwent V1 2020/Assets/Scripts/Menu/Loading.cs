@@ -14,7 +14,7 @@ public class Loading : MonoBehaviour
     //public string[] Tips;
     void Start()
     {
-        loadingTime = Random.Range(3,7);
+        loadingTime = Random.Range(1,2.5f);
     }
 
     // Update is called once per frame
