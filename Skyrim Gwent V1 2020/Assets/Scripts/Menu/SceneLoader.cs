@@ -8,6 +8,7 @@ public class SceneLoader : MonoBehaviour
     public void PressPlay()
     {
         Debug.Log("Clicked Play");
+
     }
 
     public void PressOptions()
@@ -18,6 +19,7 @@ public class SceneLoader : MonoBehaviour
     public void PressDecks()
     {
         Debug.Log("Clicked Decks");
+        SceneManager.LoadScene("Card Creation");
     }
 
     public void PressQuit()
