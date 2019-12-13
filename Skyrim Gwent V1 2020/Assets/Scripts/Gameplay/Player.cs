@@ -29,8 +29,8 @@ public class Player : MonoBehaviour
 
 
     //temp card count:
-    int P1Cards = 8;
-    int P2Cards = 8;
+    int P1Cards = 10;
+    int P2Cards = 10;
 
     // game info ref
     GameStarter gameinfo;
@@ -120,18 +120,18 @@ public class Player : MonoBehaviour
     {
         int count = 10;
         float yOffset;
-        float xOffset=-1;
+        float xOffset=-2;
         GameObject deck;
 
         if (PlayerID == 1)
         {
             deck = gameinfo.P1Deck;
-            yOffset = 0;
+            yOffset = -4.2f;
         }
         else
         {
             deck = gameinfo.P2Deck;
-            yOffset = 6;
+            yOffset = 4.4f;
         }
 
         for (int i = 0; i < count; i++)
@@ -144,11 +144,15 @@ public class Player : MonoBehaviour
             // instantiate
             if (PlayerID == 1)
             {
-                Instantiate(card, p1HandRef);
+                GameObject temp=Instantiate(card, p1HandRef);
+                temp.transform.position = new Vector3(xOffset,yOffset,0);
+                xOffset += 0.75f;
             }
             else
             {
-                Instantiate(card, p2HandRef);
+                GameObject temp=Instantiate(card, p2HandRef);
+                temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                xOffset += 0.75f;
             }
         }
     }
