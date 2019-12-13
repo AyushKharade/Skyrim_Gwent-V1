@@ -7,8 +7,8 @@ public class SceneLoader : MonoBehaviour
 {
     public void PressPlay()
     {
-        Debug.Log("Clicked Play");
-
+        //Debug.Log("Clicked Play");
+        SceneManager.LoadScene("Select Deck");
     }
 
     public void PressOptions()
@@ -25,5 +25,17 @@ public class SceneLoader : MonoBehaviour
     public void PressQuit()
     {
         Application.Quit();
+    }
+
+    public void GoBackToMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+
+    // start game:
+    public void StartGame()
+    {
+        // load gwent board scene with info of which decks were chosen
     }
 }
