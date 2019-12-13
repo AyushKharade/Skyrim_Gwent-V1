@@ -32,6 +32,9 @@ public class Player : MonoBehaviour
     int P1Cards = 8;
     int P2Cards = 8;
 
+    // game info ref
+    GameStarter gameinfo;
+
     
     void Start()
     {
@@ -40,6 +43,15 @@ public class Player : MonoBehaviour
 
         P1Pass = P1PassRef.GetComponent<Button>();
         P2Pass = P2PassRef.GetComponent<Button>();
+
+        // fetch info
+        gameinfo = GameObject.FindGameObjectWithTag("GameInfo").GetComponent<GameStarter>();
+
+        // random turn
+        turn = Random.Range(1,2);
+
+
+        //init
     }
 
 

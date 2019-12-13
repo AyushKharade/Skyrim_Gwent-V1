@@ -228,6 +228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03a585512c517e47b0319c9d3c7acfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WhiterunDeck: {fileID: 5969686074367784359, guid: 42e7cd3a4874d86438d25e9b9607f4a7,
+    type: 3}
+  DraugrDeck: {fileID: 1314456710096841934, guid: 995d461cb4d8fd64cb374cf301c93d9f,
+    type: 3}
 --- !u!4 &28843683
 Transform:
   m_ObjectHideFlags: 0
@@ -386,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cdbf58632e59384eb8d1843a77b98b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeckInfoObj: {fileID: 28843681}
   P1Deck: {fileID: 0}
   P2Deck: {fileID: 0}
   P1NameUI: {fileID: 1662416667}

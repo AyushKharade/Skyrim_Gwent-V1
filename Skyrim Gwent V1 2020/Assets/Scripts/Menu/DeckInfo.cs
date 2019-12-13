@@ -12,15 +12,7 @@ public class DeckInfo : MonoBehaviour
     public GameObject DraugrDeck;
     // others when they are available.
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+   
 
     public GameObject FetchDeck(string name)
     {

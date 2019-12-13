@@ -9,12 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Card Creation.unity
-    guid: 83a0e004d9ca3fa40989d83265486ed1
+    path: Assets/Scenes/Select Deck.unity
+    guid: c2d9ee0f9aea8814e8e8a631c4ca13e2
+  - enabled: 1
+    path: Assets/Scenes/LoadingScreen.unity
+    guid: 28f6d6e4257a9144da5b9c7934a899bd
   - enabled: 1
     path: Assets/Scenes/GwentBoard.unity
     guid: a21a6e9468ec50e4db6461497398ed46
   - enabled: 1
-    path: Assets/Scenes/Select Deck.unity
-    guid: c2d9ee0f9aea8814e8e8a631c4ca13e2
+    path: Assets/Scenes/Card Creation.unity
+    guid: 83a0e004d9ca3fa40989d83265486ed1
   m_configObjects: {}

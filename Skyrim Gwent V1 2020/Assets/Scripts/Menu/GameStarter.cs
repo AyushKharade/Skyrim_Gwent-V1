@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /*
@@ -9,6 +10,8 @@ using UnityEngine.UI;
  */
 public class GameStarter : MonoBehaviour
 {
+    bool gameStarted;
+
     [Header("GameObject Refernces")]
     public GameObject DeckInfoObj;
     DeckInfo DeckInfoRef;
@@ -46,7 +49,8 @@ public class GameStarter : MonoBehaviour
 
     void Update()
     {
-        CheckDeckSelection();
+        if(!gameStarted)
+            CheckDeckSelection();
     }
 
     void StartGame()
@@ -57,6 +61,8 @@ public class GameStarter : MonoBehaviour
         Debug.Log("Starting Game, Information Collected:");
         Debug.Log("Player 1: "+P1Name+" starting with deck "+P1DeckName);
         Debug.Log("Player 2: "+P2Name+" starting with deck "+P2DeckName);
+        gameStarted = true;
+        SceneManager.LoadScene("LoadingScreen");
 
     }
 
