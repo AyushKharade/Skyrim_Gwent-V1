@@ -36,6 +36,11 @@ public class GameStarter : MonoBehaviour
         PlayUIRef.onClick.AddListener(StartGame);    
     }
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Update()
     {
         CheckDeckSelection();

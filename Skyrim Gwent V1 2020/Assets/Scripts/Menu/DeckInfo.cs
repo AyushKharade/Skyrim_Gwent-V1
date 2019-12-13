@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class DeckInfo : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+
+    // has references to all deck prefabs, sends out the deck reference when requested
+
+    public GameObject WhiterunDeck;
+    public GameObject DraugrDeck;
+    // others when they are available.
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
