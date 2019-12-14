@@ -11,10 +11,13 @@ public class MusicPlayer : MonoBehaviour
 {
     Scene currentScene;
     string sceneName;
+    string playingSceneName;
+    public int musicID;
 
     float playTime;
     bool playing;
-    float timer;
+    public float timer;
+    
 
 
     // Start is called before the first frame update
@@ -36,7 +39,38 @@ public class MusicPlayer : MonoBehaviour
         if (!playing)
             CheckScene();
         else
+        {
+            CheckChangeInScene();
             EndSoundTrack();
+        }
+    }
+
+    void CheckChangeInScene()
+    {
+        currentScene = SceneManager.GetActiveScene();
+        sceneName = currentScene.name;
+        if (playingSceneName == "Main Menu")
+        {
+            if (sceneName == "Select Deck")
+            { }
+            else if (sceneName == "Main Menu")
+            { }
+            else
+            {
+                //force stop
+                AudioManager.instance.Stop(AudioManager.instance.sounds[musicID].name);
+                playing = false;
+                timer = 0;
+            }
+
+        }
+        else if (playingSceneName != sceneName)
+        {
+            //force stop
+            AudioManager.instance.Stop(AudioManager.instance.sounds[musicID].name);
+            playing = false;
+            timer = 0;
+        }
     }
 
     void MenuMusic()
@@ -47,12 +81,16 @@ public class MusicPlayer : MonoBehaviour
             AudioManager.instance.Play("SkyrimTheme");
             playTime = AudioManager.instance.sounds[0].clip.length + 5;
             playing = true;
+            playingSceneName = sceneName;
+            musicID = 0;
         }
         else
         {
             AudioManager.instance.Play("Witcher3_Wolven_Storm");
             playTime = AudioManager.instance.sounds[1].clip.length + 5;
             playing = true;
+            playingSceneName = sceneName;
+            musicID = 1;
         }
     }
 
@@ -85,6 +123,8 @@ public class MusicPlayer : MonoBehaviour
         AudioManager.instance.Play("Game1");
         playTime = AudioManager.instance.sounds[3].clip.length + 5;
         playing = true;
+        playingSceneName = sceneName;
+        musicID = 3;
 
     }
 
