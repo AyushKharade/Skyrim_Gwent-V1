@@ -17,8 +17,8 @@ public class MusicPlayer : MonoBehaviour
     float playTime;
     bool playing;
     public float timer;
-    public float remainingTimer;
     public float trackLength;
+    public string nowPlaying;
 
 
     // Start is called before the first frame update
@@ -139,8 +139,9 @@ public class MusicPlayer : MonoBehaviour
     {
 
         // randomly play from track 1 to track 9
-        int randInt = Random.Range(1,10);
+        int randInt = Random.Range(1,11);
         string trackName = "Game" + randInt;
+
         // array code is always game 'n'+2
         AudioManager.instance.Play(trackName);
         playTime = AudioManager.instance.sounds[randInt+2].clip.length + 1.5f;
@@ -164,7 +165,7 @@ public class MusicPlayer : MonoBehaviour
     void UpdateTimerData()
     {
         trackLength = AudioManager.instance.sounds[musicID].clip.length;
-        remainingTimer = timer - trackLength;
+        nowPlaying = AudioManager.instance.sounds[musicID].clip.name;
     }
 
 
