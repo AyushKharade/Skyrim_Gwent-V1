@@ -29,6 +29,7 @@ public class SceneLoader : MonoBehaviour
 
     public void GoBackToMenu()
     {
+        Destroy(GameObject.FindGameObjectWithTag("GameInfo")); // destroy this instance
         SceneManager.LoadScene("Main Menu");
     }
 

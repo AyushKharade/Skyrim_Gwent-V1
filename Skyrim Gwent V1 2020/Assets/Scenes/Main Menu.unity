@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 294400302}
   m_Layer: 0
   m_Name: MusicPlayer
-  m_TagString: Untagged
+  m_TagString: MusicPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -387,6 +387,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicID: 0
   timer: 0
+  remainingTimer: 0
+  trackLength: 0
 --- !u!4 &294400303
 Transform:
   m_ObjectHideFlags: 0
