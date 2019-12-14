@@ -356,6 +356,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293907381}
   m_CullTransparentMesh: 0
+--- !u!1 &294400301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 294400303}
+  - component: {fileID: 294400302}
+  m_Layer: 0
+  m_Name: MusicPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &294400302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294400301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ce2511b4e89e041a58d2d745a8d73b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicID: 0
+  timer: 0
+--- !u!4 &294400303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294400301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 543.4089, y: 422.59338, z: -40}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &317787419
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,6 +1037,128 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014167130}
   m_CullTransparentMesh: 0
+--- !u!1 &1237648437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1237648439}
+  - component: {fileID: 1237648438}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1237648438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237648437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ceafa32828cd24eb171e85845feb5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: SkyrimTheme
+    clip: {fileID: 8300000, guid: 072f63caac2d42e4ca4d8bd13edeeca6, type: 3}
+    volume: 0.38
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Witcher3_Wolven_Storm
+    clip: {fileID: 8300000, guid: 6bf24440171aca9489a15964dcfac0e2, type: 3}
+    volume: 0.42
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Menu music 3
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Game1
+    clip: {fileID: 8300000, guid: d1881fc186f3af74ba545b419fdc35e2, type: 3}
+    volume: 0.38
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Game2
+    clip: {fileID: 8300000, guid: ecd3fb5c6c6ac774db589fe7cc7bc534, type: 3}
+    volume: 0.38
+    pitch: 1.25
+    loop: 0
+    source: {fileID: 0}
+  - name: Game2
+    clip: {fileID: 8300000, guid: e2dea6ecee50a6142b8dacd790028239, type: 3}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Game3
+    clip: {fileID: 8300000, guid: 0abc2d81fe5f7d845b45e07812caf089, type: 3}
+    volume: 0.49
+    pitch: 1.45
+    loop: 0
+    source: {fileID: 0}
+  - name: Game4
+    clip: {fileID: 8300000, guid: 13c83f55ae5d3d54daa31585bfe8b3ed, type: 3}
+    volume: 0.45
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Game5
+    clip: {fileID: 8300000, guid: baee5c8ae36743f42b656ecff22d3a69, type: 3}
+    volume: 0.47
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Game6
+    clip: {fileID: 8300000, guid: dd1413d4da8c7d14090754ec3f73f096, type: 3}
+    volume: 0.49
+    pitch: 1.41
+    loop: 0
+    source: {fileID: 0}
+  - name: Game7
+    clip: {fileID: 8300000, guid: ae2356693c2b0f24ca815cce51493277, type: 3}
+    volume: 0.47
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Game8
+    clip: {fileID: 8300000, guid: 2c03cd485e1f40342801aa29c456e6ce, type: 3}
+    volume: 0.41
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Game9
+    clip: {fileID: 8300000, guid: 721fc8a8eef833d4e970de31c91a3f08, type: 3}
+    volume: 0.48
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+--- !u!4 &1237648439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237648437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 543.4089, y: 422.59338, z: -40}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1741002263
 GameObject:
   m_ObjectHideFlags: 0

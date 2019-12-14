@@ -17,7 +17,8 @@ public class MusicPlayer : MonoBehaviour
     float playTime;
     bool playing;
     public float timer;
-    
+    public float remainingTimer;
+    public float trackLength;
 
 
     // Start is called before the first frame update
@@ -37,11 +38,14 @@ public class MusicPlayer : MonoBehaviour
     void Update()
     {
         if (!playing)
+        {
             CheckScene();
+        }
         else
         {
             CheckChangeInScene();
             EndSoundTrack();
+            UpdateTimerData();
         }
     }
 
@@ -119,12 +123,16 @@ public class MusicPlayer : MonoBehaviour
 
     void GameplayMusic()
     {
+
+        // randomly play from track 1 to track 9
+        int randInt = Random.Range(1,10);
+        string trackName = "Game" + randInt;
         // array code is always game 'n'+2
-        AudioManager.instance.Play("Game1");
-        playTime = AudioManager.instance.sounds[3].clip.length + 5;
+        AudioManager.instance.Play(trackName);
+        playTime = AudioManager.instance.sounds[randInt+2].clip.length + 3.5f;
         playing = true;
         playingSceneName = sceneName;
-        musicID = 3;
+        musicID = randInt;
 
     }
 
@@ -137,5 +145,11 @@ public class MusicPlayer : MonoBehaviour
             timer = 0;
             playing = false;
         }
+    }
+
+    void UpdateTimerData()
+    {
+        trackLength = AudioManager.instance.sounds[musicID].clip.length;
+        remainingTimer = timer - trackLength;
     }
 }
