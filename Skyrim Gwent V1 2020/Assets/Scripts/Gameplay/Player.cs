@@ -8,7 +8,12 @@ public class Player : MonoBehaviour
     GameObject raycastTarget;
 
     [Range(1,2)]
-    public int turn=1;
+    [HideInInspector]public int turn=1;
+    [Range(1, 3)]
+    public int round=1;
+
+    public int p1Lives = 2;
+    public int p2Lives = 2;
 
     public GameObject P1Battlefield;
     public GameObject P2Battlefield;
@@ -17,6 +22,7 @@ public class Player : MonoBehaviour
     Battlefield P2BFRef;
 
     // ui done from p1_battlefield
+    public Text RoundUI;
 
     // references to both player decks
 
@@ -38,6 +44,12 @@ public class Player : MonoBehaviour
     // hand instantiation references.
     public Transform p1HandRef;
     public Transform p2HandRef;
+
+    // discard pile offset
+    float p1DiscardXPos=5;
+    float p1DiscardYPos=-2.8f;
+    float p2DiscardXPos=5;
+    float p2DiscardYPos=2.8f;
     
     void Start()
     {
@@ -64,14 +76,8 @@ public class Player : MonoBehaviour
 
     private void InitializeGame()
     {
-        // randomly select cards from respective decks.
-
-        // for now instantiate it on the field
-        //p1
         GenerateHand(1);
         GenerateHand(2);
-        
-        //p2
     }
 
 
@@ -79,11 +85,13 @@ public class Player : MonoBehaviour
     {
         GetCameraRaycast();
         //DisplayRaycastTarget();
-
         //for scaling
         CardScaling();
         PassButtonController();
-      
+
+
+        // make a function and only update when required
+        RoundUI.text = "Round: " + round;
     }
 
 
@@ -258,24 +266,130 @@ public class Player : MonoBehaviour
         if (P1BFRef.playerPassed && P2BFRef.playerPassed)
         {
             //call end of round function
+            EndOfRound();
             Debug.Log("End of round.");
-            if (P1BFRef.totalScore > P2BFRef.totalScore)
-            {
-                Debug.Log("Player 1 Won!");
-            }
-            else if (P1BFRef.totalScore == P2BFRef.totalScore)
-            {
-                Debug.Log("Tied");
-            }
-            else if( P1BFRef.totalScore < P2BFRef.totalScore)
-            {
-                Debug.Log("Player 2 Won!");
-            }
+           
         }
         
     }
 
 
+    void EndOfRound()
+    {
+        if (P1BFRef.totalScore > P2BFRef.totalScore)
+        {
+            Debug.Log("Player 1 Won round "+round);
+            p2Lives--;
+        }
+        else if (P1BFRef.totalScore == P2BFRef.totalScore)
+        {
+            Debug.Log("Round "+round+" Tied");
+            p1Lives--;
+            p2Lives--;
+        }
+        else if (P1BFRef.totalScore < P2BFRef.totalScore)
+        {
+            Debug.Log("Player 2 Won round "+round);
+            p1Lives--;
+        }
+
+        // update
+        RoundStatus();
+
+    }
+
+    void RoundStatus()
+    {
+        // check if anyone lost then end game
+        if (p1Lives == 0)
+        {
+            Debug.Log("Player 2 Won the Match!!");
+        }
+        else if (p2Lives == 0)
+        {
+            Debug.Log("Player 1 Won the Match!!");
+        }
+        else if (p1Lives == 0 && p2Lives ==0)
+        {
+            Debug.Log("Match Draw!");
+        }
+        else
+        {
+            Debug.Log("Starting Next Round");
+            round++;
+            Reinitialize();
+        }
+    }
+
+
+    void Reinitialize()
+    {
+        // move current cards to discard pile (done in battlefield)
+
+        // reset pass buttons and UI & score
+        P1Pass.gameObject.GetComponent<PassRound>().Reset();
+        P2Pass.gameObject.GetComponent<PassRound>().Reset();
+
+        //p1battlefield
+        P1BFRef.Reset();
+        //p2battlefield
+        P2BFRef.Reset();
+
+        //physically move cards in p1hand and p2hand (or disable)
+        // destroy in player.cs for now
+        RemoveDeployedCards();
+    }
+
+    void RemoveDeployedCards()
+    {
+        //p1 traverse p1hand, remove deployed
+        // optional rearragne hand cards
+        Debug.Log("called remove cards");
+
+        int count = 0;
+
+        while (count<10)
+        {
+            if (p1HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
+            {
+                // rotate card and place on discard pile
+                GameObject card = p1HandRef.GetChild(count).gameObject;
+                //set status to discard, rotate and move to discard pile
+                card.GetComponent<Card>().SetCardStatus("Discard");
+                card.transform.Rotate(new Vector3(0,180,0));
+                card.transform.position = new Vector3(p1DiscardXPos,p1DiscardYPos);
+                // rearrange hand positions function
+
+                Debug.Log("Destroyed one card: "+p1HandRef.GetChild(count).GetComponent<Card>().name);
+                count++;
+            }
+            else
+                count++;
+        }
+        //p2
+        count = 0;
+        while (count < 10)
+        {
+            if (p2HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
+            {
+                // rotate card and place on discard pile
+                GameObject card = p2HandRef.GetChild(count).gameObject;
+                //set status to discard, rotate and move to discard pile
+                card.GetComponent<Card>().SetCardStatus("Discard");
+                card.transform.Rotate(new Vector3(0, 180, 0));
+                card.transform.position = new Vector3(p2DiscardXPos, p2DiscardYPos);
+                // rearrange hand positions function
+
+                Debug.Log("Destroyed one card: " + p1HandRef.GetChild(count).GetComponent<Card>().name);
+                count++;
+            }
+            else
+                count++;
+        }
+    }
+
+
+    
 
     // extra
     void CardScaling()
