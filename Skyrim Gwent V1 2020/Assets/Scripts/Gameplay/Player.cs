@@ -24,9 +24,12 @@ public class Player : MonoBehaviour
 
     // ui done from p1_battlefield
     public Text RoundUI;
+    public Image P1HP1;
+    public Image P1HP2;
+    public Image P2HP1;
+    public Image P2HP2;
 
-    // references to both player decks
-
+    // dead rgb = 126,99,99
 
     // references to pass buttons
     public Button P1PassRef; 
@@ -319,6 +322,7 @@ public class Player : MonoBehaviour
 
         // update
         RoundStatus();
+        UpdateLivesUI();
 
     }
 
@@ -468,6 +472,7 @@ public class Player : MonoBehaviour
 
 
     //experimental: // allow fliping all cards if not your turn:
+    //doesnt work right now fix latex
     void FlipCardsInDeck(int ID)
     {
         if (hideOpponentCards)
@@ -498,6 +503,24 @@ public class Player : MonoBehaviour
 
     }
 
-  
-    
+    void UpdateLivesUI()
+    {
+        //p1
+        if (p1Lives == 1)
+            P1HP1.enabled = false;
+        if (p1Lives == 0)
+            P1HP2.enabled = false;
+        // p2
+        if (p2Lives == 1)
+            P2HP1.enabled = false;
+        if (p2Lives == 0)
+            P2HP2.enabled = false;
+
+
+
+        //P2HP2.color = new Vector4(99, 99, 99, 200);
+        
+    }
+
+
 }
