@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     bool gameEnded;
     [Range(1,2)]
-    [HideInInspector]public int turn=1;
+    [HideInInspector]public int turn;
     [Range(1, 3)]
     public int round=1;
 
@@ -54,7 +54,6 @@ public class Player : MonoBehaviour
     
     void Start()
     {
-
         // random turn
         turn = Random.Range(1, 2);
 
@@ -344,6 +343,12 @@ public class Player : MonoBehaviour
         //physically move cards in p1hand and p2hand (or disable)
         // destroy in player.cs for now
         RemoveDeployedCards();
+
+        //test for forcepassing if round starts with you having 0 cards
+        if (P1Cards == 0)
+            ForcePass(1);
+        if (P2Cards == 0)
+            ForcePass(2);
     }
 
     void RemoveDeployedCards()
