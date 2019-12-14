@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     GameObject raycastTarget;
 
+    bool gameEnded;
     [Range(1,2)]
     [HideInInspector]public int turn=1;
     [Range(1, 3)]
@@ -83,12 +84,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        GetCameraRaycast();
-        //DisplayRaycastTarget();
-        //for scaling
-        CardScaling();
-        PassButtonController();
-
+        if (!gameEnded)
+        {
+            GetCameraRaycast();
+            //DisplayRaycastTarget();
+            //for scaling
+            CardScaling();
+            PassButtonController();
+        }
 
         // make a function and only update when required
         RoundUI.text = "Round: " + round;
@@ -301,17 +304,20 @@ public class Player : MonoBehaviour
     void RoundStatus()
     {
         // check if anyone lost then end game
-        if (p1Lives == 0)
+        if (p1Lives == 0 && p2Lives == 0)
+        {
+            Debug.Log("Match Draw!");
+            gameEnded = true;
+        }
+        else if (p1Lives == 0)
         {
             Debug.Log("Player 2 Won the Match!!");
+            gameEnded = true;
         }
         else if (p2Lives == 0)
         {
             Debug.Log("Player 1 Won the Match!!");
-        }
-        else if (p1Lives == 0 && p2Lives ==0)
-        {
-            Debug.Log("Match Draw!");
+            gameEnded = true;
         }
         else
         {

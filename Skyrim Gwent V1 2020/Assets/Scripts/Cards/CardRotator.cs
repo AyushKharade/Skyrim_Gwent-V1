@@ -20,7 +20,7 @@ public class CardRotator : MonoBehaviour
     void Update()
     {
         double angleY = transform.rotation.eulerAngles.y;
-        if((angleY>90 && angleY<180) || (angleY>180 && angleY<270 ))
+        if((angleY>=90 && angleY<=180) || (angleY>180 && angleY<=270 ))
         {
             frontRef.SetActive(false);
             backRef.SetActive(true);
@@ -29,6 +29,11 @@ public class CardRotator : MonoBehaviour
         {
             frontRef.SetActive(true);
             backRef.SetActive(false);
+        }
+
+        if (GetComponent<Card>().GetCardStatus() == "Discard")
+        {
+            //Debug.Log("Card Rotator Working, angle: "+transform.rotation.eulerAngles.y);
         }
         
     }
