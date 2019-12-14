@@ -24,6 +24,7 @@ public class MusicPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
         CheckScene();
@@ -32,6 +33,7 @@ public class MusicPlayer : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        SingletonCheck2();
     }
 
     // Update is called once per frame
@@ -67,6 +69,18 @@ public class MusicPlayer : MonoBehaviour
                 timer = 0;
             }
 
+        }
+        else if (playingSceneName == "Select Deck")
+        {
+            if (sceneName == "Main Menu" || sceneName == "Select Deck")
+            { }
+            else
+            {
+                //force stop
+                AudioManager.instance.Stop(AudioManager.instance.sounds[musicID].name);
+                playing = false;
+                timer = 0;
+            }
         }
         else if (playingSceneName != sceneName)
         {
@@ -129,7 +143,7 @@ public class MusicPlayer : MonoBehaviour
         string trackName = "Game" + randInt;
         // array code is always game 'n'+2
         AudioManager.instance.Play(trackName);
-        playTime = AudioManager.instance.sounds[randInt+2].clip.length + 3.5f;
+        playTime = AudioManager.instance.sounds[randInt+2].clip.length + 1.5f;
         playing = true;
         playingSceneName = sceneName;
         musicID = randInt;
@@ -151,5 +165,17 @@ public class MusicPlayer : MonoBehaviour
     {
         trackLength = AudioManager.instance.sounds[musicID].clip.length;
         remainingTimer = timer - trackLength;
+    }
+
+
+
+    void SingletonCheck2()
+    {
+        //delete itself if there already is a class
+        GameObject[] arr = GameObject.FindGameObjectsWithTag("MusicPlayer");
+        if (arr.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
