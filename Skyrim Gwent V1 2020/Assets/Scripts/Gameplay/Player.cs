@@ -51,7 +51,11 @@ public class Player : MonoBehaviour
     float p1DiscardYPos=-2.8f;
     float p2DiscardXPos=5;
     float p2DiscardYPos=2.8f;
-    
+
+
+    // if hide
+    public bool hideOpponentCards;
+
     void Start()
     {
         // random turn
@@ -444,6 +448,36 @@ public class Player : MonoBehaviour
         //ChangeTurn();             //Pass () does it
     }
 
+
+    //experimental: // allow fliping all cards if not your turn:
+    void FlipDeck(int ID)
+    {
+        if (hideOpponentCards)
+        {
+            if (ID == 1)
+            {
+                int count = 0;
+                while (count < 0)
+                {
+                    GameObject card = p1HandRef.GetChild(count).gameObject;
+                    card.transform.Rotate(new Vector3(0,180,0));
+                    count++;
+                }
+            }
+            else if (ID == 2)
+            {
+                int count = 0;
+                while (count < 0)
+                {
+                    GameObject card = p1HandRef.GetChild(count).gameObject;
+                    card.transform.Rotate(new Vector3(0,180,0));
+                    count++;
+                }
+            }
+            
+        }
+
+    }
 
   
     
