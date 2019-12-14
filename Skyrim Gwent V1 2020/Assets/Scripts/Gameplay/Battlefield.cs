@@ -137,13 +137,14 @@ public class Battlefield : MonoBehaviour
         vantageScore = 0;
         shadowScore = 0;
         totalScore = 0;
+
+        // reset placement offsets
+        frontlinePosX = -0.5f;
+        vantagePosX = -0.5f;
+        shadowPosX = -0.5f;
     }
 
-    private void DeleteBattlefield()
-    {
-        
-    }
-
+    
 
 
 
