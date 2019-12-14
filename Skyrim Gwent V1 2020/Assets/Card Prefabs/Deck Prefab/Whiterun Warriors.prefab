@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5969686074367784359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1034901333313406587}
+  - component: {fileID: 1970725447061407259}
+  m_Layer: 0
+  m_Name: Whiterun Warriors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1034901333313406587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969686074367784359}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970725447061407259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969686074367784359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da60d3b1c44883e4b8fceb6c85285200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckName: Whiterun Warrriors
+  ID: 1
+  description: Warriors and Characters from Whiterun & The companions
+  CardsDeck:
+  - {fileID: 3877954423680544113, guid: 378d7cecc155af041b567e30e6601923, type: 3}
+  - {fileID: 4895052041531861960, guid: 1050e1cea0722ec4fb0650a1af1923fa, type: 3}
+  - {fileID: 5072491062042741408, guid: c10832e15a2e7f54b900f4e82b0285bd, type: 3}
+  - {fileID: 4221713335808114438, guid: 2be3abd4e557b0d4d99bddde3b9707c6, type: 3}
+  - {fileID: 6422683962857419229, guid: d11f7c5f149017a4395f306a9ae07a60, type: 3}
+  - {fileID: 6157192114025581522, guid: 8217635a381eb384fb4be9480ca7e2f9, type: 3}
+  - {fileID: 5154112046503552526, guid: 549c9331611b62d4dbb255d7964cce62, type: 3}
+  - {fileID: 7162381907500842492, guid: 7c55544f5c6180241aaa62df39169352, type: 3}
+  totalCards: 0

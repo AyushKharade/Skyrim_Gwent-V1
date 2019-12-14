@@ -7,8 +7,14 @@ public class Player : MonoBehaviour
 {
     GameObject raycastTarget;
 
+    bool gameEnded;
     [Range(1,2)]
-    public int turn=1;
+    [HideInInspector]public int turn;
+    [Range(1, 3)]
+    public int round=1;
+
+    public int p1Lives = 2;
+    public int p2Lives = 2;
 
     public GameObject P1Battlefield;
     public GameObject P2Battlefield;
@@ -17,6 +23,7 @@ public class Player : MonoBehaviour
     Battlefield P2BFRef;
 
     // ui done from p1_battlefield
+    public Text RoundUI;
 
     // references to both player decks
 
@@ -29,29 +36,78 @@ public class Player : MonoBehaviour
 
 
     //temp card count:
-    int P1Cards = 8;
-    int P2Cards = 8;
+    int P1Cards = 10;
+    int P2Cards = 10;
 
-    
+    // game info ref
+    GameStarter gameinfo;
+
+    // hand instantiation references.
+    public Transform p1HandRef;
+    public Transform p2HandRef;
+
+    // discard pile offset
+    float p1DiscardXPos=5;
+    float p1DiscardYPos=-2.8f;
+    float p2DiscardXPos=5;
+    float p2DiscardYPos=2.8f;
+
+
+    // if hide
+    public bool hideOpponentCards;
+
     void Start()
     {
+        // random turn
+        int randNo = Random.Range(0,100);
+        turn = (randNo % 2)+1;
+
+
         P1BFRef = P1Battlefield.GetComponent<Battlefield>();
         P2BFRef = P2Battlefield.GetComponent<Battlefield>();
 
         P1Pass = P1PassRef.GetComponent<Button>();
         P2Pass = P2PassRef.GetComponent<Button>();
+
+        // fetch info
+        gameinfo = GameObject.FindGameObjectWithTag("GameInfo").GetComponent<GameStarter>();
+
+
+
+
+        //init
+        InitializeGame();
+        //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
+
+        if (hideOpponentCards)
+        { 
+            if (turn == 2)
+                FlipCardsInDeck(2);
+            else
+                FlipCardsInDeck(1);
+        }
+    }
+
+    private void InitializeGame()
+    {
+        GenerateHand(1);
+        GenerateHand(2);
     }
 
 
     void Update()
     {
-        GetCameraRaycast();
-        //DisplayRaycastTarget();
+        if (!gameEnded)
+        {
+            GetCameraRaycast();
+            //DisplayRaycastTarget();
+            //for scaling
+            CardScaling();
+            PassButtonController();
+        }
 
-        //for scaling
-        CardScaling();
-        PassButtonController();
-      
+        // make a function and only update when required
+        RoundUI.text = "Round: " + round;
     }
 
 
@@ -84,6 +140,46 @@ public class Player : MonoBehaviour
     }
 
 
+    private void GenerateHand(int PlayerID)
+    {
+        int count = 10;
+        float yOffset;
+        float xOffset=-2;
+        GameObject deck;
+
+        if (PlayerID == 1)
+        {
+            deck = gameinfo.P1Deck;
+            yOffset = -4.2f;
+        }
+        else
+        {
+            deck = gameinfo.P2Deck;
+            yOffset = 4.4f;
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            // fetch signature:
+            //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
+            GameObject card;
+            //card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, deck.GetComponent<Deck>().totalCards)];
+            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, 7)];
+            // instantiate
+            if (PlayerID == 1)
+            {
+                GameObject temp=Instantiate(card, p1HandRef);
+                temp.transform.position = new Vector3(xOffset,yOffset,0);
+                xOffset += 0.75f;
+            }
+            else
+            {
+                GameObject temp=Instantiate(card, p2HandRef);
+                temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                xOffset += 0.75f;
+            }
+        }
+    }
 
 
     void DeployUnitCard(GameObject card)
@@ -174,36 +270,159 @@ public class Player : MonoBehaviour
         if (turn == 2)
         {
             if (!P1BFRef.playerPassed)
+            {
                 turn = 1;
+                FlipCardsInDeck(1);
+                FlipCardsInDeck(2);
+            }
         }
         else if (turn == 1)
         {
-            if(!P2BFRef.playerPassed)
+            if (!P2BFRef.playerPassed)
+            {
                 turn = 2;
+                FlipCardsInDeck(1);
+                FlipCardsInDeck(2);
+            }
         }
 
         
         if (P1BFRef.playerPassed && P2BFRef.playerPassed)
         {
             //call end of round function
+            EndOfRound();
             Debug.Log("End of round.");
-            if (P1BFRef.totalScore > P2BFRef.totalScore)
-            {
-                Debug.Log("Player 1 Won!");
-            }
-            else if (P1BFRef.totalScore == P2BFRef.totalScore)
-            {
-                Debug.Log("Tied");
-            }
-            else if( P1BFRef.totalScore < P2BFRef.totalScore)
-            {
-                Debug.Log("Player 2 Won!");
-            }
+           
         }
         
     }
 
 
+    void EndOfRound()
+    {
+        if (P1BFRef.totalScore > P2BFRef.totalScore)
+        {
+            Debug.Log("Player 1 Won round "+round);
+            p2Lives--;
+        }
+        else if (P1BFRef.totalScore == P2BFRef.totalScore)
+        {
+            Debug.Log("Round "+round+" Tied");
+            p1Lives--;
+            p2Lives--;
+        }
+        else if (P1BFRef.totalScore < P2BFRef.totalScore)
+        {
+            Debug.Log("Player 2 Won round "+round);
+            p1Lives--;
+        }
+
+        // update
+        RoundStatus();
+
+    }
+
+    void RoundStatus()
+    {
+        // check if anyone lost then end game
+        if (p1Lives == 0 && p2Lives == 0)
+        {
+            Debug.Log("Match Draw!");
+            gameEnded = true;
+        }
+        else if (p1Lives == 0)
+        {
+            Debug.Log("Player 2 Won the Match!!");
+            gameEnded = true;
+        }
+        else if (p2Lives == 0)
+        {
+            Debug.Log("Player 1 Won the Match!!");
+            gameEnded = true;
+        }
+        else
+        {
+            Debug.Log("Starting Next Round");
+            round++;
+            Reinitialize();
+        }
+    }
+
+
+    void Reinitialize()
+    {
+        // move current cards to discard pile (done in battlefield)
+
+        // reset pass buttons and UI & score
+        P1Pass.gameObject.GetComponent<PassRound>().Reset();
+        P2Pass.gameObject.GetComponent<PassRound>().Reset();
+
+        //p1battlefield
+        P1BFRef.Reset();
+        //p2battlefield
+        P2BFRef.Reset();
+
+        //physically move cards in p1hand and p2hand (or disable)
+        // destroy in player.cs for now
+        RemoveDeployedCards();
+
+        //test for forcepassing if round starts with you having 0 cards
+        if (P1Cards == 0)
+            ForcePass(1);
+        if (P2Cards == 0)
+            ForcePass(2);
+    }
+
+    void RemoveDeployedCards()
+    {
+        //p1 traverse p1hand, remove deployed
+        // optional rearragne hand cards
+        Debug.Log("called remove cards");
+
+        int count = 0;
+
+        while (count<10)
+        {
+            if (p1HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
+            {
+                // rotate card and place on discard pile
+                GameObject card = p1HandRef.GetChild(count).gameObject;
+                //set status to discard, rotate and move to discard pile
+                card.GetComponent<Card>().SetCardStatus("Discard");
+                card.transform.Rotate(new Vector3(0,180,0));
+                card.transform.position = new Vector3(p1DiscardXPos,p1DiscardYPos);
+                // rearrange hand positions function
+
+                Debug.Log("Destroyed one card: "+p1HandRef.GetChild(count).GetComponent<Card>().name);
+                count++;
+            }
+            else
+                count++;
+        }
+        //p2
+        count = 0;
+        while (count < 10)
+        {
+            if (p2HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
+            {
+                // rotate card and place on discard pile
+                GameObject card = p2HandRef.GetChild(count).gameObject;
+                //set status to discard, rotate and move to discard pile
+                card.GetComponent<Card>().SetCardStatus("Discard");
+                card.transform.Rotate(new Vector3(0, 180, 0));
+                card.transform.position = new Vector3(p2DiscardXPos, p2DiscardYPos);
+                // rearrange hand positions function
+
+                Debug.Log("Destroyed one card: " + p1HandRef.GetChild(count).GetComponent<Card>().name);
+                count++;
+            }
+            else
+                count++;
+        }
+    }
+
+
+    
 
     // extra
     void CardScaling()
@@ -247,6 +466,37 @@ public class Player : MonoBehaviour
         //ChangeTurn();             //Pass () does it
     }
 
+
+    //experimental: // allow fliping all cards if not your turn:
+    void FlipCardsInDeck(int ID)
+    {
+        if (hideOpponentCards)
+        {
+            Debug.Log("Card Hiding Called");
+            if (ID == 1)
+            {
+                int count = 0;
+                while (count < P1Cards)
+                {
+                    GameObject card = p1HandRef.GetChild(count).gameObject;
+                    card.transform.Rotate(new Vector3(0,180,0));
+                    count++;
+                }
+            }
+            else if (ID == 2)
+            {
+                int count = 0;
+                while (count < P2Cards)
+                {
+                    GameObject card = p1HandRef.GetChild(count).gameObject;
+                    card.transform.Rotate(new Vector3(0,180,0));
+                    count++;
+                }
+            }
+            
+        }
+
+    }
 
   
     

@@ -25,12 +25,7 @@ public class PassRound : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     public void Pass()
     {
         Debug.Log("Player "+PlayerID+" Passed.");
@@ -45,5 +40,11 @@ public class PassRound : MonoBehaviour
 
         playableRef.ChangeTurn();
 
+    }
+
+    public void Reset()
+    {
+        buttonRef.interactable = true;
+        PassedUI.SetActive(false);
     }
 }

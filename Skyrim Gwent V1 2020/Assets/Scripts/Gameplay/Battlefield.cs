@@ -126,8 +126,38 @@ public class Battlefield : MonoBehaviour
     private void MoveToDiscardPile()
     { // move all cards in all decks to discard}
 
-        
+
+        // clear lists
+        frontline.Clear();
+        vantage.Clear();
+        shadow.Clear();
+
+        //reset scores
+        frontlineScore = 0;
+        vantageScore = 0;
+        shadowScore = 0;
+        totalScore = 0;
+
+        // reset placement offsets
+        frontlinePosX = -0.5f;
+        vantagePosX = -0.5f;
+        shadowPosX = -0.5f;
     }
+
+    
+
+
+
+
+
+    //reset battlefield
+    public void Reset()
+    {
+        MoveToDiscardPile();
+        playerPassed = false;
+    }
+
+
 
 
     // ui

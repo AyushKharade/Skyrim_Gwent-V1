@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1314456710096841934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 268131402848570974}
+  - component: {fileID: 7363667834794317301}
+  m_Layer: 0
+  m_Name: Undead Draugrs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &268131402848570974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314456710096841934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7363667834794317301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314456710096841934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da60d3b1c44883e4b8fceb6c85285200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckName: Undead Draugrs
+  ID: 2
+  description: Undead of the skyrim
+  CardsDeck:
+  - {fileID: 7432360530823932979, guid: a5f3d50e459cef54092041609a0a8d0c, type: 3}
+  - {fileID: 6341326623246062486, guid: d8d944d9b07cc79418518f1813d85afc, type: 3}
+  - {fileID: 52381642161115845, guid: af313a1a790076d45a105894f65c65d3, type: 3}
+  - {fileID: 5219550783539576580, guid: 38fa788140d8b47429d30a00554581cc, type: 3}
+  - {fileID: 5925217101150070251, guid: f0ac53028cd94e04e882b893cf1032e5, type: 3}
+  - {fileID: 2129448843463872176, guid: ed02ee66737ef5f49b05cd709de95fa5, type: 3}
+  - {fileID: 5717345139046954837, guid: e40b4d9796331104aafa7c2fa3657720, type: 3}
+  - {fileID: 6796562445786672612, guid: 3720348e2692ca341a06adb7a244140b, type: 3}
+  totalCards: 0
