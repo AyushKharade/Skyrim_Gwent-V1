@@ -59,7 +59,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         // random turn
-        turn = Random.Range(1, 2);
+        int randNo = Random.Range(0,100);
+        turn = (randNo % 2)+1;
+
 
         P1BFRef = P1Battlefield.GetComponent<Battlefield>();
         P2BFRef = P2Battlefield.GetComponent<Battlefield>();
@@ -76,6 +78,14 @@ public class Player : MonoBehaviour
         //init
         InitializeGame();
         //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
+
+        if (hideOpponentCards)
+        { 
+            if (turn == 2)
+                FlipCardsInDeck(2);
+            else
+                FlipCardsInDeck(1);
+        }
     }
 
     private void InitializeGame()
@@ -260,12 +270,20 @@ public class Player : MonoBehaviour
         if (turn == 2)
         {
             if (!P1BFRef.playerPassed)
+            {
                 turn = 1;
+                FlipCardsInDeck(1);
+                FlipCardsInDeck(2);
+            }
         }
         else if (turn == 1)
         {
-            if(!P2BFRef.playerPassed)
+            if (!P2BFRef.playerPassed)
+            {
                 turn = 2;
+                FlipCardsInDeck(1);
+                FlipCardsInDeck(2);
+            }
         }
 
         
@@ -450,14 +468,15 @@ public class Player : MonoBehaviour
 
 
     //experimental: // allow fliping all cards if not your turn:
-    void FlipDeck(int ID)
+    void FlipCardsInDeck(int ID)
     {
         if (hideOpponentCards)
         {
+            Debug.Log("Card Hiding Called");
             if (ID == 1)
             {
                 int count = 0;
-                while (count < 0)
+                while (count < P1Cards)
                 {
                     GameObject card = p1HandRef.GetChild(count).gameObject;
                     card.transform.Rotate(new Vector3(0,180,0));
@@ -467,7 +486,7 @@ public class Player : MonoBehaviour
             else if (ID == 2)
             {
                 int count = 0;
-                while (count < 0)
+                while (count < P2Cards)
                 {
                     GameObject card = p1HandRef.GetChild(count).gameObject;
                     card.transform.Rotate(new Vector3(0,180,0));
