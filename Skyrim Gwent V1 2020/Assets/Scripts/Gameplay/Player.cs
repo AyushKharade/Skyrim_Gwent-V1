@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
             //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
             GameObject card;
             //card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, deck.GetComponent<Deck>().totalCards)];
-            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, 7)];
+            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, 8)];
             // instantiate
             if (PlayerID == 1)
             {

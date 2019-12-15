@@ -387,8 +387,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicID: 0
   timer: 0
-  remainingTimer: 0
   trackLength: 0
+  nowPlaying: 
 --- !u!4 &294400303
 Transform:
   m_ObjectHideFlags: 0
@@ -1096,7 +1096,7 @@ MonoBehaviour:
   - name: Game2
     clip: {fileID: 8300000, guid: ecd3fb5c6c6ac774db589fe7cc7bc534, type: 3}
     volume: 0.38
-    pitch: 1.25
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Game3
