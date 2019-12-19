@@ -104,15 +104,13 @@ public class Player : MonoBehaviour
         if (turn == 1)
         {
             GameObject popup = Instantiate(popupPrefab);
-            //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1 goes first!");
-            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 1 goes first!";
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1 goes first.");
 
         }
         else
         {
             GameObject popup = Instantiate(popupPrefab);
-            //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 goes first!");
-            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 2 goes first!";
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 goes first.");
         }
 
 
@@ -312,8 +310,8 @@ public class Player : MonoBehaviour
                 TurnOnControlLock();
                 //
                 GameObject popup = Instantiate(popupPrefab);
-                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
-                popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 1's turn.";
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1's turn.");
+
             }
         }
         else if (turn == 1)
@@ -327,7 +325,7 @@ public class Player : MonoBehaviour
                 //
                 GameObject popup = Instantiate(popupPrefab);
                 popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
-                popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 2's turn.";
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2's turn.");
             }
         }
 
@@ -352,7 +350,7 @@ public class Player : MonoBehaviour
             //
             GameObject popup = Instantiate(popupPrefab);
             popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2f);
-            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 1 Won the round.";
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1 won the round.");
 
 
         }
@@ -364,7 +362,7 @@ public class Player : MonoBehaviour
             //
             GameObject popup = Instantiate(popupPrefab);
             popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2);
-            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Round Draw.";
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Round Draw.");
         }
         else if (P1BFRef.totalScore < P2BFRef.totalScore)
         {
@@ -373,7 +371,7 @@ public class Player : MonoBehaviour
             //
             GameObject popup = Instantiate(popupPrefab);
             popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2);
-            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 2 won the round.";
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 won the round.");
         }
 
         // update
@@ -406,9 +404,9 @@ public class Player : MonoBehaviour
             round++;
             Reinitialize();
             //
-            GameObject popup = Instantiate(popupPrefab);
-            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(3);
-            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Round "+round;
+            //GameObject popup = Instantiate(popupPrefab);
+            //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(3);
+            //popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Round "+round;
         }
     }
 
@@ -532,7 +530,7 @@ public class Player : MonoBehaviour
 
 
     //experimental: // allow fliping all cards if not your turn:
-    //doesnt work right now fix latex
+    //doesnt work right now fix later
     void FlipCardsInDeck(int ID)
     {
         if (hideOpponentCards)

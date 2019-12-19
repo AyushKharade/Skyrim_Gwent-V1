@@ -8,7 +8,7 @@ public class PopupMessage : MonoBehaviour
 
     float timer; // self destroy
     float expireTimer = 2.5f;
-    float alphaFactor=191; // transperancy
+    float alphaFactor=0.75f; // transperancy
     public Text textObj;
     Image image;
 
@@ -34,17 +34,18 @@ public class PopupMessage : MonoBehaviour
         if (image.color.a != 1)
         {
             alphaFactor+=Time.deltaTime;
-            image.color = new Vector4(255, 255, 255, alphaFactor);
+            image.color = new Vector4(1, 1, 1, alphaFactor);
         }
     }
 
     public void SetMessage(string message)
     {
-        textObj.text="pop messgae";
+        transform.GetChild(1).gameObject.GetComponent<Text>().text=message+"";
     }
 
     public void SetExpireTimer(float newTimer)
     {
         expireTimer = newTimer; // if not set, it will be defaut 2.5 seconds
+
     }
 }

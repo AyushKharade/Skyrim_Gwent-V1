@@ -47,7 +47,7 @@ public class MusicPlayer : MonoBehaviour
         {
             CheckChangeInScene();
             EndSoundTrack();
-            UpdateTimerData();
+            //UpdateTimerData();
         }
     }
 
