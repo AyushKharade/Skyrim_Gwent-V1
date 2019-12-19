@@ -59,11 +59,16 @@ public class Player : MonoBehaviour
     // if hide
     public bool hideOpponentCards;
 
+
+    //ref to popup message prefab
+    public GameObject popupPrefab;
+
     void Start()
     {
         // random turn
         int randNo = Random.Range(0,100);
         turn = (randNo % 2)+1;
+
 
 
         P1BFRef = P1Battlefield.GetComponent<Battlefield>();
@@ -88,6 +93,21 @@ public class Player : MonoBehaviour
                 FlipCardsInDeck(2);
             else
                 FlipCardsInDeck(1);
+        }
+
+
+        // popup
+        if (turn == 1)
+        {
+            GameObject popup = Instantiate(popupPrefab);
+            //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1 goes first!");
+            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 1 goes first!";
+        }
+        else
+        {
+            GameObject popup = Instantiate(popupPrefab);
+            //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 goes first!");
+            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 2 goes first!";
         }
     }
 
