@@ -8,6 +8,10 @@ public class Player : MonoBehaviour
     GameObject raycastTarget;
 
     bool gameEnded;
+    bool controlLock;
+    float controlLockTimer;
+    float controlLockTime = 1.5f;
+
     [Range(1,2)]
     [HideInInspector]public int turn;
     [Range(1, 3)]
@@ -102,6 +106,7 @@ public class Player : MonoBehaviour
             GameObject popup = Instantiate(popupPrefab);
             //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1 goes first!");
             popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 1 goes first!";
+
         }
         else
         {
@@ -109,6 +114,11 @@ public class Player : MonoBehaviour
             //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 goes first!");
             popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 2 goes first!";
         }
+
+
+        // so palyers cant click right away
+        TurnOnControlLock();
+
     }
 
     private void InitializeGame()
@@ -120,7 +130,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (!gameEnded)
+        if (!gameEnded && !controlLock)
         {
             GetCameraRaycast();
             //DisplayRaycastTarget();
@@ -128,6 +138,8 @@ public class Player : MonoBehaviour
             CardScaling();
             PassButtonController();
         }
+        else if (controlLock)
+            ControlLockCounter();
 
         // make a function and only update when required
         RoundUI.text = "Round: " + round;
@@ -297,6 +309,11 @@ public class Player : MonoBehaviour
                 turn = 1;
                 FlipCardsInDeck(1);
                 FlipCardsInDeck(2);
+                TurnOnControlLock();
+                //
+                GameObject popup = Instantiate(popupPrefab);
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
+                popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 1's turn.";
             }
         }
         else if (turn == 1)
@@ -306,6 +323,11 @@ public class Player : MonoBehaviour
                 turn = 2;
                 FlipCardsInDeck(1);
                 FlipCardsInDeck(2);
+                TurnOnControlLock();
+                //
+                GameObject popup = Instantiate(popupPrefab);
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
+                popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 2's turn.";
             }
         }
 
@@ -327,17 +349,31 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Player 1 Won round "+round);
             p2Lives--;
+            //
+            GameObject popup = Instantiate(popupPrefab);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2f);
+            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 1 Won the round.";
+
+
         }
         else if (P1BFRef.totalScore == P2BFRef.totalScore)
         {
             Debug.Log("Round "+round+" Tied");
             p1Lives--;
             p2Lives--;
+            //
+            GameObject popup = Instantiate(popupPrefab);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2);
+            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Round Draw.";
         }
         else if (P1BFRef.totalScore < P2BFRef.totalScore)
         {
             Debug.Log("Player 2 Won round "+round);
             p1Lives--;
+            //
+            GameObject popup = Instantiate(popupPrefab);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2);
+            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Player 2 won the round.";
         }
 
         // update
@@ -369,6 +405,10 @@ public class Player : MonoBehaviour
             Debug.Log("Starting Next Round");
             round++;
             Reinitialize();
+            //
+            GameObject popup = Instantiate(popupPrefab);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(3);
+            popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Round "+round;
         }
     }
 
@@ -542,5 +582,20 @@ public class Player : MonoBehaviour
         
     }
 
+    void ControlLockCounter()
+    {
+        controlLockTimer += Time.deltaTime;
+        if (controlLockTimer > controlLockTime)
+        {
+            controlLock = false;
+            controlLockTimer = 0;
+        }
+    }
+
+    void TurnOnControlLock()
+    {
+        controlLock = true;
+        controlLockTimer = 0;
+    }
 
 }

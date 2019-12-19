@@ -42,4 +42,9 @@ public class PopupMessage : MonoBehaviour
     {
         textObj.text="pop messgae";
     }
+
+    public void SetExpireTimer(float newTimer)
+    {
+        expireTimer = newTimer; // if not set, it will be defaut 2.5 seconds
+    }
 }
