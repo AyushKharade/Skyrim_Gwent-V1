@@ -66,6 +66,15 @@ public class Player : MonoBehaviour
 
     //ref to popup message prefab
     public GameObject popupPrefab;
+    public GameObject endgamePrefab;
+
+    // endgame info
+    int ScoreR1P1;
+    int ScoreR1P2;
+    int ScoreR2P1;
+    int ScoreR2P2;
+    int ScoreR3P1;
+    int ScoreR3P2;
 
     void Start()
     {
@@ -141,6 +150,7 @@ public class Player : MonoBehaviour
 
         // make a function and only update when required
         RoundUI.text = "Round: " + round;
+
     }
 
 
@@ -387,16 +397,19 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Match Draw!");
             gameEnded = true;
+            EndgameStats();
         }
         else if (p1Lives == 0)
         {
             Debug.Log("Player 2 Won the Match!!");
             gameEnded = true;
+            EndgameStats();
         }
         else if (p2Lives == 0)
         {
             Debug.Log("Player 1 Won the Match!!");
             gameEnded = true;
+            EndgameStats();
         }
         else
         {
@@ -414,20 +427,33 @@ public class Player : MonoBehaviour
     void Reinitialize()
     {
         // move current cards to discard pile (done in battlefield)
-
         // reset pass buttons and UI & score
         P1Pass.gameObject.GetComponent<PassRound>().Reset();
         P2Pass.gameObject.GetComponent<PassRound>().Reset();
 
-        //p1battlefield
+        //save scores
+        if (round - 1 == 1)
+        {
+            ScoreR1P1 = P1BFRef.totalScore;
+            ScoreR1P2 = P2BFRef.totalScore;
+        }
+        else if (round - 1 == 2)
+        {
+            ScoreR2P1 = P1BFRef.totalScore;
+            ScoreR2P2 = P2BFRef.totalScore;
+        }
+        else
+        {
+            ScoreR3P1 = P1BFRef.totalScore;
+            ScoreR3P2 = P2BFRef.totalScore;
+        }
+
+
+        //reset battlefield scripts
         P1BFRef.Reset();
-        //p2battlefield
         P2BFRef.Reset();
 
-        //physically move cards in p1hand and p2hand (or disable)
-        // destroy in player.cs for now
         RemoveDeployedCards();
-
         //test for forcepassing if round starts with you having 0 cards
         if (P1Cards == 0)
             ForcePass(1);
@@ -483,6 +509,15 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    void EndgameStats()
+    {
+        //instantiate prefab and send info
+        GameObject temp=Instantiate(endgamePrefab);
+        Endgame endgameScriptRef=temp.transform.GetChild(0).GetComponent<Endgame>();
+        endgameScriptRef.SetP1Scores(ScoreR1P1,ScoreR2P1,ScoreR3P1);
+        endgameScriptRef.SetP2Scores(ScoreR1P2,ScoreR2P2,ScoreR3P2);
+    }
 
     
 
