@@ -18,7 +18,6 @@ public class SceneLoader : MonoBehaviour
 
     public void PressDecks()
     {
-        Debug.Log("Clicked Decks");
         SceneManager.LoadScene("Card Creation");
     }
 
@@ -29,9 +28,15 @@ public class SceneLoader : MonoBehaviour
 
     public void GoBackToMenu()
     {
+        Destroy(GameObject.FindGameObjectWithTag("GameInfo")); // destroy this instance
         SceneManager.LoadScene("Main Menu");
     }
 
+
+    public void RetryGwentGame()
+    {
+        SceneManager.LoadScene("GwentBoard");
+    }
 
     // start game:
     public void StartGame()
