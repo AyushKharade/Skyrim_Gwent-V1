@@ -320,6 +320,7 @@ public class Player : MonoBehaviour
                 TurnOnControlLock();
                 //
                 GameObject popup = Instantiate(popupPrefab);
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
                 popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1's turn.");
 
             }
