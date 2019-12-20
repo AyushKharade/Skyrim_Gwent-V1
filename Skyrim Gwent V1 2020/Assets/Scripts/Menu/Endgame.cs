@@ -74,11 +74,4 @@ public class Endgame : MonoBehaviour
     }
 
 
-    // buttons
-    public void LoadMenu()
-    { }
-
-    public void RetryGwentMatch()
-    { }
-
 }

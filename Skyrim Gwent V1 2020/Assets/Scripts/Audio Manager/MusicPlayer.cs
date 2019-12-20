@@ -82,6 +82,13 @@ public class MusicPlayer : MonoBehaviour
                 timer = 0;
             }
         }
+        else if (playingSceneName == "GwentBoard" && sceneName == "Main Menu")
+        {
+            //force stop
+            AudioManager.instance.Stop(AudioManager.instance.sounds[musicID].name);
+            playing = false;
+            timer = 0;
+        }
         else if (playingSceneName != sceneName)
         {
             //force stop

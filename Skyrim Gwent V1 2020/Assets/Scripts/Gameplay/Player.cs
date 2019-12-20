@@ -442,11 +442,7 @@ public class Player : MonoBehaviour
             ScoreR2P1 = P1BFRef.totalScore;
             ScoreR2P2 = P2BFRef.totalScore;
         }
-        else
-        {
-            ScoreR3P1 = P1BFRef.totalScore;
-            ScoreR3P2 = P2BFRef.totalScore;
-        }
+      
 
 
         //reset battlefield scripts
@@ -512,6 +508,18 @@ public class Player : MonoBehaviour
 
     void EndgameStats()
     {
+        if (round == 2)
+        {
+            ScoreR2P1 = P1BFRef.totalScore;
+            ScoreR2P2 = P2BFRef.totalScore;
+        }
+        else if (round == 3)
+        {
+            ScoreR3P1 = P1BFRef.totalScore;
+            ScoreR3P2 = P2BFRef.totalScore;
+        }
+        
+        
         //instantiate prefab and send info
         GameObject temp=Instantiate(endgamePrefab);
         Endgame endgameScriptRef=temp.transform.GetChild(0).GetComponent<Endgame>();
