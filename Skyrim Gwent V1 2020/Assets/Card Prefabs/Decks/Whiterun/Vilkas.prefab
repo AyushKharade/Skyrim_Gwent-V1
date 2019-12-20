@@ -635,7 +635,8 @@ MonoBehaviour:
     subUnitType: 0
     race: 1
     Ability_Details: Doubles Strength if place together with Vilkas
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 5154112047376933324}
 --- !u!61 &2679712942832257800
 BoxCollider2D:

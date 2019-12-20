@@ -636,7 +636,7 @@ MonoBehaviour:
     race: 1
     Ability_Details: Doubles Strength if place together with Vilkas
     Quotes: '"Security in whiterun is terrible, Shameful, is what it is."'
-  cardState: 0
+  cardState: 5
   unitStrength: {fileID: 4755408214678629451}
 --- !u!61 &4309022845761404437
 BoxCollider2D:

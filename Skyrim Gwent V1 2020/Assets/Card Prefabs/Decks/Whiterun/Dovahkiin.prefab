@@ -1288,7 +1288,7 @@ MonoBehaviour:
     race: 1
     Ability_Details: Thu'um
     Quotes: Fus Roh Dahh
-  cardState: 0
+  cardState: 5
   unitStrength: {fileID: 7474699038705436261}
 --- !u!61 &2167705879999933273
 BoxCollider2D:

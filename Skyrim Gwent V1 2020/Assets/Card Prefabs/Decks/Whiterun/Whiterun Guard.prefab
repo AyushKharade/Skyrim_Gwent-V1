@@ -292,7 +292,8 @@ MonoBehaviour:
     subUnitType: 1
     race: 1
     Ability_Details: +1 to strength when place with other guards.
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 7162381907703167550}
 --- !u!61 &4261474501956645717
 BoxCollider2D:

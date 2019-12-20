@@ -194,24 +194,34 @@ public class Player : MonoBehaviour
             yOffset = 4.4f;
         }
 
+        int maxCards = deck.GetComponent<Deck>().totalCards;
+        //int[] arr = new int[maxCards];
+
         for (int i = 0; i < count; i++)
         {
             // fetch signature:
             GameObject card;
-            int maxCards = deck.GetComponent<Deck>().totalCards;
             card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, maxCards)];
-            // instantiate
-            if (PlayerID == 1)
-            {
-                GameObject temp=Instantiate(card, p1HandRef);
-                temp.transform.position = new Vector3(xOffset,yOffset,0);
-                xOffset += 0.75f;
-            }
+
+            //if already used
+            if (card.GetComponent<Card>().GetCardStatus() != "Deck")
+                i--;
             else
             {
-                GameObject temp=Instantiate(card, p2HandRef);
-                temp.transform.position = new Vector3(xOffset, yOffset, 0);
-                xOffset += 0.75f;
+                card.GetComponent<Card>().SetCardStatus("Hand");
+                // instantiate
+                if (PlayerID == 1)
+                {
+                    GameObject temp = Instantiate(card, p1HandRef);
+                    temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                    xOffset += 0.75f;
+                }
+                else
+                {
+                    GameObject temp = Instantiate(card, p2HandRef);
+                    temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                    xOffset += 0.75f;
+                }
             }
         }
     }

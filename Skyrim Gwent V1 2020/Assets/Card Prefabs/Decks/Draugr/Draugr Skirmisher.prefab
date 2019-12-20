@@ -565,7 +565,7 @@ MonoBehaviour:
     race: 9
     Ability_Details: 
     Quotes: 
-  cardState: 0
+  cardState: 5
   unitStrength: {fileID: 1100625371178650244}
 --- !u!61 &8463414958575622362
 BoxCollider2D:

@@ -863,7 +863,8 @@ MonoBehaviour:
     subUnitType: 9
     race: 1
     Ability_Details: Redeploy a card from the discard pile
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 8314932989652844945}
 --- !u!61 &3557582364469968562
 BoxCollider2D:

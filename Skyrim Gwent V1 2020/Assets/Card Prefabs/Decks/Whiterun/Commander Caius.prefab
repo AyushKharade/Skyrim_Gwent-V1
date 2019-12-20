@@ -635,7 +635,8 @@ MonoBehaviour:
     subUnitType: 1
     race: 1
     Ability_Details: Summons a Patrol Guard if available in the deck when deployed.
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 2626187310912672839}
 --- !u!61 &6791486032024225305
 BoxCollider2D:

@@ -639,7 +639,8 @@ MonoBehaviour:
     subUnitType: 1
     race: 1
     Ability_Details: 
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 1556891332638454335}
 --- !u!61 &8587349963060713723
 BoxCollider2D:

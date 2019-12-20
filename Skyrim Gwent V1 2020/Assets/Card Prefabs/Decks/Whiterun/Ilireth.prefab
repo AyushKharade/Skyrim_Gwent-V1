@@ -787,7 +787,8 @@ MonoBehaviour:
     subUnitType: 1
     race: 6
     Ability_Details: Summons all Whiterun guards available if any in the deck.
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 4221713336545212612}
 --- !u!61 &2163168695147398533
 BoxCollider2D:

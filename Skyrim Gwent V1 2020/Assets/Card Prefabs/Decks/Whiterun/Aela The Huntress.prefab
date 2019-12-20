@@ -256,7 +256,8 @@ MonoBehaviour:
     race: 1
     Ability_Details: Able to one shot an enemy non-hero target who is below level
       10.
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 3877954424419871411}
 --- !u!61 &3932532350368280384
 BoxCollider2D:
