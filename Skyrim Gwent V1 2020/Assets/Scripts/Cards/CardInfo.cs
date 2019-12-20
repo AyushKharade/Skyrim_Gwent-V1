@@ -6,7 +6,7 @@ using UnityEngine;
 public class CardInfo
 {
     public enum UnitType { Warrior,Mage,Spellsword,Shadow};
-    public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer, Archer, Assassin, Thief};
+    public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer, Archer, Assassin, Thief, Healer, Spy};
 
     public enum Race { Imperial, Nord, Redguard, Khajit, Argonian, Wood_Elf, Dark_Elf, Vampire, Breton, Draugr };
 
@@ -36,7 +36,8 @@ public class CardInfo
     [TextArea]
     public string Ability_Details;
 
-
+    [TextArea]
+    public string Quotes;
 
     // functions
     public void AddBuff(int buff)

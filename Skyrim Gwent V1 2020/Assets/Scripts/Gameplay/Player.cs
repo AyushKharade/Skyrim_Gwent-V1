@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/*
+ * This is the main gameplay loop, or the main game script.
+ * It controls player inputs, game functions to advance games.
+ * Relies on GameInfo object to retrieve decks
+ * Generates hands from decks
+ * Uses battlefield class onjects for both players as supporting methods
+ * Does most UI (except scores --> done in battlefield.
+ */
 public class Player : MonoBehaviour
 {
     GameObject raycastTarget;
@@ -11,6 +20,7 @@ public class Player : MonoBehaviour
     bool controlLock;
     float controlLockTimer;
     float controlLockTime = 1.5f;
+
 
     [Range(1,2)]
     [HideInInspector]public int turn;
@@ -34,7 +44,6 @@ public class Player : MonoBehaviour
     public Image P2HP2;
 
     // dead rgb = 126,99,99
-
     // references to pass buttons
     public Button P1PassRef; 
     public Button P2PassRef;
@@ -82,24 +91,19 @@ public class Player : MonoBehaviour
         int randNo = Random.Range(0,100);
         turn = (randNo % 2)+1;
 
-
-
+        // get references to battlefield objects
         P1BFRef = P1Battlefield.GetComponent<Battlefield>();
         P2BFRef = P2Battlefield.GetComponent<Battlefield>();
 
+        //references to pass buttons
         P1Pass = P1PassRef.GetComponent<Button>();
         P2Pass = P2PassRef.GetComponent<Button>();
 
         // fetch info
         gameinfo = GameObject.FindGameObjectWithTag("GameInfo").GetComponent<GameStarter>();
 
-
-
-
         //init
         InitializeGame();
-        //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
-
         if (hideOpponentCards)
         { 
             if (turn == 2)
@@ -108,28 +112,24 @@ public class Player : MonoBehaviour
                 FlipCardsInDeck(1);
         }
 
-
-        // popup
+        // popup message for the first message to be displayed
         if (turn == 1)
         {
             GameObject popup = Instantiate(popupPrefab);
             popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1 goes first.");
-
         }
         else
         {
             GameObject popup = Instantiate(popupPrefab);
             popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 goes first.");
         }
-
-
         // so palyers cant click right away
         TurnOnControlLock();
-
     }
 
     private void InitializeGame()
     {
+        // generate initial hand for both players
         GenerateHand(1);
         GenerateHand(2);
     }
@@ -139,18 +139,15 @@ public class Player : MonoBehaviour
     {
         if (!gameEnded && !controlLock)
         {
-            GetCameraRaycast();
-            //DisplayRaycastTarget();
-            //for scaling
+            GetCameraRaycast();               // main input
             CardScaling();
             PassButtonController();
         }
         else if (controlLock)
             ControlLockCounter();
 
-        // make a function and only update when required
+        // Round UI (change to function
         RoundUI.text = "Round: " + round;
-
     }
 
 
@@ -162,7 +159,6 @@ public class Player : MonoBehaviour
         else
             raycastTarget = null;
 
-
         // input
         if (Input.GetMouseButtonDown(0) && hit.collider != null)
         {
@@ -170,16 +166,13 @@ public class Player : MonoBehaviour
             if(hit.collider.gameObject.GetComponent<Card>().GetCardStatus() == "Hand")
                 DeployUnitCard(hit.collider.gameObject);
         }
-
     }
 
-
+    // early debugger function
     void DisplayRaycastTarget()
     {
         if (raycastTarget != null)
             Debug.Log("Card: " + raycastTarget.transform.name);
-        //else
-            //Debug.Log("No card:");
     }
 
 
@@ -201,25 +194,34 @@ public class Player : MonoBehaviour
             yOffset = 4.4f;
         }
 
+        int maxCards = deck.GetComponent<Deck>().totalCards;
+        //int[] arr = new int[maxCards];
+
         for (int i = 0; i < count; i++)
         {
             // fetch signature:
-            //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
             GameObject card;
-            //card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, deck.GetComponent<Deck>().totalCards)];
-            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, 8)];
-            // instantiate
-            if (PlayerID == 1)
-            {
-                GameObject temp=Instantiate(card, p1HandRef);
-                temp.transform.position = new Vector3(xOffset,yOffset,0);
-                xOffset += 0.75f;
-            }
+            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, maxCards)];
+
+            //if already used
+            if (card.GetComponent<Card>().GetCardStatus() != "Deck")
+                i--;
             else
             {
-                GameObject temp=Instantiate(card, p2HandRef);
-                temp.transform.position = new Vector3(xOffset, yOffset, 0);
-                xOffset += 0.75f;
+                card.GetComponent<Card>().SetCardStatus("Hand");
+                // instantiate
+                if (PlayerID == 1)
+                {
+                    GameObject temp = Instantiate(card, p1HandRef);
+                    temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                    xOffset += 0.75f;
+                }
+                else
+                {
+                    GameObject temp = Instantiate(card, p2HandRef);
+                    temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                    xOffset += 0.75f;
+                }
             }
         }
     }
@@ -251,9 +253,6 @@ public class Player : MonoBehaviour
             }
         }
 
-
-        
-
         else if ((cardRef.info.GetUnitType() == "Mage" || cardRef.info.GetUnitType() == "Spellsword") && cardRef.GetCardStatus() == "Hand")
         {
             // place on Vantage -- for now place spellswords on vantage too
@@ -276,7 +275,6 @@ public class Player : MonoBehaviour
                     ForcePass(2);
             }
         }
-
         
 
         else if (cardRef.info.GetUnitType() == "Shadow" && cardRef.GetCardStatus() == "Hand")
@@ -308,8 +306,6 @@ public class Player : MonoBehaviour
 
     public void ChangeTurn()
     {
-        //Debug.Log("Change Turn Called: current turn: "+turn);
-
         if (turn == 2)
         {
             if (!P1BFRef.playerPassed)
@@ -320,6 +316,7 @@ public class Player : MonoBehaviour
                 TurnOnControlLock();
                 //
                 GameObject popup = Instantiate(popupPrefab);
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
                 popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1's turn.");
 
             }
@@ -342,9 +339,15 @@ public class Player : MonoBehaviour
         
         if (P1BFRef.playerPassed && P2BFRef.playerPassed)
         {
-            //call end of round function
-            EndOfRound();
-            Debug.Log("End of round.");
+            if (!controlLock)                
+            {
+                //call end of round function
+                if(round==3)
+                    Invoke("EndOfRound", 1f);
+                else
+                    EndOfRound();
+                Debug.Log("End of round.");
+            }
            
         }
         
@@ -387,7 +390,6 @@ public class Player : MonoBehaviour
         // update
         RoundStatus();
         UpdateLivesUI();
-
     }
 
     void RoundStatus()
@@ -416,10 +418,6 @@ public class Player : MonoBehaviour
             Debug.Log("Starting Next Round");
             round++;
             Reinitialize();
-            //
-            //GameObject popup = Instantiate(popupPrefab);
-            //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(3);
-            //popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Round "+round;
         }
     }
 
@@ -442,15 +440,12 @@ public class Player : MonoBehaviour
             ScoreR2P1 = P1BFRef.totalScore;
             ScoreR2P2 = P2BFRef.totalScore;
         }
-      
-
 
         //reset battlefield scripts
         P1BFRef.Reset();
         P2BFRef.Reset();
 
         RemoveDeployedCards();
-        //test for forcepassing if round starts with you having 0 cards
         if (P1Cards == 0)
             ForcePass(1);
         if (P2Cards == 0)
@@ -459,25 +454,19 @@ public class Player : MonoBehaviour
 
     void RemoveDeployedCards()
     {
-        //p1 traverse p1hand, remove deployed
-        // optional rearragne hand cards
-        Debug.Log("called remove cards");
-
+        
         int count = 0;
-
         while (count<10)
         {
             if (p1HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
             {
-                // rotate card and place on discard pile
                 GameObject card = p1HandRef.GetChild(count).gameObject;
                 //set status to discard, rotate and move to discard pile
                 card.GetComponent<Card>().SetCardStatus("Discard");
                 card.transform.Rotate(new Vector3(0,180,0));
                 card.transform.position = new Vector3(p1DiscardXPos,p1DiscardYPos);
-                // rearrange hand positions function
 
-                Debug.Log("Destroyed one card: "+p1HandRef.GetChild(count).GetComponent<Card>().name);
+                //Debug.Log("Destroyed one card: "+p1HandRef.GetChild(count).GetComponent<Card>().name);
                 count++;
             }
             else
@@ -489,15 +478,12 @@ public class Player : MonoBehaviour
         {
             if (p2HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
             {
-                // rotate card and place on discard pile
                 GameObject card = p2HandRef.GetChild(count).gameObject;
                 //set status to discard, rotate and move to discard pile
                 card.GetComponent<Card>().SetCardStatus("Discard");
                 card.transform.Rotate(new Vector3(0, 180, 0));
                 card.transform.position = new Vector3(p2DiscardXPos, p2DiscardYPos);
-                // rearrange hand positions function
-
-                Debug.Log("Destroyed one card: " + p1HandRef.GetChild(count).GetComponent<Card>().name);
+                //Debug.Log("Destroyed one card: " + p1HandRef.GetChild(count).GetComponent<Card>().name);
                 count++;
             }
             else
@@ -534,7 +520,6 @@ public class Player : MonoBehaviour
     {
         if (raycastTarget != null)
             raycastTarget.GetComponent<CardScaler>().underCursor = true;
-
     }
 
     // to disable clicking if player's turn isnt there or if they passed.
@@ -555,20 +540,9 @@ public class Player : MonoBehaviour
     void ForcePass(int ID)
     {
         if (ID == 1)
-        {
-            //P1BFRef.SetPassed();
-            //P1Pass.interactable = false;
             P1Pass.gameObject.GetComponent<PassRound>().Pass();
-            //Debug.Log("Force Passed on button ID: "+P1Pass.GetComponent<PassRound>().PlayerID);
-        }
         else if (ID==2)
-        {
-            //P2BFRef.SetPassed();
-            //P2Pass.interactable = false;
             P2Pass.gameObject.GetComponent<PassRound>().Pass();
-            //Debug.Log("Force Passed on button ID: " + P2Pass.GetComponent<PassRound>().PlayerID);
-        }
-        //ChangeTurn();             //Pass () does it
     }
 
 
@@ -616,11 +590,6 @@ public class Player : MonoBehaviour
             P2HP1.enabled = false;
         if (p2Lives == 0)
             P2HP2.enabled = false;
-
-
-
-        //P2HP2.color = new Vector4(99, 99, 99, 200);
-        
     }
 
     void ControlLockCounter()
@@ -638,5 +607,4 @@ public class Player : MonoBehaviour
         controlLock = true;
         controlLockTimer = 0;
     }
-
 }

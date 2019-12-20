@@ -151,7 +151,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Novice
+  m_Text: Apprentice
 --- !u!1 &52381640783837168
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,7 +573,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 3
 --- !u!1 &52381641318150582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1034,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.902, y: -0.1688678}
+  m_AnchoredPosition: {x: 0.9019928, y: -0.16885376}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &52381642161115842
@@ -1125,16 +1125,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info:
     name: Draugr Archer
-    strength: 2
-    originalStrength: 2
+    strength: 3
+    originalStrength: 3
     isHero: 0
-    trainingLevel: 0
+    trainingLevel: 1
     unitType: 3
     faction: 3
     subUnitType: 1
     race: 9
     Ability_Details: 
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 52381641289667847}
 --- !u!61 &8829372157651896153
 BoxCollider2D:

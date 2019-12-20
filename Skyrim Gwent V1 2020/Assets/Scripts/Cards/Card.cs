@@ -7,7 +7,7 @@ public class Card : MonoBehaviour
 {
     
     public CardInfo info = new CardInfo();
-    public enum State{Hand,Deployed,Dead,Discard,Resurrected};
+    public enum State{Hand,Deployed,Dead,Discard,Resurrected,Deck};
     public State cardState = new State();
 
     //UI References:

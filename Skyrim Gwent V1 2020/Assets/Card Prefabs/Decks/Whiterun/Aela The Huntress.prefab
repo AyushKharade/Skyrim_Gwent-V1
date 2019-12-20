@@ -256,7 +256,8 @@ MonoBehaviour:
     race: 1
     Ability_Details: Able to one shot an enemy non-hero target who is below level
       10.
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 3877954424419871411}
 --- !u!61 &3932532350368280384
 BoxCollider2D:
@@ -477,7 +478,7 @@ RectTransform:
   m_GameObject: {fileID: 3877954423924452965}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.1911497, y: 2.288052, z: 1.6235}
+  m_LocalScale: {x: 3.6882117, y: 2.013486, z: 1.42868}
   m_Children: []
   m_Father: {fileID: 3877954425621315232}
   m_RootOrder: 0
@@ -666,7 +667,7 @@ RectTransform:
   m_GameObject: {fileID: 3877954424346684448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11.876043, y: 7.388622, z: 8.929512}
+  m_LocalScale: {x: 14.399702, y: 7.388622, z: 8.929512}
   m_Children: []
   m_Father: {fileID: 3877954424836586596}
   m_RootOrder: 0
@@ -704,7 +705,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 770790730960474753, guid: dbe872b151319f248b14d04e5a3cabfd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c630e2ef2326e4a439dbe01c2de31ea4, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -748,7 +749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -112, y: -258}
+  m_AnchoredPosition: {x: -134, y: -252}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3877954424389553671

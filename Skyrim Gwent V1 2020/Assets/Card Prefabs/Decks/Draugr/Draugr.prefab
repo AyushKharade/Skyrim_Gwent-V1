@@ -687,7 +687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.106, y: -0.1688678}
+  m_AnchoredPosition: {x: -0.10600281, y: -0.16885376}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6341326623246062481
@@ -787,7 +787,8 @@ MonoBehaviour:
     subUnitType: 1
     race: 9
     Ability_Details: 
-  cardState: 0
+    Quotes: 
+  cardState: 5
   unitStrength: {fileID: 6341326623985259604}
 --- !u!61 &2464253045607499274
 BoxCollider2D:
@@ -1172,7 +1173,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rag Draugr
+  m_Text: Draugr
 --- !u!1 &6341326623985259610
 GameObject:
   m_ObjectHideFlags: 0
