@@ -345,7 +345,10 @@ public class Player : MonoBehaviour
             if (!controlLock)                // this might fix the last card not registering issue
             {
                 //call end of round function
-                EndOfRound();
+                if(round==3)
+                    Invoke("EndOfRound", 1f);
+                else
+                    EndOfRound();
                 Debug.Log("End of round.");
             }
            
