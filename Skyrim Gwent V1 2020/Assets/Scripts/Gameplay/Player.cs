@@ -204,10 +204,9 @@ public class Player : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             // fetch signature:
-            //Debug.Log(gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[0].GetComponent<Card>().name);
             GameObject card;
-            //card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, deck.GetComponent<Deck>().totalCards)];
-            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, 8)];
+            int maxCards = deck.GetComponent<Deck>().totalCards;
+            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, maxCards)];
             // instantiate
             if (PlayerID == 1)
             {
@@ -343,9 +342,12 @@ public class Player : MonoBehaviour
         
         if (P1BFRef.playerPassed && P2BFRef.playerPassed)
         {
-            //call end of round function
-            EndOfRound();
-            Debug.Log("End of round.");
+            if (!controlLock)                // this might fix the last card not registering issue
+            {
+                //call end of round function
+                EndOfRound();
+                Debug.Log("End of round.");
+            }
            
         }
         
@@ -417,10 +419,6 @@ public class Player : MonoBehaviour
             Debug.Log("Starting Next Round");
             round++;
             Reinitialize();
-            //
-            //GameObject popup = Instantiate(popupPrefab);
-            //popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(3);
-            //popup.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Text>().text = "Round "+round;
         }
     }
 
