@@ -52,6 +52,8 @@ public class Card : MonoBehaviour
             cardState = State.Discard;
         else if (state == "Resurrected")
             cardState = State.Resurrected;
+        else if (state == "Deck")
+            cardState = State.Deck;
         else
             Debug.Log("Invalid state parameter.");
 

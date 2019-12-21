@@ -14,7 +14,7 @@ public class Deck : MonoBehaviour
 
     void Start()
     {
-        CountCards();
+        //CountCards();
     }
 
     void Update()
@@ -23,9 +23,17 @@ public class Deck : MonoBehaviour
     }
 
     // methods
+    /*
     void CountCards()
     {
         foreach (GameObject g in CardsDeck)
             totalCards++;
+    }
+    */
+
+    public void ResetDeckCardsStatus()
+    {
+        foreach (GameObject g in CardsDeck)
+            g.GetComponent<Card>().SetCardStatus("Deck");
     }
 }

@@ -131,6 +131,10 @@ public class Player : MonoBehaviour
     {
         // generate initial hand for both players
         GenerateHand(1);
+        // if they are the same decks, reset card statuses on them to avoid freezing
+        if (gameinfo.P1Deck.name == gameinfo.P2Deck.name)
+            gameinfo.P1Deck.GetComponent<Deck>().ResetDeckCardsStatus();
+
         GenerateHand(2);
     }
 
@@ -342,8 +346,8 @@ public class Player : MonoBehaviour
             if (!controlLock)                
             {
                 //call end of round function
-                if(round==3)
-                    Invoke("EndOfRound", 1f);
+                if(round==3 || round==2)
+                    Invoke("EndOfRound", 1f);       //need to delay function call otherwise wont register last deployed card.
                 else
                     EndOfRound();
                 Debug.Log("End of round.");
