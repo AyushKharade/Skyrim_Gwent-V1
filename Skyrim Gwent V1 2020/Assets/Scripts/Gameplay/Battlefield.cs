@@ -138,20 +138,26 @@ public class Battlefield : MonoBehaviour
             //GameObject temp = frontline.First.Value;
             frontline.RemoveFirst();
         }
-        if (vantage.Count > 0)
+        while (vantage.Count > 0)
         {
-
+            discardpile.AddLast(vantage.First.Value);
+            vantage.RemoveFirst();
         }
-        if (shadow.Count > 0)
+        while (shadow.Count > 0)
         {
+            discardpile.AddLast(shadow.First.Value);
+            shadow.RemoveFirst();
         }
 
 
 
-        // clear lists
+        // clear lists (dont need this anymore, because you already empty up there
+        /*
         frontline.Clear();
         vantage.Clear();
         shadow.Clear();
+        */
+
 
         //reset scores
         frontlineScore = 0;
