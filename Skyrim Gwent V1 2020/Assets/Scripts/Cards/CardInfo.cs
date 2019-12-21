@@ -42,8 +42,11 @@ public class CardInfo
     // functions
     public void AddBuff(int buff)
     {
-        if(!isHero)
+        if (!isHero)
+        {
             strength += buff;
+            // change color to green
+        }
     }
 
     public void AddDeBuff(int debuff)
@@ -53,8 +56,14 @@ public class CardInfo
             strength -= debuff;
             if (strength < 1)
                 strength = 1;
+            // change color to red
         }
-               
+    }
+
+    public void ResetBuffs()
+    {
+        // change color to regular
+        //strength = original strength
     }
 
 

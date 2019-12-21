@@ -56,6 +56,10 @@ public class Battlefield : MonoBehaviour
     float shadowPosX=-0.5f;
     public float additionOffsetX = 0.75f;
 
+    // public varaibles for checking discard pile
+    public int FrontlineContent;
+    public int DiscardPileContent;
+
     private void Start()
     {
         frontline = new LinkedList<GameObject>();
@@ -67,6 +71,8 @@ public class Battlefield : MonoBehaviour
     private void Update()
     {
         UpdateScoreUI();
+        FrontlineContent = frontline.Count;
+        DiscardPileContent = discardpile.Count;
     }
 
   
@@ -125,6 +131,21 @@ public class Battlefield : MonoBehaviour
 
     private void MoveToDiscardPile()
     { // move all cards in all decks to discard}
+
+        while (frontline.Count > 0)
+        {
+            discardpile.AddLast(frontline.First.Value);
+            //GameObject temp = frontline.First.Value;
+            frontline.RemoveFirst();
+        }
+        if (vantage.Count > 0)
+        {
+
+        }
+        if (shadow.Count > 0)
+        {
+        }
+
 
 
         // clear lists
