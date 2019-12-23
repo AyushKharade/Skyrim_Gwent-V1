@@ -56,16 +56,13 @@ public class Battlefield : MonoBehaviour
     float shadowPosX=-0.5f;
     public float additionOffsetX = 0.75f;
 
-    //Weather  UI:
+    // Weather particle systems
     [Header("Weather Particle Systems")]
     public GameObject FrostParticleSystem;
 
-    // particle systems are probably gameobjects
+    // baneAetherius
+    public GameObject BaneAetheriusParticleSystem;
 
-
-    // public varaibles for checking discard pile
-    //public int FrontlineContent;
-    //public int DiscardPileContent;
 
     private void Start()
     {
@@ -77,13 +74,12 @@ public class Battlefield : MonoBehaviour
 
         // turn on weather particle systems:
         FrostParticleSystem.GetComponent<ParticleSystem>().Pause();
+        BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Pause();
     }
 
     private void Update()
     {
         UpdateScoreUI();
-        //FrontlineContent = frontline.Count;
-        //DiscardPileContent = discardpile.Count;
     }
 
   
@@ -194,7 +190,6 @@ public class Battlefield : MonoBehaviour
 
     void ResetWeatherDebuffs()
     {
-
         // if any weather was active, make sure to reset all buffs on the cards in that zone
         // iterate and call reset functions on card & info
         if (frostbite)
