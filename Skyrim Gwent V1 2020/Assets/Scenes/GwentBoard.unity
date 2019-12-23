@@ -547,7 +547,7 @@ MonoBehaviour:
   P2PassRef: {fileID: 1348157130}
   p1HandRef: {fileID: 879652398}
   p2HandRef: {fileID: 823325093}
-  hideOpponentCards: 0
+  hideOpponentCards: 1
   popupPrefab: {fileID: 5510150325873344920, guid: 008a7aabce023f54ca487994988941ee,
     type: 3}
   endgamePrefab: {fileID: 368925907185256596, guid: 30e4468e73617a14f9b9bd5037212b43,

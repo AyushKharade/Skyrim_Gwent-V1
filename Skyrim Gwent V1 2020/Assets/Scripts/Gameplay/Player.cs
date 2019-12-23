@@ -107,9 +107,9 @@ public class Player : MonoBehaviour
         if (hideOpponentCards)
         { 
             if (turn == 2)
-                FlipCardsInDeck(2);
-            else
                 FlipCardsInDeck(1);
+            else
+                FlipCardsInDeck(2);
         }
 
         // popup message for the first message to be displayed
@@ -649,23 +649,26 @@ public class Player : MonoBehaviour
         if (hideOpponentCards)
         {
             Debug.Log("Card Hiding Called");
+            GameObject card;
             if (ID == 1)
             {
                 int count = 0;
-                while (count < P1Cards)
+                while (count < 10)
                 {
-                    GameObject card = p1HandRef.GetChild(count).gameObject;
-                    card.transform.Rotate(new Vector3(0,180,0));
+                    card = p1HandRef.GetChild(count).gameObject;
+                    if (card.GetComponent<Card>().GetCardStatus() == "Hand")
+                        card.transform.Rotate(new Vector3(0,180,0));
                     count++;
                 }
             }
             else if (ID == 2)
             {
                 int count = 0;
-                while (count < P2Cards)
+                while (count < 10)
                 {
-                    GameObject card = p1HandRef.GetChild(count).gameObject;
-                    card.transform.Rotate(new Vector3(0,180,0));
+                    card = p2HandRef.GetChild(count).gameObject;
+                    if(card.GetComponent<Card>().GetCardStatus() =="Hand")
+                        card.transform.Rotate(new Vector3(0,180,0));
                     count++;
                 }
             }
