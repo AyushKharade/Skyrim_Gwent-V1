@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
 
 
         // experimental for unique random sequence:
-        GenerateRandomIndices(gameinfo.P1Deck.GetComponent<Deck>().totalCards);
+        //GenerateRandomIndices(gameinfo.P1Deck.GetComponent<Deck>().totalCards);
     }
 
     private void InitializeGame()
@@ -208,30 +208,34 @@ public class Player : MonoBehaviour
         }
 
         int maxCards = deck.GetComponent<Deck>().totalCards;
-        //int[] arr = new int[maxCards];
+        List<int> drawSequence = GenerateRandomIndices(maxCards);
 
         for (int i = 0; i < count; i++)
         {
             // fetch signature:
             GameObject card;
-            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, maxCards)];
+            card = deck.GetComponent<Deck>().CardsDeck[drawSequence[i]];
 
             //if already used
-            if (card.GetComponent<Card>().GetCardStatus() != "Deck")
-                i--;
-            else
+            //if (card.GetComponent<Card>().GetCardStatus() != "Deck")
+            //    i--;
+            if(true)
             {
-                card.GetComponent<Card>().SetCardStatus("Hand");
+                //card.GetComponent<Card>().SetCardStatus("Hand");            // modify instance not prefab
                 // instantiate
                 if (PlayerID == 1)
                 {
                     GameObject temp = Instantiate(card, p1HandRef);
+                    temp.GetComponent<Card>().SetCardStatus("Hand");
+
                     temp.transform.position = new Vector3(xOffset, yOffset, 0);
                     xOffset += 0.75f;
                 }
                 else
                 {
                     GameObject temp = Instantiate(card, p2HandRef);
+                    temp.GetComponent<Card>().SetCardStatus("Hand");
+
                     temp.transform.position = new Vector3(xOffset, yOffset, 0);
                     xOffset += 0.75f;
                 }
@@ -717,14 +721,13 @@ public class Player : MonoBehaviour
                 sequence.Add(temp);
         }
 
-        /* Debugging
         string str="";
         Debug.Log("Displaying all sequence.");
         foreach (int a in sequence)
             str += (a+" ");
 
         Debug.Log(str);
-        */
+
         return sequence;
 
     }
