@@ -4,7 +4,7 @@
  * 2 instantiations of this script will be present in the game
  * this also takes care of UI
  * 
- * In future, also add discard pile and starting hand lists
+ * Takes care of weather cards.
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -56,20 +56,31 @@ public class Battlefield : MonoBehaviour
     float shadowPosX=-0.5f;
     public float additionOffsetX = 0.75f;
 
+    // Weather particle systems
+    [Header("Weather Particle Systems")]
+    public GameObject FrostParticleSystem;
+    public GameObject BaneAetheriusParticleSystem;
+    public GameObject StormParticleSystem;
+
+
     private void Start()
     {
         frontline = new LinkedList<GameObject>();
         vantage = new LinkedList<GameObject>();
         shadow = new LinkedList<GameObject>();
         discardpile = new LinkedList<GameObject>();
+
+
+        // turn on weather particle systems:
+        FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
+        BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
+        StormParticleSystem.GetComponent<ParticleSystem>().Stop();
     }
 
     private void Update()
     {
         UpdateScoreUI();
     }
-
-  
 
 
     // public add cards to any fields
@@ -86,10 +97,14 @@ public class Battlefield : MonoBehaviour
 
 
         frontline.AddLast(UnitCard);
+        //adjust scores according to buffs or debuffs (Phase 2)
+        if (frostbite && !UnitCard.GetComponent<Card>().info.isHero)
+        {
+            UnitCard.GetComponent<Card>().info.AddDeBuff(100);
+            UnitCard.GetComponent<Card>().DebuffColorEffect();
+        }
         frontlineScore += UnitCard.GetComponent<Card>().info.strength;
         
-        //adjust scores according to buffs or debuffs (Phase 2)
-        // update positions
         
     }
 
@@ -104,6 +119,12 @@ public class Battlefield : MonoBehaviour
         vantagePosX += additionOffsetX;
 
         vantage.AddLast(UnitCard);
+        //adjust scores according to buffs or debuffs (Phase 2)
+        if (baneAetherius && !UnitCard.GetComponent<Card>().info.isHero)
+        {
+            UnitCard.GetComponent<Card>().info.AddDeBuff(100);
+            UnitCard.GetComponent<Card>().DebuffColorEffect();
+        }
         vantageScore += UnitCard.GetComponent<Card>().info.strength;
     }
 
@@ -119,6 +140,12 @@ public class Battlefield : MonoBehaviour
         shadowPosX += additionOffsetX;
 
         shadow.AddLast(UnitCard);
+        //adjust scores according to buffs or debuffs (Phase 2)
+        if (storm && !UnitCard.GetComponent<Card>().info.isHero)
+        {
+            UnitCard.GetComponent<Card>().info.AddDeBuff(100);
+            UnitCard.GetComponent<Card>().DebuffColorEffect();
+        }
         shadowScore += UnitCard.GetComponent<Card>().info.strength;
     }
 
@@ -126,11 +153,21 @@ public class Battlefield : MonoBehaviour
     private void MoveToDiscardPile()
     { // move all cards in all decks to discard}
 
-
-        // clear lists
-        frontline.Clear();
-        vantage.Clear();
-        shadow.Clear();
+        while (frontline.Count > 0)
+        {
+            discardpile.AddLast(frontline.First.Value);
+            frontline.RemoveFirst();
+        }
+        while (vantage.Count > 0)
+        {
+            discardpile.AddLast(vantage.First.Value);
+            vantage.RemoveFirst();
+        }
+        while (shadow.Count > 0)
+        {
+            discardpile.AddLast(shadow.First.Value);
+            shadow.RemoveFirst();
+        }
 
         //reset scores
         frontlineScore = 0;
@@ -147,17 +184,46 @@ public class Battlefield : MonoBehaviour
     
 
 
-
-
-
     //reset battlefield
     public void Reset()
     {
+        ResetWeatherDebuffs();
         MoveToDiscardPile();
         playerPassed = false;
     }
 
-
+    void ResetWeatherDebuffs()
+    {
+        // if any weather was active, make sure to reset all buffs on the cards in that zone
+        // iterate and call reset functions on card & info
+        if (frostbite)
+        {
+            foreach (GameObject g in frontline)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+                g.GetComponent<Card>().ResetBuffColorEffect();
+                g.GetComponent<Card>().UI_Update();
+            }
+        }
+        if (baneAetherius)
+        {
+            foreach (GameObject g in vantage)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+                g.GetComponent<Card>().ResetBuffColorEffect();
+                g.GetComponent<Card>().UI_Update();
+            }
+        }
+        if (storm)
+        {
+            foreach (GameObject g in shadow)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+                g.GetComponent<Card>().ResetBuffColorEffect();
+                g.GetComponent<Card>().UI_Update();
+            }
+        }
+    }
 
 
     // ui
@@ -178,5 +244,151 @@ public class Battlefield : MonoBehaviour
     public void SetPassed()
     {
         playerPassed = true;
+    }
+
+
+    void UpdateModifiedUnitScores(int i)
+    {
+        if (i == 1) // frost bite
+        {
+            int tempScore = 0;
+            foreach (GameObject g in frontline)
+            {
+                string strScore = g.GetComponent<Card>().unitStrength.text + "";
+                //Debug.Log("String score is: " + strScore);
+                tempScore += int.Parse(strScore);
+
+            }
+            //update
+            frontlineScore = tempScore;
+            UpdateScoreUI();
+        }
+        else if (i == 2)
+        {
+            int tempScore = 0;
+            foreach (GameObject g in vantage)
+            {
+                string strScore = g.GetComponent<Card>().unitStrength.text + "";
+                tempScore += int.Parse(strScore);
+            }
+            //update
+            vantageScore = tempScore;
+            UpdateScoreUI();
+        }
+        else
+        {
+            int tempScore = 0;
+            foreach (GameObject g in shadow)
+            {
+                string strScore = g.GetComponent<Card>().unitStrength.text + "";
+                tempScore += int.Parse(strScore);
+            }
+            //update
+            shadowScore = tempScore;
+            UpdateScoreUI();
+        }
+    }
+
+    // calling weather functions on any player is enough, do only one call, to keep it simple, call the player battlefield who used the card.
+    //weather:
+    public void SetFrostbiteWeather()
+    {
+        if (!frostbite)
+        {
+            FrostParticleSystem.GetComponent<ParticleSystem>().Play();
+            // iterate through front line, set all non-hero's strengh to 1 by calling debuff functions.
+            foreach (GameObject g in frontline)
+            {
+                if (!g.GetComponent<Card>().info.isHero)
+                {
+                    g.GetComponent<Card>().info.AddDeBuff(100);
+                    // call update ui score on card
+                    g.GetComponent<Card>().UI_Update();
+                    g.GetComponent<Card>().DebuffColorEffect();
+                }
+            }
+            frostbite = true;
+            UpdateModifiedUnitScores(1);
+        }
+    }
+
+    public void SetBaneAetheriusWeather()
+    {
+        if (!baneAetherius)
+        {
+            BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Play();
+            // set all vantage (non-hero cards to 1)
+            foreach (GameObject g in vantage)
+            {
+                if (!g.GetComponent<Card>().info.isHero)
+                {
+                    g.GetComponent<Card>().info.AddDeBuff(100);
+                    // call update ui score on card
+                    g.GetComponent<Card>().UI_Update();
+                    g.GetComponent<Card>().DebuffColorEffect();
+                }
+            }
+            baneAetherius = true;
+            UpdateModifiedUnitScores(2);
+        }
+    }
+
+    public void SetStormWeather()
+    {
+        if (!storm)
+        {
+            StormParticleSystem.GetComponent<ParticleSystem>().Play();
+            // set all vantage (non-hero cards to 1)
+            foreach (GameObject g in shadow)
+            {
+                if (!g.GetComponent<Card>().info.isHero)
+                {
+                    g.GetComponent<Card>().info.AddDeBuff(100);
+                    // call update ui score on card
+                    g.GetComponent<Card>().UI_Update();
+                    g.GetComponent<Card>().DebuffColorEffect();
+                }
+            }
+            storm = true;
+            UpdateModifiedUnitScores(3);
+        }
+    }
+
+        // this is for clear weather card
+    public void SetClearWeather()
+    {
+        FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
+        BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
+        StormParticleSystem.GetComponent<ParticleSystem>().Stop();
+
+        //reset debuffs
+        ResetWeatherDebuffs();
+
+        if (frostbite)
+            UpdateModifiedUnitScores(1);
+        if (baneAetherius)
+            UpdateModifiedUnitScores(2);
+        if (storm)
+            UpdateModifiedUnitScores(3);
+
+
+        frostbite = false;
+        baneAetherius = false;
+        storm = false;
+        
+    }
+
+        //this is for end of round reset
+    public void ResetWeather()
+    {
+        //turn off all particle systems:
+        FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
+        BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
+        StormParticleSystem.GetComponent<ParticleSystem>().Stop();
+
+        //turn off all booleans
+        frostbite = false;
+        baneAetherius = false;
+        storm = false;
     }
 }

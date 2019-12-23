@@ -5,8 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class CardInfo
 {
-    public enum UnitType { Warrior,Mage,Spellsword,Shadow};
-    public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer, Archer, Assassin, Thief, Healer, Spy};
+    public enum UnitType { Warrior,Mage,Spellsword,Shadow,Special};
+    public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer, Archer, Assassin, Thief, Healer, Spy,
+        FrostWeather,BaneAetheriusWeather,StormWeather,ClearWeather};
 
     public enum Race { Imperial, Nord, Redguard, Khajit, Argonian, Wood_Elf, Dark_Elf, Vampire, Breton, Draugr };
 
@@ -42,8 +43,10 @@ public class CardInfo
     // functions
     public void AddBuff(int buff)
     {
-        if(!isHero)
+        if (!isHero)
+        {
             strength += buff;
+        }
     }
 
     public void AddDeBuff(int debuff)
@@ -54,7 +57,11 @@ public class CardInfo
             if (strength < 1)
                 strength = 1;
         }
-               
+    }
+
+    public void ResetBuffs()
+    {
+        strength = originalStrength;
     }
 
 
@@ -62,5 +69,10 @@ public class CardInfo
     public string GetUnitType()
     {
         return unitType + "";
+    }
+
+    public string GetSubUnitType()
+    {
+        return subUnitType + "";
     }
 }

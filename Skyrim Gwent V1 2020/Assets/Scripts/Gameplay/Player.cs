@@ -10,7 +10,7 @@ using UnityEngine.UI;
  * Relies on GameInfo object to retrieve decks
  * Generates hands from decks
  * Uses battlefield class onjects for both players as supporting methods
- * Does most UI (except scores --> done in battlefield.
+ * Does most UI (except scores --> done in battlefield.)
  */
 public class Player : MonoBehaviour
 {
@@ -43,7 +43,6 @@ public class Player : MonoBehaviour
     public Image P2HP1;
     public Image P2HP2;
 
-    // dead rgb = 126,99,99
     // references to pass buttons
     public Button P1PassRef; 
     public Button P2PassRef;
@@ -107,9 +106,9 @@ public class Player : MonoBehaviour
         if (hideOpponentCards)
         { 
             if (turn == 2)
-                FlipCardsInDeck(2);
-            else
                 FlipCardsInDeck(1);
+            else
+                FlipCardsInDeck(2);
         }
 
         // popup message for the first message to be displayed
@@ -127,11 +126,11 @@ public class Player : MonoBehaviour
         TurnOnControlLock();
     }
 
-    private void InitializeGame()
+    private void InitializeGame()           // generate initial hand for both players
     {
-        // generate initial hand for both players
         GenerateHand(1);
         GenerateHand(2);
+        // since prefabs are not being changed anymore, there is no need to resetdeck() if the two decks are the same
     }
 
 
@@ -195,33 +194,28 @@ public class Player : MonoBehaviour
         }
 
         int maxCards = deck.GetComponent<Deck>().totalCards;
-        //int[] arr = new int[maxCards];
+        List<int> drawSequence = GenerateRandomIndices(maxCards);       // for spy cards, save this sequence
 
         for (int i = 0; i < count; i++)
         {
             // fetch signature:
             GameObject card;
-            card = deck.GetComponent<Deck>().CardsDeck[Random.Range(0, maxCards)];
+            card = deck.GetComponent<Deck>().CardsDeck[drawSequence[i]];
 
-            //if already used
-            if (card.GetComponent<Card>().GetCardStatus() != "Deck")
-                i--;
+            // instantiate
+            if (PlayerID == 1)
+            {
+                GameObject temp = Instantiate(card, p1HandRef);
+                temp.GetComponent<Card>().SetCardStatus("Hand");
+                temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                xOffset += 0.75f;
+            }
             else
             {
-                card.GetComponent<Card>().SetCardStatus("Hand");
-                // instantiate
-                if (PlayerID == 1)
-                {
-                    GameObject temp = Instantiate(card, p1HandRef);
-                    temp.transform.position = new Vector3(xOffset, yOffset, 0);
-                    xOffset += 0.75f;
-                }
-                else
-                {
-                    GameObject temp = Instantiate(card, p2HandRef);
-                    temp.transform.position = new Vector3(xOffset, yOffset, 0);
-                    xOffset += 0.75f;
-                }
+                GameObject temp = Instantiate(card, p2HandRef);
+                temp.GetComponent<Card>().SetCardStatus("Hand");
+                temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                xOffset += 0.75f;
             }
         }
     }
@@ -230,9 +224,9 @@ public class Player : MonoBehaviour
     void DeployUnitCard(GameObject card)
     {
         Card cardRef = card.GetComponent<Card>();
-        if (cardRef.info.GetUnitType() == "Warrior" && cardRef.GetCardStatus()=="Hand")
+        if (cardRef.info.GetUnitType() == "Warrior" && cardRef.GetCardStatus() == "Hand")
         {
-            if (turn == 1 && card.transform.parent.name=="Player1_Hand")
+            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
                 P1BFRef.AddUnitToFrontline(card);
                 ChangeTurn();
@@ -275,7 +269,7 @@ public class Player : MonoBehaviour
                     ForcePass(2);
             }
         }
-        
+
 
         else if (cardRef.info.GetUnitType() == "Shadow" && cardRef.GetCardStatus() == "Hand")
         {
@@ -299,8 +293,75 @@ public class Player : MonoBehaviour
                     ForcePass(2);
             }
         }
-       
 
+        //weather -- make sure to set card to discard later
+        else if (cardRef.info.GetUnitType() == "Special")
+        {
+            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
+            {
+                if (cardRef.info.GetSubUnitType() == "FrostWeather")
+                {
+                    P1BFRef.SetFrostbiteWeather();
+                    P2BFRef.SetFrostbiteWeather();
+                }
+                //else if baneaetherius
+                else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
+                {
+                    P1BFRef.SetBaneAetheriusWeather();
+                    P2BFRef.SetBaneAetheriusWeather();
+                }
+                else if (cardRef.info.GetSubUnitType() == "StormWeather")
+                {
+                    P1BFRef.SetStormWeather();
+                    P2BFRef.SetStormWeather();
+                }
+                else if (cardRef.info.GetSubUnitType() == "ClearWeather")
+                {
+                    P1BFRef.SetClearWeather();
+                    P2BFRef.SetClearWeather();
+                }
+                card.transform.Translate(new Vector3(0, -2, 0));
+
+
+                ChangeTurn();
+
+                P1Cards--;
+                if (P1Cards == 0)
+                    ForcePass(1);
+            }
+            //for player 2
+            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
+            {
+                if (cardRef.info.GetSubUnitType() == "FrostWeather")
+                {
+                    P2BFRef.SetFrostbiteWeather();
+                    P1BFRef.SetFrostbiteWeather();
+                }
+                //else if baneaetherius
+                else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
+                {
+                    P1BFRef.SetBaneAetheriusWeather();
+                    P2BFRef.SetBaneAetheriusWeather();
+                }
+                else if (cardRef.info.GetSubUnitType() == "StormWeather")
+                {
+                    P1BFRef.SetStormWeather();
+                    P2BFRef.SetStormWeather();
+                }
+                else if (cardRef.info.GetSubUnitType() == "ClearWeather")
+                {
+                    P1BFRef.SetClearWeather();
+                    P2BFRef.SetClearWeather();
+                }
+                card.transform.Translate(new Vector3(0, 2, 0));
+
+                ChangeTurn();
+
+                P2Cards--;
+                if (P2Cards == 0)
+                    ForcePass(2);
+            }
+        }
     }
 
 
@@ -342,8 +403,8 @@ public class Player : MonoBehaviour
             if (!controlLock)                
             {
                 //call end of round function
-                if(round==3)
-                    Invoke("EndOfRound", 1f);
+                if(round==3 || round==2)
+                    Invoke("EndOfRound", 1f);       //need to delay function call otherwise wont register last deployed card.
                 else
                     EndOfRound();
                 Debug.Log("End of round.");
@@ -445,6 +506,10 @@ public class Player : MonoBehaviour
         P1BFRef.Reset();
         P2BFRef.Reset();
 
+        //reset weathers
+        P1BFRef.ResetWeather();
+        P2BFRef.ResetWeather();
+
         RemoveDeployedCards();
         if (P1Cards == 0)
             ForcePass(1);
@@ -511,6 +576,13 @@ public class Player : MonoBehaviour
         Endgame endgameScriptRef=temp.transform.GetChild(0).GetComponent<Endgame>();
         endgameScriptRef.SetP1Scores(ScoreR1P1,ScoreR2P1,ScoreR3P1);
         endgameScriptRef.SetP2Scores(ScoreR1P2,ScoreR2P2,ScoreR3P2);
+
+        if (p1Lives == 0 && p2Lives == 0)
+            endgameScriptRef.SetWinner(0);
+        else if (p1Lives == 0 && p2Lives > 0)
+            endgameScriptRef.SetWinner(2);
+        else
+            endgameScriptRef.SetWinner(1);
     }
 
     
@@ -545,31 +617,30 @@ public class Player : MonoBehaviour
             P2Pass.gameObject.GetComponent<PassRound>().Pass();
     }
 
-
-    //experimental: // allow fliping all cards if not your turn:
-    //doesnt work right now fix later
     void FlipCardsInDeck(int ID)
     {
         if (hideOpponentCards)
         {
-            Debug.Log("Card Hiding Called");
+            GameObject card;
             if (ID == 1)
             {
                 int count = 0;
-                while (count < P1Cards)
+                while (count < 10)
                 {
-                    GameObject card = p1HandRef.GetChild(count).gameObject;
-                    card.transform.Rotate(new Vector3(0,180,0));
+                    card = p1HandRef.GetChild(count).gameObject;
+                    if (card.GetComponent<Card>().GetCardStatus() == "Hand")
+                        card.transform.Rotate(new Vector3(0,180,0));
                     count++;
                 }
             }
             else if (ID == 2)
             {
                 int count = 0;
-                while (count < P2Cards)
+                while (count < 10)
                 {
-                    GameObject card = p1HandRef.GetChild(count).gameObject;
-                    card.transform.Rotate(new Vector3(0,180,0));
+                    card = p2HandRef.GetChild(count).gameObject;
+                    if(card.GetComponent<Card>().GetCardStatus() =="Hand")
+                        card.transform.Rotate(new Vector3(0,180,0));
                     count++;
                 }
             }
@@ -606,5 +677,32 @@ public class Player : MonoBehaviour
     {
         controlLock = true;
         controlLockTimer = 0;
+    }
+
+
+
+    // random but unique sequence for drawing cards
+    List<int> GenerateRandomIndices(int deckSize)
+    {
+        // to replace old card drawing:
+        List<int> sequence = new List<int>();
+
+        while (sequence.Count < 10)
+        {
+            int temp = Random.Range(0,deckSize);
+            if (!sequence.Contains(temp))
+                sequence.Add(temp);
+        }
+
+        /*
+        string str="";
+        Debug.Log("Displaying all sequence.");
+        foreach (int a in sequence)
+            str += (a+" ");
+
+        Debug.Log(str);
+        */
+        return sequence;
+
     }
 }
