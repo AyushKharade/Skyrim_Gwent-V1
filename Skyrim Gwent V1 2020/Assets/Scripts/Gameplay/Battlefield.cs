@@ -78,6 +78,7 @@ public class Battlefield : MonoBehaviour
         // turn on weather particle systems:
         FrostParticleSystem.GetComponent<ParticleSystem>().Pause();
         BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
+        StormParticleSystem.GetComponent<ParticleSystem>().Stop();
     }
 
     private void Update()
