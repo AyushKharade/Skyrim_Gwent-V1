@@ -129,6 +129,11 @@ public class Player : MonoBehaviour
 
     private void InitializeGame()
     {
+        //reset status before every new game:
+        gameinfo.P1Deck.GetComponent<Deck>().ResetDeckCardsStatus();
+        gameinfo.P2Deck.GetComponent<Deck>().ResetDeckCardsStatus();
+
+
         // generate initial hand for both players
         GenerateHand(1);
         // if they are the same decks, reset card statuses on them to avoid freezing
@@ -304,7 +309,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        //weather
+        //weather -- make sure to set card to discard later
         else if (cardRef.info.GetUnitType() == "Special")
         {
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
@@ -324,6 +329,11 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetStormWeather();
                     P2BFRef.SetStormWeather();
+                }
+                else if (cardRef.info.GetSubUnitType() == "ClearWeather")
+                {
+                    P1BFRef.SetClearWeather();
+                    P2BFRef.SetClearWeather();
                 }
                 card.transform.Translate(new Vector3(0, -2, 0));
 
@@ -352,6 +362,11 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetStormWeather();
                     P2BFRef.SetStormWeather();
+                }
+                else if (cardRef.info.GetSubUnitType() == "ClearWeather")
+                {
+                    P1BFRef.SetClearWeather();
+                    P2BFRef.SetClearWeather();
                 }
                 card.transform.Translate(new Vector3(0, 2, 0));
 

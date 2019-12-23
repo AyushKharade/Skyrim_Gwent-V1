@@ -368,7 +368,24 @@ public class Battlefield : MonoBehaviour
     {
         // this is for clear weather card
         FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
+        BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
+        StormParticleSystem.GetComponent<ParticleSystem>().Stop();
+
+        //reset debuffs
+        ResetWeatherDebuffs();
+
+        if (frostbite)
+            UpdateModifiedUnitScores(1);
+        if (baneAetherius)
+            UpdateModifiedUnitScores(2);
+        if (storm)
+            UpdateModifiedUnitScores(3);
+
+
         frostbite = false;
+        baneAetherius = false;
+        storm = false;
+        
     }
 
     public void ResetWeather()
