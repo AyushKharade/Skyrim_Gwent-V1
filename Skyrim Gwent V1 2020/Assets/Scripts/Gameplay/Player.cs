@@ -125,6 +125,10 @@ public class Player : MonoBehaviour
         }
         // so palyers cant click right away
         TurnOnControlLock();
+
+
+        // experimental for unique random sequence:
+        GenerateRandomIndices(gameinfo.P1Deck.GetComponent<Deck>().totalCards);
     }
 
     private void InitializeGame()
@@ -696,5 +700,32 @@ public class Player : MonoBehaviour
     {
         controlLock = true;
         controlLockTimer = 0;
+    }
+
+
+
+    // random but unique sequence for drawing cards
+    List<int> GenerateRandomIndices(int deckSize)
+    {
+        // to replace old card drawing:
+        List<int> sequence = new List<int>();
+
+        while (sequence.Count < 10)
+        {
+            int temp = Random.Range(0,deckSize);
+            if (!sequence.Contains(temp))
+                sequence.Add(temp);
+        }
+
+        /* Debugging
+        string str="";
+        Debug.Log("Displaying all sequence.");
+        foreach (int a in sequence)
+            str += (a+" ");
+
+        Debug.Log(str);
+        */
+        return sequence;
+
     }
 }
