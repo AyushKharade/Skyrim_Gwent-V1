@@ -4,7 +4,7 @@
  * 2 instantiations of this script will be present in the game
  * this also takes care of UI
  * 
- * In future, also add discard pile and starting hand lists
+ * Takes care of weather cards.
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -59,11 +59,7 @@ public class Battlefield : MonoBehaviour
     // Weather particle systems
     [Header("Weather Particle Systems")]
     public GameObject FrostParticleSystem;
-
-    // baneAetherius
     public GameObject BaneAetheriusParticleSystem;
-
-    //storm
     public GameObject StormParticleSystem;
 
 
@@ -76,7 +72,7 @@ public class Battlefield : MonoBehaviour
 
 
         // turn on weather particle systems:
-        FrostParticleSystem.GetComponent<ParticleSystem>().Pause();
+        FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
         BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
         StormParticleSystem.GetComponent<ParticleSystem>().Stop();
     }
@@ -85,8 +81,6 @@ public class Battlefield : MonoBehaviour
     {
         UpdateScoreUI();
     }
-
-  
 
 
     // public add cards to any fields
@@ -111,7 +105,6 @@ public class Battlefield : MonoBehaviour
         }
         frontlineScore += UnitCard.GetComponent<Card>().info.strength;
         
-        // update positions
         
     }
 
@@ -189,9 +182,6 @@ public class Battlefield : MonoBehaviour
     }
 
     
-
-
-
 
 
     //reset battlefield
@@ -364,9 +354,9 @@ public class Battlefield : MonoBehaviour
         }
     }
 
+        // this is for clear weather card
     public void SetClearWeather()
     {
-        // this is for clear weather card
         FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
         BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
         StormParticleSystem.GetComponent<ParticleSystem>().Stop();
@@ -388,9 +378,9 @@ public class Battlefield : MonoBehaviour
         
     }
 
+        //this is for end of round reset
     public void ResetWeather()
     {
-        //this is for end of round reset
         //turn off all particle systems:
         FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
         BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();

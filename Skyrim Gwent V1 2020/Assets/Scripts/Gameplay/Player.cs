@@ -10,7 +10,7 @@ using UnityEngine.UI;
  * Relies on GameInfo object to retrieve decks
  * Generates hands from decks
  * Uses battlefield class onjects for both players as supporting methods
- * Does most UI (except scores --> done in battlefield.
+ * Does most UI (except scores --> done in battlefield.)
  */
 public class Player : MonoBehaviour
 {
@@ -43,7 +43,6 @@ public class Player : MonoBehaviour
     public Image P2HP1;
     public Image P2HP2;
 
-    // dead rgb = 126,99,99
     // references to pass buttons
     public Button P1PassRef; 
     public Button P2PassRef;
@@ -125,24 +124,13 @@ public class Player : MonoBehaviour
         }
         // so palyers cant click right away
         TurnOnControlLock();
-
-        
     }
 
-    private void InitializeGame()
+    private void InitializeGame()           // generate initial hand for both players
     {
-        //reset status before every new game:
-        //gameinfo.P1Deck.GetComponent<Deck>().ResetDeckCardsStatus();
-        //gameinfo.P2Deck.GetComponent<Deck>().ResetDeckCardsStatus();
-
-
-        // generate initial hand for both players
         GenerateHand(1);
-        // if they are the same decks, reset card statuses on them to avoid freezing
-        //if (gameinfo.P1Deck.name == gameinfo.P2Deck.name)
-            //gameinfo.P1Deck.GetComponent<Deck>().ResetDeckCardsStatus();
-
         GenerateHand(2);
+        // since prefabs are not being changed anymore, there is no need to resetdeck() if the two decks are the same
     }
 
 
@@ -206,7 +194,7 @@ public class Player : MonoBehaviour
         }
 
         int maxCards = deck.GetComponent<Deck>().totalCards;
-        List<int> drawSequence = GenerateRandomIndices(maxCards);
+        List<int> drawSequence = GenerateRandomIndices(maxCards);       // for spy cards, save this sequence
 
         for (int i = 0; i < count; i++)
         {
@@ -214,29 +202,20 @@ public class Player : MonoBehaviour
             GameObject card;
             card = deck.GetComponent<Deck>().CardsDeck[drawSequence[i]];
 
-            //if already used
-            //if (card.GetComponent<Card>().GetCardStatus() != "Deck")
-            //    i--;
-            if(true)
+            // instantiate
+            if (PlayerID == 1)
             {
-                //card.GetComponent<Card>().SetCardStatus("Hand");            // modify instance not prefab
-                // instantiate
-                if (PlayerID == 1)
-                {
-                    GameObject temp = Instantiate(card, p1HandRef);
-                    temp.GetComponent<Card>().SetCardStatus("Hand");
-
-                    temp.transform.position = new Vector3(xOffset, yOffset, 0);
-                    xOffset += 0.75f;
-                }
-                else
-                {
-                    GameObject temp = Instantiate(card, p2HandRef);
-                    temp.GetComponent<Card>().SetCardStatus("Hand");
-
-                    temp.transform.position = new Vector3(xOffset, yOffset, 0);
-                    xOffset += 0.75f;
-                }
+                GameObject temp = Instantiate(card, p1HandRef);
+                temp.GetComponent<Card>().SetCardStatus("Hand");
+                temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                xOffset += 0.75f;
+            }
+            else
+            {
+                GameObject temp = Instantiate(card, p2HandRef);
+                temp.GetComponent<Card>().SetCardStatus("Hand");
+                temp.transform.position = new Vector3(xOffset, yOffset, 0);
+                xOffset += 0.75f;
             }
         }
     }
@@ -383,9 +362,6 @@ public class Player : MonoBehaviour
                     ForcePass(2);
             }
         }
-
-
-
     }
 
 
@@ -641,14 +617,10 @@ public class Player : MonoBehaviour
             P2Pass.gameObject.GetComponent<PassRound>().Pass();
     }
 
-
-    //experimental: // allow fliping all cards if not your turn:
-    //doesnt work right now fix later
     void FlipCardsInDeck(int ID)
     {
         if (hideOpponentCards)
         {
-            Debug.Log("Card Hiding Called");
             GameObject card;
             if (ID == 1)
             {
@@ -722,13 +694,14 @@ public class Player : MonoBehaviour
                 sequence.Add(temp);
         }
 
+        /*
         string str="";
         Debug.Log("Displaying all sequence.");
         foreach (int a in sequence)
             str += (a+" ");
 
         Debug.Log(str);
-
+        */
         return sequence;
 
     }
