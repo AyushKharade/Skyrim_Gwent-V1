@@ -568,6 +568,13 @@ public class Player : MonoBehaviour
         Endgame endgameScriptRef=temp.transform.GetChild(0).GetComponent<Endgame>();
         endgameScriptRef.SetP1Scores(ScoreR1P1,ScoreR2P1,ScoreR3P1);
         endgameScriptRef.SetP2Scores(ScoreR1P2,ScoreR2P2,ScoreR3P2);
+
+        if (p1Lives == 0 && p2Lives == 0)
+            endgameScriptRef.SetWinner(0);
+        else if (p1Lives == 0 && p2Lives > 0)
+            endgameScriptRef.SetWinner(2);
+        else
+            endgameScriptRef.SetWinner(1);
     }
 
     

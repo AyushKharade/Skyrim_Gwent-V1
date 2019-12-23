@@ -12,6 +12,8 @@ public class Endgame : MonoBehaviour
     bool scoresSetP1;
     bool scoresSetP2;
 
+    int WinnerID;
+
     void Start()
     {
         
@@ -58,19 +60,27 @@ public class Endgame : MonoBehaviour
         int totalP2 = S_P2R1 + S_P2R2 + S_P2R3;
 
         temp = transform.GetChild(4).gameObject;
-        if (totalP1 > totalP2)
+
+
+        // chang this
+        if (WinnerID==1)
         {
             temp.transform.GetChild(1).gameObject.SetActive(false);
         }
-        else if (totalP1 == totalP2)
+        else if (WinnerID==0)
         {
             temp.transform.GetChild(0).gameObject.SetActive(false);
             temp.transform.GetChild(1).gameObject.SetActive(false);
         }
-        else
+        else if(WinnerID==2)
         {
             temp.transform.GetChild(0).gameObject.SetActive(false);
         }
+    }
+
+    public void SetWinner(int ID)
+    {
+        WinnerID = ID;
     }
 
 
