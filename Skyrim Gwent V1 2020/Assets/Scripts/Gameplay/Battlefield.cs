@@ -74,7 +74,7 @@ public class Battlefield : MonoBehaviour
 
         // turn on weather particle systems:
         FrostParticleSystem.GetComponent<ParticleSystem>().Pause();
-        BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Pause();
+        BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
     }
 
     private void Update()
@@ -122,6 +122,12 @@ public class Battlefield : MonoBehaviour
         vantagePosX += additionOffsetX;
 
         vantage.AddLast(UnitCard);
+        //adjust scores according to buffs or debuffs (Phase 2)
+        if (baneAetherius && !UnitCard.GetComponent<Card>().info.isHero)
+        {
+            UnitCard.GetComponent<Card>().info.AddDeBuff(100);
+            UnitCard.GetComponent<Card>().DebuffColorEffect();
+        }
         vantageScore += UnitCard.GetComponent<Card>().info.strength;
     }
 
@@ -181,11 +187,9 @@ public class Battlefield : MonoBehaviour
     //reset battlefield
     public void Reset()
     {
-
         ResetWeatherDebuffs();
         MoveToDiscardPile();
         playerPassed = false;
-
     }
 
     void ResetWeatherDebuffs()
@@ -344,8 +348,10 @@ public class Battlefield : MonoBehaviour
         //this is for end of round reset
         //turn off all particle systems:
         FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
+        BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
 
         //turn off all booleans
         frostbite = false;
+        baneAetherius = false;
     }
 }
