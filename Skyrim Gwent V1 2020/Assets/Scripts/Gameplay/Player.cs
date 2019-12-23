@@ -234,9 +234,9 @@ public class Player : MonoBehaviour
     void DeployUnitCard(GameObject card)
     {
         Card cardRef = card.GetComponent<Card>();
-        if (cardRef.info.GetUnitType() == "Warrior" && cardRef.GetCardStatus()=="Hand")
+        if (cardRef.info.GetUnitType() == "Warrior" && cardRef.GetCardStatus() == "Hand")
         {
-            if (turn == 1 && card.transform.parent.name=="Player1_Hand")
+            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
                 P1BFRef.AddUnitToFrontline(card);
                 ChangeTurn();
@@ -279,7 +279,7 @@ public class Player : MonoBehaviour
                     ForcePass(2);
             }
         }
-        
+
 
         else if (cardRef.info.GetUnitType() == "Shadow" && cardRef.GetCardStatus() == "Hand")
         {
@@ -303,7 +303,45 @@ public class Player : MonoBehaviour
                     ForcePass(2);
             }
         }
-       
+
+        //weather
+        else if (cardRef.info.GetUnitType() == "Special")
+        {
+            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
+            {
+                if (cardRef.info.GetSubUnitType() == "FrostWeather")
+                {
+                    P1BFRef.SetFrostbiteWeather();
+                    P2BFRef.SetFrostbiteWeather();
+                }//else if baneaetherius
+
+
+
+
+                ChangeTurn();
+
+                P1Cards--;
+                if (P1Cards == 0)
+                    ForcePass(1);
+            }
+            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
+            {
+                if (cardRef.info.GetSubUnitType() == "FrostWeather")
+                {
+                    P2BFRef.SetFrostbiteWeather();
+                    P1BFRef.SetFrostbiteWeather();
+                }
+                card.transform.Translate(new Vector3(0, 2, 0));
+
+                ChangeTurn();
+
+                P2Cards--;
+                if (P2Cards == 0)
+                    ForcePass(2);
+            }
+        }
+
+
 
     }
 
@@ -448,6 +486,10 @@ public class Player : MonoBehaviour
         //reset battlefield scripts
         P1BFRef.Reset();
         P2BFRef.Reset();
+
+        //reset weathers
+        P1BFRef.ResetWeather();
+        P2BFRef.ResetWeather();
 
         RemoveDeployedCards();
         if (P1Cards == 0)

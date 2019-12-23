@@ -13,10 +13,12 @@ public class Card : MonoBehaviour
     //UI References:
     
     public Text unitStrength;
+    Vector4 originalColor;
 
     private void Start()
     {
         cardState = State.Hand;
+        originalColor = unitStrength.color;
     }
 
     private void Update()
@@ -24,9 +26,25 @@ public class Card : MonoBehaviour
         UI_Update();
     }
 
-    private void UI_Update()
+    public void UI_Update()
     {
         unitStrength.text = "" + info.strength;
+    }
+
+    // strength text color
+    public void DebuffColorEffect()
+    {
+        unitStrength.color = Color.red;
+    }
+
+    public void BuffColorEffect()
+    {
+        unitStrength.color = Color.green;
+    }
+
+    public void ResetBuffColorEffect()
+    {
+        unitStrength.color = originalColor;
     }
 
 
