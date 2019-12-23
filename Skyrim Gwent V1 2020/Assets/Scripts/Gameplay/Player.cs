@@ -320,6 +320,11 @@ public class Player : MonoBehaviour
                     P1BFRef.SetBaneAetheriusWeather();
                     P2BFRef.SetBaneAetheriusWeather();
                 }
+                else if (cardRef.info.GetSubUnitType() == "StormWeather")
+                {
+                    P1BFRef.SetStormWeather();
+                    P2BFRef.SetStormWeather();
+                }
                 card.transform.Translate(new Vector3(0, -2, 0));
 
 
@@ -329,6 +334,7 @@ public class Player : MonoBehaviour
                 if (P1Cards == 0)
                     ForcePass(1);
             }
+            //for player 2
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 if (cardRef.info.GetSubUnitType() == "FrostWeather")
@@ -341,6 +347,11 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetBaneAetheriusWeather();
                     P2BFRef.SetBaneAetheriusWeather();
+                }
+                else if (cardRef.info.GetSubUnitType() == "StormWeather")
+                {
+                    P1BFRef.SetStormWeather();
+                    P2BFRef.SetStormWeather();
                 }
                 card.transform.Translate(new Vector3(0, 2, 0));
 

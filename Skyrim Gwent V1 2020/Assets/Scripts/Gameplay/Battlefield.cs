@@ -63,6 +63,9 @@ public class Battlefield : MonoBehaviour
     // baneAetherius
     public GameObject BaneAetheriusParticleSystem;
 
+    //storm
+    public GameObject StormParticleSystem;
+
 
     private void Start()
     {
@@ -143,6 +146,12 @@ public class Battlefield : MonoBehaviour
         shadowPosX += additionOffsetX;
 
         shadow.AddLast(UnitCard);
+        //adjust scores according to buffs or debuffs (Phase 2)
+        if (storm && !UnitCard.GetComponent<Card>().info.isHero)
+        {
+            UnitCard.GetComponent<Card>().info.AddDeBuff(100);
+            UnitCard.GetComponent<Card>().DebuffColorEffect();
+        }
         shadowScore += UnitCard.GetComponent<Card>().info.strength;
     }
 
@@ -334,7 +343,25 @@ public class Battlefield : MonoBehaviour
     }
 
     public void SetStormWeather()
-    { }
+    {
+        if (!storm)
+        {
+            StormParticleSystem.GetComponent<ParticleSystem>().Play();
+            // set all vantage (non-hero cards to 1)
+            foreach (GameObject g in shadow)
+            {
+                if (!g.GetComponent<Card>().info.isHero)
+                {
+                    g.GetComponent<Card>().info.AddDeBuff(100);
+                    // call update ui score on card
+                    g.GetComponent<Card>().UI_Update();
+                    g.GetComponent<Card>().DebuffColorEffect();
+                }
+            }
+            storm = true;
+            UpdateModifiedUnitScores(3);
+        }
+    }
 
     public void SetClearWeather()
     {
@@ -349,9 +376,11 @@ public class Battlefield : MonoBehaviour
         //turn off all particle systems:
         FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
         BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
+        StormParticleSystem.GetComponent<ParticleSystem>().Stop();
 
         //turn off all booleans
         frostbite = false;
         baneAetherius = false;
+        storm = false;
     }
 }
