@@ -126,23 +126,21 @@ public class Player : MonoBehaviour
         // so palyers cant click right away
         TurnOnControlLock();
 
-
-        // experimental for unique random sequence:
-        //GenerateRandomIndices(gameinfo.P1Deck.GetComponent<Deck>().totalCards);
+        
     }
 
     private void InitializeGame()
     {
         //reset status before every new game:
-        gameinfo.P1Deck.GetComponent<Deck>().ResetDeckCardsStatus();
-        gameinfo.P2Deck.GetComponent<Deck>().ResetDeckCardsStatus();
+        //gameinfo.P1Deck.GetComponent<Deck>().ResetDeckCardsStatus();
+        //gameinfo.P2Deck.GetComponent<Deck>().ResetDeckCardsStatus();
 
 
         // generate initial hand for both players
         GenerateHand(1);
         // if they are the same decks, reset card statuses on them to avoid freezing
-        if (gameinfo.P1Deck.name == gameinfo.P2Deck.name)
-            gameinfo.P1Deck.GetComponent<Deck>().ResetDeckCardsStatus();
+        //if (gameinfo.P1Deck.name == gameinfo.P2Deck.name)
+            //gameinfo.P1Deck.GetComponent<Deck>().ResetDeckCardsStatus();
 
         GenerateHand(2);
     }
