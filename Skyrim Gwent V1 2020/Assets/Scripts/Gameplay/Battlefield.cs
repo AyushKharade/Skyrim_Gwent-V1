@@ -247,16 +247,40 @@ public class Battlefield : MonoBehaviour
     {
         if (i == 1) // frost bite
         {
-            int tempScore=0;
+            int tempScore = 0;
             foreach (GameObject g in frontline)
             {
-                string strScore= g.GetComponent<Card>().unitStrength.text+"";
-                Debug.Log("String score is: "+strScore);
+                string strScore = g.GetComponent<Card>().unitStrength.text + "";
+                //Debug.Log("String score is: " + strScore);
                 tempScore += int.Parse(strScore);
-                    
+
             }
             //update
             frontlineScore = tempScore;
+            UpdateScoreUI();
+        }
+        else if (i == 2)
+        {
+            int tempScore = 0;
+            foreach (GameObject g in vantage)
+            {
+                string strScore = g.GetComponent<Card>().unitStrength.text + "";
+                tempScore += int.Parse(strScore);
+            }
+            //update
+            vantageScore = tempScore;
+            UpdateScoreUI();
+        }
+        else
+        {
+            int tempScore = 0;
+            foreach (GameObject g in shadow)
+            {
+                string strScore = g.GetComponent<Card>().unitStrength.text + "";
+                tempScore += int.Parse(strScore);
+            }
+            //update
+            shadowScore = tempScore;
             UpdateScoreUI();
         }
     }
@@ -285,7 +309,25 @@ public class Battlefield : MonoBehaviour
     }
 
     public void SetBaneAetheriusWeather()
-    { }
+    {
+        if (!baneAetherius)
+        {
+            BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Play();
+            // set all vantage (non-hero cards to 1)
+            foreach (GameObject g in vantage)
+            {
+                if (!g.GetComponent<Card>().info.isHero)
+                {
+                    g.GetComponent<Card>().info.AddDeBuff(100);
+                    // call update ui score on card
+                    g.GetComponent<Card>().UI_Update();
+                    g.GetComponent<Card>().DebuffColorEffect();
+                }
+            }
+            baneAetherius = true;
+            UpdateModifiedUnitScores(2);
+        }
+    }
 
     public void SetStormWeather()
     { }

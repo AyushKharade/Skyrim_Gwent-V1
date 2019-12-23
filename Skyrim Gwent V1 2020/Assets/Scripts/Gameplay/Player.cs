@@ -313,9 +313,14 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetFrostbiteWeather();
                     P2BFRef.SetFrostbiteWeather();
-                }//else if baneaetherius
-
-
+                }
+                //else if baneaetherius
+                else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
+                {
+                    P1BFRef.SetBaneAetheriusWeather();
+                    P2BFRef.SetBaneAetheriusWeather();
+                }
+                card.transform.Translate(new Vector3(0, -2, 0));
 
 
                 ChangeTurn();
@@ -330,6 +335,12 @@ public class Player : MonoBehaviour
                 {
                     P2BFRef.SetFrostbiteWeather();
                     P1BFRef.SetFrostbiteWeather();
+                }
+                //else if baneaetherius
+                else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
+                {
+                    P1BFRef.SetBaneAetheriusWeather();
+                    P2BFRef.SetBaneAetheriusWeather();
                 }
                 card.transform.Translate(new Vector3(0, 2, 0));
 
