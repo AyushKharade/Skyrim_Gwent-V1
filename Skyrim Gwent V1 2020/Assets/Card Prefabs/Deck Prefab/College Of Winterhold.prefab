@@ -71,5 +71,9 @@ MonoBehaviour:
   - {fileID: 4250612077538604720, guid: e49e28673eb768147a8f420d5970019d, type: 3}
   - {fileID: 7315679881873795926, guid: 87c3049cb1db6ed4daefee597bb6089f, type: 3}
   - {fileID: 8926905417816104027, guid: 52f663c1684fe7f4fbb9a6682092407f, type: 3}
-  - {fileID: 0}
-  totalCards: 24
+  - {fileID: 2774816683111968856, guid: df266dc4150b4eb44b281965dd43d8f3, type: 3}
+  - {fileID: 3904704474008859723, guid: dd721eaa35eb0204481ef9a4f7ca4cf6, type: 3}
+  - {fileID: 3904704474008859723, guid: dd721eaa35eb0204481ef9a4f7ca4cf6, type: 3}
+  - {fileID: 3904704474008859723, guid: dd721eaa35eb0204481ef9a4f7ca4cf6, type: 3}
+  - {fileID: 8785931036689156931, guid: dff666db52af77548a6e0ecf04036148, type: 3}
+  totalCards: 29
