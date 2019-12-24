@@ -253,6 +253,24 @@ public class Player : MonoBehaviour
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
                 P1BFRef.AddUnitToVantage(card);
+                //ChangeTurn();
+
+                //if healer, for now randomly redeploy a card into battlefield.
+                if (cardRef.info.GetSubUnitType() == "Healer")
+                {
+                    GameObject RedeployedUnit = P1BFRef.MedicReDeploy();
+                    if (RedeployedUnit != null)
+                    {
+                        Debug.Log("Redeploying Card. "+RedeployedUnit.GetComponent<Card>().info.name);
+                        // rotate and change status to hand for redeployment to work.
+                        RedeployedUnit.transform.Rotate(new Vector3(0,180,0));
+                        RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);          // 4.4 & -4.2
+                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        P1Cards++;
+                        DeployUnitCard(RedeployedUnit);
+                    }
+                   
+                }
                 ChangeTurn();
 
                 P1Cards--;
@@ -262,8 +280,25 @@ public class Player : MonoBehaviour
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToVantage(card);
-                ChangeTurn();
+                //ChangeTurn();
 
+                //if healer, for now randomly redeploy a card into battlefield.
+                if (cardRef.info.GetSubUnitType() == "Healer")
+                {
+                    GameObject RedeployedUnit = P2BFRef.MedicReDeploy();
+                    if (RedeployedUnit != null)
+                    {
+                        //Debug.Log("Redeploying Card. " + RedeployedUnit.GetComponent<Card>().info.name);
+                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));        // rotate and change status to hand for redeployment to work.
+                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        RedeployedUnit.transform.position = new Vector3(0,4.4f,0);          // 4.4 & -4.2
+                        P1Cards++;              // because deploy function decrements
+                        DeployUnitCard(RedeployedUnit);
+                    }
+                   
+                }
+
+                ChangeTurn();
                 P2Cards--;
                 if (P2Cards == 0)
                     ForcePass(2);
@@ -303,24 +338,38 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetFrostbiteWeather();
                     P2BFRef.SetFrostbiteWeather();
+                    card.transform.Translate(new Vector3(0, -2, 0));
                 }
-                //else if baneaetherius
                 else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
                 {
                     P1BFRef.SetBaneAetheriusWeather();
                     P2BFRef.SetBaneAetheriusWeather();
+                    card.transform.Translate(new Vector3(0, -2, 0));
                 }
                 else if (cardRef.info.GetSubUnitType() == "StormWeather")
                 {
                     P1BFRef.SetStormWeather();
                     P2BFRef.SetStormWeather();
+                    card.transform.Translate(new Vector3(0, -2, 0));
                 }
                 else if (cardRef.info.GetSubUnitType() == "ClearWeather")
                 {
                     P1BFRef.SetClearWeather();
                     P2BFRef.SetClearWeather();
+                    card.transform.Translate(new Vector3(0, -2, 0));
                 }
-                card.transform.Translate(new Vector3(0, -2, 0));
+                
+
+                 // boosters:
+                else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
+                { }
+                else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
+                {
+                    //place at vantage booster offset.
+                    // call function on battlefield.
+                    P1BFRef.AddBooster(2,card);
+                }
+
 
 
                 ChangeTurn();
@@ -336,24 +385,37 @@ public class Player : MonoBehaviour
                 {
                     P2BFRef.SetFrostbiteWeather();
                     P1BFRef.SetFrostbiteWeather();
+                    card.transform.Translate(new Vector3(0, 2, 0));
                 }
                 //else if baneaetherius
                 else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
                 {
                     P1BFRef.SetBaneAetheriusWeather();
                     P2BFRef.SetBaneAetheriusWeather();
+                    card.transform.Translate(new Vector3(0, 2, 0));
                 }
                 else if (cardRef.info.GetSubUnitType() == "StormWeather")
                 {
                     P1BFRef.SetStormWeather();
                     P2BFRef.SetStormWeather();
+                    card.transform.Translate(new Vector3(0, 2, 0));
                 }
                 else if (cardRef.info.GetSubUnitType() == "ClearWeather")
                 {
                     P1BFRef.SetClearWeather();
                     P2BFRef.SetClearWeather();
+                    card.transform.Translate(new Vector3(0, 2, 0));
                 }
-                card.transform.Translate(new Vector3(0, 2, 0));
+
+                // boosters:
+                else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
+                { }
+                else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
+                {
+                    //place at vantage booster offset.
+                    // call function on battlefield.
+                    P2BFRef.AddBooster(2, card);
+                }
 
                 ChangeTurn();
 

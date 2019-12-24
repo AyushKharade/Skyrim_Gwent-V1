@@ -7,7 +7,7 @@ public class CardInfo
 {
     public enum UnitType { Warrior,Mage,Spellsword,Shadow,Special};
     public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer, Archer, Assassin, Thief, Healer, Spy,
-        FrostWeather,BaneAetheriusWeather,StormWeather,ClearWeather, Necromancer};
+        FrostWeather,BaneAetheriusWeather,StormWeather,ClearWeather, Necromancer, Booster_Frontline, Booster_Vantage, Booster_Shadow}; // any zone booster later
 
     public enum Race { Imperial, Nord, Redguard, Khajit, Argonian, Wood_Elf, Dark_Elf, Vampire, Breton, Draugr, Summon };
 

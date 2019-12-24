@@ -31,6 +31,11 @@ public class Battlefield : MonoBehaviour
     bool baneAetherius; // affects mages
     bool storm;         // affects archers, thiefs and assassins.
 
+    //booster effects
+    bool frontlineBoost;
+    bool vantageBoost;
+    bool shadowlineBoost;
+
     [HideInInspector]public int frontlineScore=0;
     [HideInInspector] public int vantageScore=0;
     [HideInInspector] public int shadowScore=0;
@@ -125,6 +130,11 @@ public class Battlefield : MonoBehaviour
             UnitCard.GetComponent<Card>().info.AddDeBuff(100);
             UnitCard.GetComponent<Card>().DebuffColorEffect();
         }
+        if (vantageBoost && !UnitCard.GetComponent<Card>().info.isHero)
+        {
+            UnitCard.GetComponent<Card>().info.AddBuff(UnitCard.GetComponent<Card>().info.strength);
+            UnitCard.GetComponent<Card>().BuffColorEffect();
+        }
         vantageScore += UnitCard.GetComponent<Card>().info.strength;
     }
 
@@ -155,17 +165,20 @@ public class Battlefield : MonoBehaviour
 
         while (frontline.Count > 0)
         {
-            discardpile.AddLast(frontline.First.Value);
+            if(!frontline.First.Value.GetComponent<Card>().info.isHero)
+                discardpile.AddLast(frontline.First.Value);                 // dont save hero cards, you cannot redeploy them, incase it stays, destroy them
             frontline.RemoveFirst();
         }
         while (vantage.Count > 0)
         {
-            discardpile.AddLast(vantage.First.Value);
+            if (!vantage.First.Value.GetComponent<Card>().info.isHero)
+                discardpile.AddLast(vantage.First.Value);
             vantage.RemoveFirst();
         }
         while (shadow.Count > 0)
         {
-            discardpile.AddLast(shadow.First.Value);
+            if (!shadow.First.Value.GetComponent<Card>().info.isHero)
+                discardpile.AddLast(shadow.First.Value);
             shadow.RemoveFirst();
         }
 
@@ -390,5 +403,72 @@ public class Battlefield : MonoBehaviour
         frostbite = false;
         baneAetherius = false;
         storm = false;
+    }
+
+
+
+    // medic and necromancer cards
+
+    public GameObject MedicReDeploy()
+    {
+        //return a random card (random for now) from discard pile.
+        if (discardpile.Count > 0)
+        {
+            int index = Random.Range(0, discardpile.Count-1);
+            int i = 0;
+            LinkedListNode<GameObject> temp = discardpile.First;
+
+            Debug.Log("Discard pile size: "+discardpile.Count);
+            Debug.Log("Randomly generated index: "+index);
+
+            while (i < index)
+            {
+                temp = temp.Next;
+                i++;
+            }
+            if (temp != null)
+                return temp.Value;
+            else
+                return null;
+        }
+        else
+            return null;
+
+    }
+
+    // necromancer functions
+
+
+
+    // booster functions:
+        // for now boosters should not work if weather cards are active.
+    public void AddBooster(int i, GameObject boosterCard)
+    {
+        if (i == 1)        // frontline booster
+        {
+
+        }
+        else if (i == 2)  // vantage booster
+        {
+            if (!vantageBoost && !baneAetherius)
+            {
+                boosterCard.transform.Translate(new Vector3(0, vantagePosY, 0));
+                boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
+
+                foreach (GameObject g in vantage)
+                {
+                    g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                    g.GetComponent<Card>().BuffColorEffect();
+                }
+                UpdateModifiedUnitScores(2);
+                vantageBoost = true;
+            }
+
+        }
+        else if (i == 3)
+        {
+
+        }
+        boosterCard.GetComponent<Card>().SetCardStatus("Deployed");
     }
 }
