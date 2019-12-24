@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d9c85b227c6c477478dedb88abab39af
+guid: 995226e8d0a80ed40b25ac9389e0bcb9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4317311053112193539
-    second: mage4_0
+      213: -2656625159549370376
+    second: J'Zargo_0
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -89,13 +89,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mage4_0
+      name: J'Zargo_0
       rect:
         serializedVersion: 2
-        x: 272
+        x: 159
         y: 0
-        width: 750
-        height: 986
+        width: 252
+        height: 419
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,8 +103,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f35a434ac977e2b46a66ba59cbfee2a4
-      internalID: 4317311053112193539
+      spriteID: 959874d0c5398df4d839e1749bdef06f
+      internalID: -2656625159549370376
       vertices: []
       indices: 
       edges: []

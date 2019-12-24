@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d9c85b227c6c477478dedb88abab39af
+guid: d1f03245c5e258942a416ab447388f88
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4317311053112193539
-    second: mage4_0
+      213: 6824229438170672236
+    second: Drevis Nerolan (Illusion)_0
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -89,13 +89,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mage4_0
+      name: Drevis Nerolan (Illusion)_0
       rect:
         serializedVersion: 2
-        x: 272
-        y: 0
-        width: 750
-        height: 986
+        x: 103
+        y: 32
+        width: 296
+        height: 427
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,8 +103,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f35a434ac977e2b46a66ba59cbfee2a4
-      internalID: 4317311053112193539
+      spriteID: bc3bc1cd017100949b664b42cbb2047d
+      internalID: 6824229438170672236
       vertices: []
       indices: 
       edges: []

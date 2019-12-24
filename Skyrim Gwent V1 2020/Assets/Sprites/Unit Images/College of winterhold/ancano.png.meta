@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d9c85b227c6c477478dedb88abab39af
+guid: 925a719af1cf4e64da104876e8650a97
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4317311053112193539
-    second: mage4_0
+      213: -2282774862107590268
+    second: ancano_0
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -89,13 +89,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mage4_0
+      name: ancano_0
       rect:
         serializedVersion: 2
-        x: 272
+        x: 115
         y: 0
-        width: 750
-        height: 986
+        width: 304
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,8 +103,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f35a434ac977e2b46a66ba59cbfee2a4
-      internalID: 4317311053112193539
+      spriteID: 310b729dfc9a3c74fb8e145e144931eb
+      internalID: -2282774862107590268
       vertices: []
       indices: 
       edges: []
