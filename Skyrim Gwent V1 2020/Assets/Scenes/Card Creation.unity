@@ -295,6 +295,7 @@ Transform:
   m_Children:
   - {fileID: 4752874562266776674}
   - {fileID: 2234314974044268530}
+  - {fileID: 268131403603148724}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1029,6 +1030,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ed451eecbce160469a1181af966be68, type: 3}
+--- !u!4 &268131403603148724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+    type: 3}
+  m_PrefabInstance: {fileID: 2979771501725774178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &367205890273375729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3128,6 +3135,75 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5596791990726220838}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2979771501725774178
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 691305404}
+    m_Modifications:
+    - target: {fileID: 4280571447145917510, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_Name
+      value: College Of Winterhold
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090276884006964950, guid: c1fcfe2334000144e862ce71cbabf785,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c1fcfe2334000144e862ce71cbabf785, type: 3}
 --- !u!1001 &3030663248734549226
 PrefabInstance:
   m_ObjectHideFlags: 0

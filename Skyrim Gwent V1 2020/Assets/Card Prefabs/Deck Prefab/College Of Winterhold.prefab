@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4280571447145917510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3090276884006964950}
+  - component: {fileID: 5722745289687569789}
+  m_Layer: 0
+  m_Name: College Of Winterhold
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3090276884006964950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280571447145917510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5722745289687569789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280571447145917510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da60d3b1c44883e4b8fceb6c85285200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckName: Undead Draugrs
+  ID: 2
+  description: College Of winterhold
+  CardsDeck:
+  - {fileID: 1828987790737253860, guid: bff140919db6b2444ba167e7a3733bf5, type: 3}
+  - {fileID: 1828987790737253860, guid: bff140919db6b2444ba167e7a3733bf5, type: 3}
+  - {fileID: 3603368971759864789, guid: ba7d5d95f36cf5a4996a1ab765189d47, type: 3}
+  - {fileID: 2508418774898328874, guid: d3df726511946d34fa056aed4b084d2b, type: 3}
+  - {fileID: 4292156228344144104, guid: 800f3402edba1984497fd60d0f2ebc1a, type: 3}
+  - {fileID: 1771155211918745024, guid: d6a0481be227c4849b7b622a04d66742, type: 3}
+  - {fileID: 7143975953595319209, guid: 2aa01aab11c8d464f9490bc4b5214381, type: 3}
+  - {fileID: 5176999922969175527, guid: 2aabd59e1266452458f9bc877bb3c90e, type: 3}
+  - {fileID: 7902637364340414693, guid: 76395b66138a34142a9cd92a30515e0f, type: 3}
+  - {fileID: 4118361524285670317, guid: 8ae42518996b9474297ce52218d46acf, type: 3}
+  - {fileID: 6016243795641521704, guid: 4c038ad7b0fd87e41987a7625ba9e88b, type: 3}
+  - {fileID: 6875203211153885652, guid: 390e08f174ae60a439ac23fe04b2fdbc, type: 3}
+  - {fileID: 1169347358248495066, guid: 2a0e46d1f77d0aa49b893163aa620d9b, type: 3}
+  - {fileID: 82064044045046270, guid: c64b9238dd62da44592d0dad2094f938, type: 3}
+  - {fileID: 3622492788558467045, guid: 381b098e5e26bc14996f685bef070ba7, type: 3}
+  - {fileID: 3622492788558467045, guid: 381b098e5e26bc14996f685bef070ba7, type: 3}
+  - {fileID: 4498133472717209546, guid: a811a7f9affa93148ac8c47cc7711a1a, type: 3}
+  - {fileID: 4498133472717209546, guid: a811a7f9affa93148ac8c47cc7711a1a, type: 3}
+  - {fileID: 4498133472717209546, guid: a811a7f9affa93148ac8c47cc7711a1a, type: 3}
+  - {fileID: 4250612077538604720, guid: e49e28673eb768147a8f420d5970019d, type: 3}
+  - {fileID: 4250612077538604720, guid: e49e28673eb768147a8f420d5970019d, type: 3}
+  - {fileID: 4250612077538604720, guid: e49e28673eb768147a8f420d5970019d, type: 3}
+  - {fileID: 7315679881873795926, guid: 87c3049cb1db6ed4daefee597bb6089f, type: 3}
+  - {fileID: 8926905417816104027, guid: 52f663c1684fe7f4fbb9a6682092407f, type: 3}
+  - {fileID: 0}
+  totalCards: 24
