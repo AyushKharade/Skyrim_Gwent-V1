@@ -232,6 +232,8 @@ MonoBehaviour:
     type: 3}
   DraugrDeck: {fileID: 1314456710096841934, guid: 995d461cb4d8fd64cb374cf301c93d9f,
     type: 3}
+  College_of_Winterhold: {fileID: 4280571447145917510, guid: c1fcfe2334000144e862ce71cbabf785,
+    type: 3}
 --- !u!4 &28843683
 Transform:
   m_ObjectHideFlags: 0
@@ -2045,7 +2047,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: None
@@ -2837,7 +2839,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: None
@@ -3070,6 +3072,8 @@ MonoBehaviour:
     - m_Text: Whiterun Warriors
       m_Image: {fileID: 0}
     - m_Text: Undead Draugrs
+      m_Image: {fileID: 0}
+    - m_Text: College Of Winterhold
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4253,6 +4257,8 @@ MonoBehaviour:
     - m_Text: Whiterun Warriors
       m_Image: {fileID: 0}
     - m_Text: Undead Draugrs
+      m_Image: {fileID: 0}
+    - m_Text: College Of Winterhold
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

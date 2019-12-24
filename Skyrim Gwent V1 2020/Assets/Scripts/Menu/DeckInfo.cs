@@ -10,6 +10,7 @@ public class DeckInfo : MonoBehaviour
 
     public GameObject WhiterunDeck;
     public GameObject DraugrDeck;
+    public GameObject College_of_Winterhold;
     // others when they are available.
 
    
@@ -28,6 +29,11 @@ public class DeckInfo : MonoBehaviour
                     return DraugrDeck;
                     //break;
                 };
+            case "College Of Winterhold":
+                {
+                    return College_of_Winterhold;
+                    //break;
+                }
         }
         return null;
     }

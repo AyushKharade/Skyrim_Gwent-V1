@@ -103,6 +103,11 @@ public class GameStarter : MonoBehaviour
                     P1DeckName = "Undead Draugrs";
                     break;
                 }
+            case 3:
+                {
+                    P1DeckName = "College Of Winterhold";
+                    break;
+                }
            
         }
         //p2
@@ -116,6 +121,11 @@ public class GameStarter : MonoBehaviour
             case 2:
                 {
                     P2DeckName = "Undead Draugrs";
+                    break;
+                }
+            case 3:
+                {
+                    P2DeckName = "College Of Winterhold";
                     break;
                 }
 
