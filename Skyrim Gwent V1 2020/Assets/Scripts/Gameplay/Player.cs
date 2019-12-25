@@ -268,6 +268,7 @@ public class Player : MonoBehaviour
                         RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
                         P1Cards++;
                         DeployUnitCard(RedeployedUnit);
+                        ChangeTurn();                                      // needed other same player gets the turn  again
                     }
                    
                 }
