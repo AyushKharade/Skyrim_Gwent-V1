@@ -442,7 +442,32 @@ public class Battlefield : MonoBehaviour
     }
 
     // necromancer functions
-
+    public GameObject NecromancerReDeploy()
+    {
+        //return a random card (random for now) from discard pile.
+        if (discardpile.Count > 0)
+        {
+            int index = Random.Range(0, discardpile.Count - 1);
+            int i = 0;
+            LinkedListNode<GameObject> temp = discardpile.First;
+            
+            while (i < index)
+            {
+                temp = temp.Next;
+                i++;
+            }
+            if (temp != null)
+            {
+                GameObject tempRef = temp.Value;
+                //discardpile.Remove(temp);        // remove because, necromancer uses other player's card.
+                return tempRef;
+            }
+            else
+                return null;
+        }
+        else
+            return null;
+    }
 
 
     // booster functions:

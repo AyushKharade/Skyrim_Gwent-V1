@@ -80,5 +80,9 @@ MonoBehaviour:
   - {fileID: 8785931036689156931, guid: dff666db52af77548a6e0ecf04036148, type: 3}
   - {fileID: 5451343537068880645, guid: 00eaa2e949b5a8d468baccdfc024f950, type: 3}
   - {fileID: 5451343537068880645, guid: 00eaa2e949b5a8d468baccdfc024f950, type: 3}
-  - {fileID: 5451343537068880645, guid: 00eaa2e949b5a8d468baccdfc024f950, type: 3}
-  totalCards: 34
+  - {fileID: 2774816683111968856, guid: df266dc4150b4eb44b281965dd43d8f3, type: 3}
+  - {fileID: 2774816683111968856, guid: df266dc4150b4eb44b281965dd43d8f3, type: 3}
+  - {fileID: 2774816683111968856, guid: df266dc4150b4eb44b281965dd43d8f3, type: 3}
+  - {fileID: 2774816683111968856, guid: df266dc4150b4eb44b281965dd43d8f3, type: 3}
+  - {fileID: 2774816683111968856, guid: df266dc4150b4eb44b281965dd43d8f3, type: 3}
+  totalCards: 38

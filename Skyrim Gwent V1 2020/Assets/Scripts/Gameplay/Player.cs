@@ -51,8 +51,12 @@ public class Player : MonoBehaviour
 
 
     //temp card count:
-    int P1Cards = 10;
-    int P2Cards = 10;
+    public int P1Cards = 10;
+    public int P2Cards = 10;
+
+    public int P1TotalCards = 10;
+    public int P2TotalCards = 10;
+
 
     // game info ref
     GameStarter gameinfo;
@@ -261,16 +265,48 @@ public class Player : MonoBehaviour
                     GameObject RedeployedUnit = P1BFRef.MedicReDeploy();
                     if (RedeployedUnit != null)
                     {
-                        Debug.Log("Redeploying Card. "+RedeployedUnit.GetComponent<Card>().info.name);
+                        Debug.Log("Redeploying Card. " + RedeployedUnit.GetComponent<Card>().info.name);
                         // rotate and change status to hand for redeployment to work.
-                        RedeployedUnit.transform.Rotate(new Vector3(0,180,0));
+                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
                         RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);          // 4.4 & -4.2
                         RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
                         P1Cards++;
                         DeployUnitCard(RedeployedUnit);
                         ChangeTurn();                                      // needed other same player gets the turn  again
                     }
-                   
+
+                }
+
+                // necromancer
+                if (cardRef.info.GetSubUnitType() == "Necromancer")
+                {
+                    GameObject RedeployedUnit = P2BFRef.MedicReDeploy();          // use same function as medic, but dont forget to remove from other player's pile
+                    if (RedeployedUnit != null)
+                    {
+                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        Debug.Log("Redeploying Necromancer Card. " + RedeployedUnit.GetComponent<Card>().info.name);
+                        // change hand.
+                        GameObject ResurrectedUnit = Instantiate(RedeployedUnit.gameObject, p1HandRef);     // send this card to p1's hand now.
+                        Destroy(RedeployedUnit.gameObject);
+                        ResurrectedUnit.transform.Rotate(new Vector3(0, 180, 0));
+                        ResurrectedUnit.transform.position = new Vector3(0, -4.2f, 0);
+                        //ResurrectedUnit.GetComponent<Card>().SetCardStatus("Hand");
+
+
+
+                        // rotate and change status to hand for redeployment to work.
+                        //RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
+                        //RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);          // 4.4 & -4.2
+                        //RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        P1Cards++;
+                        P1TotalCards++;
+                        P2TotalCards--;
+
+                        DeployUnitCard(ResurrectedUnit);
+                        ResurrectedUnit.GetComponent<Card>().SetCardStatus("Deployed");       // force set cuz for some reason it doesnt work even here
+                        ResurrectedUnit.GetComponent<CardScaler>().deployed = true;
+                        ChangeTurn();                                      // needed other same player gets the turn  again
+                    }
                 }
                 ChangeTurn();
 
@@ -292,12 +328,12 @@ public class Player : MonoBehaviour
                         //Debug.Log("Redeploying Card. " + RedeployedUnit.GetComponent<Card>().info.name);
                         RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));        // rotate and change status to hand for redeployment to work.
                         RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
-                        RedeployedUnit.transform.position = new Vector3(0,4.4f,0);          // 4.4 & -4.2
+                        RedeployedUnit.transform.position = new Vector3(0, 4.4f, 0);          // 4.4 & -4.2
                         P2Cards++;              // because deploy function decrements
                         DeployUnitCard(RedeployedUnit);
                         ChangeTurn();
                     }
-                   
+
                 }
 
                 ChangeTurn();
@@ -360,16 +396,16 @@ public class Player : MonoBehaviour
                     P2BFRef.SetClearWeather();
                     card.transform.Translate(new Vector3(0, -2, 0));
                 }
-                
 
-                 // boosters:
+
+                // boosters:
                 else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
                 { }
                 else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
                 {
                     //place at vantage booster offset.
                     // call function on battlefield.
-                    P1BFRef.AddBooster(2,card);
+                    P1BFRef.AddBooster(2, card);
                 }
 
 
@@ -426,6 +462,11 @@ public class Player : MonoBehaviour
                     ForcePass(2);
             }
         }
+
+        // no match for card type exception
+        else
+            Debug.Log("No match found for deploying this card: Info:, name: "+cardRef.info.name+", type: "+cardRef.info.GetUnitType()+
+                ", hand: "+card.transform.parent.name+", current turn: "+turn+", state: "+cardRef.GetCardStatus());
     }
 
 
@@ -589,7 +630,7 @@ public class Player : MonoBehaviour
     {
         
         int count = 0;
-        while (count<10)
+        while (count<P1TotalCards)
         {
             if (p1HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
             {
@@ -607,7 +648,7 @@ public class Player : MonoBehaviour
         }
         //p2
         count = 0;
-        while (count < 10)
+        while (count < P2TotalCards)
         {
             if (p2HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
             {
@@ -693,7 +734,7 @@ public class Player : MonoBehaviour
             if (ID == 1)
             {
                 int count = 0;
-                while (count < 10)
+                while (count < P1TotalCards)
                 {
                     card = p1HandRef.GetChild(count).gameObject;
                     if (card.GetComponent<Card>().GetCardStatus() == "Hand")
@@ -704,7 +745,7 @@ public class Player : MonoBehaviour
             else if (ID == 2)
             {
                 int count = 0;
-                while (count < 10)
+                while (count < P2TotalCards)
                 {
                     card = p2HandRef.GetChild(count).gameObject;
                     if(card.GetComponent<Card>().GetCardStatus() =="Hand")

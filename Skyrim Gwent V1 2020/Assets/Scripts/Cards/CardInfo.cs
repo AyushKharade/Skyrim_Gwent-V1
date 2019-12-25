@@ -56,6 +56,8 @@ public class CardInfo
             strength -= debuff;
             if (strength < 1)
                 strength = 1;
+            if (originalStrength == 0)
+                strength = 0;
         }
     }
 
