@@ -18,7 +18,7 @@ public class Battlefield : MonoBehaviour
     public string PlayerName;
     [Range(1, 2)]
     public int PlayerID;
-    public bool playerPassed=false;
+    public bool playerPassed = false;
 
     [HideInInspector] public LinkedList<GameObject> frontline;
     [HideInInspector] public LinkedList<GameObject> vantage;
@@ -34,12 +34,12 @@ public class Battlefield : MonoBehaviour
     //booster effects
     bool frontlineBoost;
     bool vantageBoost;
-    bool shadowlineBoost;
+    bool shadowBoost;
 
-    [HideInInspector]public int frontlineScore=0;
-    [HideInInspector] public int vantageScore=0;
-    [HideInInspector] public int shadowScore=0;
-    [HideInInspector] public int totalScore=0;
+    [HideInInspector] public int frontlineScore = 0;
+    [HideInInspector] public int vantageScore = 0;
+    [HideInInspector] public int shadowScore = 0;
+    [HideInInspector] public int totalScore = 0;
 
     //UI
     [Header("Score UI")]
@@ -56,9 +56,9 @@ public class Battlefield : MonoBehaviour
     public float shadowPosY;
 
     //x
-    float frontlinePosX=-0.5f;
-    float vantagePosX=-0.5f;
-    float shadowPosX=-0.5f;
+    float frontlinePosX = -0.5f;
+    float vantagePosX = -0.5f;
+    float shadowPosX = -0.5f;
     public float additionOffsetX = 0.75f;
 
     // Weather particle systems
@@ -91,13 +91,13 @@ public class Battlefield : MonoBehaviour
     // public add cards to any fields
     public void AddUnitToFrontline(GameObject UnitCard)
     {
-        
+
         UnitCard.GetComponent<CardScaler>().deployed = true;                            // set cardrotator to deployed
         UnitCard.GetComponent<Card>().SetCardStatus("Deployed");                        // set status deployed
 
         //Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
         UnitCard.transform.Translate(new Vector3(0, frontlinePosY, 0));
-        UnitCard.transform.position = new Vector3(frontlinePosX,UnitCard.transform.position.y,0);
+        UnitCard.transform.position = new Vector3(frontlinePosX, UnitCard.transform.position.y, 0);
         frontlinePosX += additionOffsetX;
 
 
@@ -109,8 +109,8 @@ public class Battlefield : MonoBehaviour
             UnitCard.GetComponent<Card>().DebuffColorEffect();
         }
         frontlineScore += UnitCard.GetComponent<Card>().info.strength;
-        
-        
+
+
     }
 
     public void AddUnitToVantage(GameObject UnitCard)
@@ -165,7 +165,7 @@ public class Battlefield : MonoBehaviour
 
         while (frontline.Count > 0)
         {
-            if(!frontline.First.Value.GetComponent<Card>().info.isHero)
+            if (!frontline.First.Value.GetComponent<Card>().info.isHero)
                 discardpile.AddLast(frontline.First.Value);                 // dont save hero cards, you cannot redeploy them, incase it stays, destroy them
             frontline.RemoveFirst();
         }
@@ -194,7 +194,7 @@ public class Battlefield : MonoBehaviour
         shadowPosX = -0.5f;
     }
 
-    
+
 
 
     //reset battlefield
@@ -267,10 +267,7 @@ public class Battlefield : MonoBehaviour
             int tempScore = 0;
             foreach (GameObject g in frontline)
             {
-                string strScore = g.GetComponent<Card>().unitStrength.text + "";
-                //Debug.Log("String score is: " + strScore);
-                tempScore += int.Parse(strScore);
-
+                tempScore += g.GetComponent<Card>().info.strength;
             }
             //update
             frontlineScore = tempScore;
@@ -281,9 +278,11 @@ public class Battlefield : MonoBehaviour
             int tempScore = 0;
             foreach (GameObject g in vantage)
             {
-                string strScore = g.GetComponent<Card>().unitStrength.text + "";
-                tempScore += int.Parse(strScore);
+                //string strScore = g.GetComponent<Card>().unitStrength.text + "";
+                //tempScore += int.Parse(strScore);
+                tempScore += g.GetComponent<Card>().info.strength;
             }
+            Debug.Log("newly updated vantage score: " + tempScore);
             //update
             vantageScore = tempScore;
             UpdateScoreUI();
@@ -293,8 +292,7 @@ public class Battlefield : MonoBehaviour
             int tempScore = 0;
             foreach (GameObject g in shadow)
             {
-                string strScore = g.GetComponent<Card>().unitStrength.text + "";
-                tempScore += int.Parse(strScore);
+                tempScore += g.GetComponent<Card>().info.strength;
             }
             //update
             shadowScore = tempScore;
@@ -367,7 +365,7 @@ public class Battlefield : MonoBehaviour
         }
     }
 
-        // this is for clear weather card
+    // this is for clear weather card
     public void SetClearWeather()
     {
         FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
@@ -388,10 +386,10 @@ public class Battlefield : MonoBehaviour
         frostbite = false;
         baneAetherius = false;
         storm = false;
-        
+
     }
 
-        //this is for end of round reset
+    //this is for end of round reset
     public void ResetWeather()
     {
         //turn off all particle systems:
@@ -405,6 +403,13 @@ public class Battlefield : MonoBehaviour
         storm = false;
     }
 
+
+    public void ResetBoosters()
+    {
+        frontlineBoost = false;
+        vantageBoost = false;
+        shadowBoost = false;
+    }
 
 
     // medic and necromancer cards

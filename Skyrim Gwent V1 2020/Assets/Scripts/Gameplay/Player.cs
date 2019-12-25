@@ -573,6 +573,10 @@ public class Player : MonoBehaviour
         P1BFRef.ResetWeather();
         P2BFRef.ResetWeather();
 
+        //reset boosters
+        P1BFRef.ResetBoosters();
+        P2BFRef.ResetBoosters();
+
         RemoveDeployedCards();
         if (P1Cards == 0)
             ForcePass(1);
