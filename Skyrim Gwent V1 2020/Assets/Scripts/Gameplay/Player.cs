@@ -292,8 +292,9 @@ public class Player : MonoBehaviour
                         RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));        // rotate and change status to hand for redeployment to work.
                         RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
                         RedeployedUnit.transform.position = new Vector3(0,4.4f,0);          // 4.4 & -4.2
-                        P1Cards++;              // because deploy function decrements
+                        P2Cards++;              // because deploy function decrements
                         DeployUnitCard(RedeployedUnit);
+                        ChangeTurn();
                     }
                    
                 }
