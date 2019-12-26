@@ -432,7 +432,12 @@ public class Battlefield : MonoBehaviour
                 i++;
             }
             if (temp != null)
-                return temp.Value;
+            {
+                GameObject redeployRef = temp.Value;
+                // remove this from the discard pile
+                discardpile.Remove(redeployRef);
+                return redeployRef;
+            }
             else
                 return null;
         }
@@ -458,9 +463,10 @@ public class Battlefield : MonoBehaviour
             }
             if (temp != null)
             {
-                GameObject tempRef = temp.Value;
-                //discardpile.Remove(temp);        // remove because, necromancer uses other player's card.
-                return tempRef;
+                GameObject redeployRef = temp.Value;
+                // remove this from the discard pile
+                discardpile.Remove(redeployRef);
+                return redeployRef;
             }
             else
                 return null;

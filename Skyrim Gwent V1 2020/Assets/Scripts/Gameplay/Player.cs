@@ -287,12 +287,15 @@ public class Player : MonoBehaviour
                         Debug.Log("Redeploying Necromancer Card. " + RedeployedUnit.GetComponent<Card>().info.name);
                         // change hand.
                         GameObject ResurrectedUnit = Instantiate(RedeployedUnit.gameObject, p1HandRef);     // send this card to p1's hand now.
+
+                        Debug.Log("Info for necromancer card:, name: " + ResurrectedUnit.GetComponent<Card>().info.name + ", type: " + ResurrectedUnit.GetComponent<Card>().info.GetUnitType() +
+                ", hand: " + ResurrectedUnit.transform.parent.name + ", current turn: " + turn + ", state: " + ResurrectedUnit.GetComponent<Card>().GetCardStatus());
                         Destroy(RedeployedUnit.gameObject);
                         ResurrectedUnit.transform.Rotate(new Vector3(0, 180, 0));
                         ResurrectedUnit.transform.position = new Vector3(0, -4.2f, 0);
                         //ResurrectedUnit.GetComponent<Card>().SetCardStatus("Hand");
 
-
+                        
 
                         // rotate and change status to hand for redeployment to work.
                         //RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
@@ -303,8 +306,9 @@ public class Player : MonoBehaviour
                         P2TotalCards--;
 
                         DeployUnitCard(ResurrectedUnit);
-                        ResurrectedUnit.GetComponent<Card>().SetCardStatus("Deployed");       // force set cuz for some reason it doesnt work even here
-                        ResurrectedUnit.GetComponent<CardScaler>().deployed = true;
+                        //ResurrectedUnit.GetComponent<Card>().SetCardStatus("Deployed");       // force set cuz for some reason it doesnt work even here
+                        //ResurrectedUnit.GetComponent<CardScaler>().deployed = true;
+                        ResurrectedUnit.GetComponent<Card>().info.AddBuff(100);
                         ChangeTurn();                                      // needed other same player gets the turn  again
                     }
                 }
