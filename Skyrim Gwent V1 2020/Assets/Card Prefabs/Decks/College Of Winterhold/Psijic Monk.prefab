@@ -730,7 +730,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.396, y: 11.82}
+  m_AnchoredPosition: {x: 1.3959961, y: 11.820007}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5861855803340377826
@@ -825,7 +825,7 @@ MonoBehaviour:
     originalStrength: 3
     isHero: 0
     trainingLevel: 2
-    unitType: 1
+    unitType: 3
     faction: 4
     subUnitType: 5
     race: 5

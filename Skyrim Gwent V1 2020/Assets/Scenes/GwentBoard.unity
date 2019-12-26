@@ -16818,43 +16818,43 @@ MonoBehaviour:
   sounds:
   - name: Frostbite_Weather
     clip: {fileID: 0}
-    volume: 0.32
+    volume: 0.65
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: BaneAetherius_Weather
     clip: {fileID: 0}
-    volume: 0.32
+    volume: 0.57
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Storm_Weather
     clip: {fileID: 8300000, guid: 3a96e8c5365f2d84386b045845d51328, type: 3}
-    volume: 0.32
+    volume: 0.7
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Medic_Redeploy
     clip: {fileID: 8300000, guid: 22b41d7da975cf54f805806c55c2bb71, type: 3}
-    volume: 0.32
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Necromancer_Redeploy
     clip: {fileID: 0}
-    volume: 0.32
+    volume: 0.62
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Endgame
     clip: {fileID: 8300000, guid: 6a476f6e3d0315c428f1bb7ea0ead3e6, type: 3}
-    volume: 0.32
+    volume: 0.66
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Booster
     clip: {fileID: 8300000, guid: eef04069db86ead4b9eb554c3d69f919, type: 3}
-    volume: 0.32
+    volume: 0.8
     pitch: 1
     loop: 0
     source: {fileID: 0}

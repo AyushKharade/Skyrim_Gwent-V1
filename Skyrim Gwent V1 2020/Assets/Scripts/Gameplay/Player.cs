@@ -272,6 +272,7 @@ public class Player : MonoBehaviour
                         P1Cards++;
                         DeployUnitCard(RedeployedUnit);
                         ChangeTurn();                                      // needed other same player gets the turn  again
+                        SFXManager.instance.Play("Medic_Redeploy");
                     }
 
                 }
@@ -320,6 +321,8 @@ public class Player : MonoBehaviour
                         P2Cards++;              // because deploy function decrements
                         DeployUnitCard(RedeployedUnit);
                         ChangeTurn();
+
+                        SFXManager.instance.Play("Medic_Redeploy");
                     }
 
                 }
@@ -397,6 +400,7 @@ public class Player : MonoBehaviour
                     P1BFRef.SetStormWeather();
                     P2BFRef.SetStormWeather();
                     card.transform.Translate(new Vector3(0, -2, 0));
+                    SFXManager.instance.Play("Storm_Weather");
                 }
                 else if (cardRef.info.GetSubUnitType() == "ClearWeather")
                 {
@@ -414,6 +418,7 @@ public class Player : MonoBehaviour
                     //place at vantage booster offset.
                     // call function on battlefield.
                     P1BFRef.AddBooster(2, card);
+                    SFXManager.instance.Play("Booster");
                 }
 
 
@@ -445,6 +450,8 @@ public class Player : MonoBehaviour
                     P1BFRef.SetStormWeather();
                     P2BFRef.SetStormWeather();
                     card.transform.Translate(new Vector3(0, 2, 0));
+                    //audio
+                    SFXManager.instance.Play("Storm_Weather");
                 }
                 else if (cardRef.info.GetSubUnitType() == "ClearWeather")
                 {
@@ -461,6 +468,7 @@ public class Player : MonoBehaviour
                     //place at vantage booster offset.
                     // call function on battlefield.
                     P2BFRef.AddBooster(2, card);
+                    SFXManager.instance.Play("Booster");
                 }
 
                 ChangeTurn();
@@ -700,6 +708,8 @@ public class Player : MonoBehaviour
             endgameScriptRef.SetWinner(2);
         else
             endgameScriptRef.SetWinner(1);
+
+        SFXManager.instance.Play("Endgame");
     }
 
     
