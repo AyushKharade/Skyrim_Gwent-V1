@@ -200,7 +200,7 @@ public class Battlefield : MonoBehaviour
     //reset battlefield
     public void Reset()
     {
-        ResetWeatherDebuffs();
+        ResetWeatherDebuffs(); // also removes any buffs from booster cards
         MoveToDiscardPile();
         playerPassed = false;
     }
@@ -209,7 +209,7 @@ public class Battlefield : MonoBehaviour
     {
         // if any weather was active, make sure to reset all buffs on the cards in that zone
         // iterate and call reset functions on card & info
-        if (frostbite)
+        if (frostbite || frontlineBoost)
         {
             foreach (GameObject g in frontline)
             {
@@ -218,7 +218,7 @@ public class Battlefield : MonoBehaviour
                 g.GetComponent<Card>().UI_Update();
             }
         }
-        if (baneAetherius)
+        if (baneAetherius || vantageBoost)
         {
             foreach (GameObject g in vantage)
             {
@@ -227,7 +227,7 @@ public class Battlefield : MonoBehaviour
                 g.GetComponent<Card>().UI_Update();
             }
         }
-        if (storm)
+        if (storm || shadowBoost)
         {
             foreach (GameObject g in shadow)
             {

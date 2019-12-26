@@ -257,7 +257,6 @@ public class Player : MonoBehaviour
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
                 P1BFRef.AddUnitToVantage(card);
-                //ChangeTurn();
 
                 //if healer, for now randomly redeploy a card into battlefield.
                 if (cardRef.info.GetSubUnitType() == "Healer")
@@ -283,33 +282,17 @@ public class Player : MonoBehaviour
                     GameObject RedeployedUnit = P2BFRef.MedicReDeploy();          // use same function as medic, but dont forget to remove from other player's pile
                     if (RedeployedUnit != null)
                     {
+                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
+                        RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);
                         RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
-                        Debug.Log("Redeploying Necromancer Card. " + RedeployedUnit.GetComponent<Card>().info.name);
-                        // change hand.
-                        GameObject ResurrectedUnit = Instantiate(RedeployedUnit.gameObject, p1HandRef);     // send this card to p1's hand now.
+                        RedeployedUnit.transform.SetParent(p1HandRef);                    // change parent, so its a player 1 card now
 
-                        Debug.Log("Info for necromancer card:, name: " + ResurrectedUnit.GetComponent<Card>().info.name + ", type: " + ResurrectedUnit.GetComponent<Card>().info.GetUnitType() +
-                ", hand: " + ResurrectedUnit.transform.parent.name + ", current turn: " + turn + ", state: " + ResurrectedUnit.GetComponent<Card>().GetCardStatus());
-                        Destroy(RedeployedUnit.gameObject);
-                        ResurrectedUnit.transform.Rotate(new Vector3(0, 180, 0));
-                        ResurrectedUnit.transform.position = new Vector3(0, -4.2f, 0);
-                        //ResurrectedUnit.GetComponent<Card>().SetCardStatus("Hand");
-
-                        
-
-                        // rotate and change status to hand for redeployment to work.
-                        //RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
-                        //RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);          // 4.4 & -4.2
-                        //RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
                         P1Cards++;
-                        P1TotalCards++;
+                        P1TotalCards++;                             // these variables so flipdecks() dont bug out
                         P2TotalCards--;
 
-                        DeployUnitCard(ResurrectedUnit);
-                        //ResurrectedUnit.GetComponent<Card>().SetCardStatus("Deployed");       // force set cuz for some reason it doesnt work even here
-                        //ResurrectedUnit.GetComponent<CardScaler>().deployed = true;
-                        ResurrectedUnit.GetComponent<Card>().info.AddBuff(100);
-                        ChangeTurn();                                      // needed other same player gets the turn  again
+                        DeployUnitCard(RedeployedUnit);
+                        ChangeTurn();                                      // needed otherwise same player gets the turn  again
                     }
                 }
                 ChangeTurn();
@@ -318,6 +301,7 @@ public class Player : MonoBehaviour
                 if (P1Cards == 0)
                     ForcePass(1);
             }
+
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToVantage(card);
@@ -338,6 +322,26 @@ public class Player : MonoBehaviour
                         ChangeTurn();
                     }
 
+                }
+
+                // necromancer
+                if (cardRef.info.GetSubUnitType() == "Necromancer")
+                {
+                    GameObject RedeployedUnit = P1BFRef.MedicReDeploy();          // use same function as medic, but dont forget to remove from other player's pile
+                    if (RedeployedUnit != null)
+                    {
+                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
+                        RedeployedUnit.transform.position = new Vector3(0, 4.4f, 0);
+                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        RedeployedUnit.transform.SetParent(p2HandRef);                    // change parent, so its a player 2 card now
+
+                        P2Cards++;
+                        P1TotalCards--;                             // these variables so flipdecks() dont bug out
+                        P2TotalCards++;
+
+                        DeployUnitCard(RedeployedUnit);
+                        ChangeTurn();                                      // needed otherwise same player gets the turn  again
+                    }
                 }
 
                 ChangeTurn();
