@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 82b82783afdc85c4fb1bed334b4c68fa
+guid: 6f7e2cd11876be7448a879591f2c6a4b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2274935687096945929
-    second: charus1_0
+      213: -5633310003581455032
+    second: falmer archer_0
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -89,13 +89,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: charus1_0
+      name: falmer archer_0
       rect:
         serializedVersion: 2
-        x: 34
-        y: 230
-        width: 1886
-        height: 2545
+        x: 280
+        y: 0
+        width: 1124
+        height: 896
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,8 +103,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c57fcf4e0ff34b4b81e6b03c3311ddc
-      internalID: -2274935687096945929
+      spriteID: b95d8a5c78941224f8acfac395555595
+      internalID: -5633310003581455032
       vertices: []
       indices: 
       edges: []
