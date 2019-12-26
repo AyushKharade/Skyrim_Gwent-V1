@@ -234,6 +234,8 @@ MonoBehaviour:
     type: 3}
   College_of_Winterhold: {fileID: 4280571447145917510, guid: c1fcfe2334000144e862ce71cbabf785,
     type: 3}
+  Wilderness: {fileID: 5969686074367784359, guid: 48d64333ab3836b42ad4bee1ca0a0b5d,
+    type: 3}
 --- !u!4 &28843683
 Transform:
   m_ObjectHideFlags: 0
@@ -3075,6 +3077,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: College Of Winterhold
       m_Image: {fileID: 0}
+    - m_Text: Wilderness
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4259,6 +4263,8 @@ MonoBehaviour:
     - m_Text: Undead Draugrs
       m_Image: {fileID: 0}
     - m_Text: College Of Winterhold
+      m_Image: {fileID: 0}
+    - m_Text: Wilderness
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
