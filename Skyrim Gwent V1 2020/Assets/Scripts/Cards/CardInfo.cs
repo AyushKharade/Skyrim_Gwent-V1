@@ -9,9 +9,9 @@ public class CardInfo
     public enum SubUnitType { HeavyArmor, LightArmor, FireMage, FrostMage, LightningMage, Conjurer, Archer, Assassin, Thief, Healer, Spy,
         FrostWeather,BaneAetheriusWeather,StormWeather,ClearWeather, Necromancer, Booster_Frontline, Booster_Vantage, Booster_Shadow}; // any zone booster later
 
-    public enum Race { Imperial, Nord, Redguard, Khajit, Argonian, Wood_Elf, Dark_Elf, Vampire, Breton, Draugr, Summon };
+    public enum Race { Imperial, Nord, Redguard, Khajit, Argonian, Wood_Elf, Dark_Elf, Vampire, Breton, Draugr, Summon, Creatures };
 
-    public enum Faction { Whiterun, Riften, Dark_Brotherhood, Draugr, College_Of_Winterhold, Thieves_Guild};
+    public enum Faction { Whiterun, Riften, Dark_Brotherhood, Draugr, College_Of_Winterhold, Thieves_Guild, Wilderness};
 
 
     public enum TrainingLevel { Novice, Apprentice, Adept, Expert, Master};
