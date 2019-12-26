@@ -477,7 +477,6 @@ public class Battlefield : MonoBehaviour
 
 
     // booster functions:
-        // for now boosters should not work if weather cards are active.
     public void AddBooster(int i, GameObject boosterCard)
     {
         if (i == 1)        // frontline booster
@@ -486,7 +485,7 @@ public class Battlefield : MonoBehaviour
         }
         else if (i == 2)  // vantage booster
         {
-            if (!vantageBoost && !baneAetherius)
+            if (!vantageBoost)
             {
                 boosterCard.transform.Translate(new Vector3(0, vantagePosY, 0));
                 boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
@@ -498,6 +497,12 @@ public class Battlefield : MonoBehaviour
                 }
                 UpdateModifiedUnitScores(2);
                 vantageBoost = true;
+            }
+            else
+            {
+                // move so it wont bug the turn
+                boosterCard.transform.Translate(new Vector3(0, vantagePosY, 0));
+                boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
             }
 
         }
