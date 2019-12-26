@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5969686074367784359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1034901333313406587}
+  - component: {fileID: 1970725447061407259}
+  m_Layer: 0
+  m_Name: Wilderness
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1034901333313406587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969686074367784359}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970725447061407259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969686074367784359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da60d3b1c44883e4b8fceb6c85285200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeckName: Wilderness
+  ID: 4
+  description: Fierce creatures of skyrim
+  CardsDeck:
+  - {fileID: 5210129430619944301, guid: 8c0461f7a81f2f84eb3a16385fe3c027, type: 3}
+  - {fileID: 5210129430619944301, guid: 8c0461f7a81f2f84eb3a16385fe3c027, type: 3}
+  - {fileID: 4781320513457773470, guid: 7f7d11958fa83dd40a08b54cbe8e862c, type: 3}
+  - {fileID: 4781320513457773470, guid: 7f7d11958fa83dd40a08b54cbe8e862c, type: 3}
+  - {fileID: 6958275124363535144, guid: c6e458427bf32874787dc4ba43015c82, type: 3}
+  - {fileID: 4126393494228144818, guid: f3616578e2f6d9b4ba080db80d723966, type: 3}
+  - {fileID: 4126393494228144818, guid: f3616578e2f6d9b4ba080db80d723966, type: 3}
+  - {fileID: 8543492056929710645, guid: 03396275757918947b8fec142360c358, type: 3}
+  - {fileID: 2817893508105044250, guid: 73ac019dc030c734abf334a3b46c6a1d, type: 3}
+  - {fileID: 2110342666892070149, guid: 9ce6f3c2a21c8324f84854abcb919c41, type: 3}
+  - {fileID: 2110342666892070149, guid: 9ce6f3c2a21c8324f84854abcb919c41, type: 3}
+  - {fileID: 4232166546675826766, guid: b9960a48007ad1c41a269656517cd358, type: 3}
+  - {fileID: 4232166546675826766, guid: b9960a48007ad1c41a269656517cd358, type: 3}
+  - {fileID: 8547862013904481850, guid: 584be380842c17c41996c071295a909e, type: 3}
+  - {fileID: 6711977934801646835, guid: cdd3a42c323720141ae6bc611054b59f, type: 3}
+  - {fileID: 2802639397901063864, guid: 869959837fb773b4a854ccb80f4788be, type: 3}
+  - {fileID: 2802639397901063864, guid: 869959837fb773b4a854ccb80f4788be, type: 3}
+  - {fileID: 2802639397901063864, guid: 869959837fb773b4a854ccb80f4788be, type: 3}
+  - {fileID: 4534922954244950673, guid: 98a51a542629fa746ba77e7994ee12c4, type: 3}
+  - {fileID: 3026718729788635083, guid: 1ef271dc0f1e5f748998042652d8e453, type: 3}
+  - {fileID: 3271180288597018581, guid: 9634b46bd7285eb40bd832e21e32b1e8, type: 3}
+  - {fileID: 2126731476576803338, guid: 9f91576d47ed5d741b458a935b2030d9, type: 3}
+  - {fileID: 6384895607591201381, guid: 1d59137bc76802645ae2770a56b18f86, type: 3}
+  - {fileID: 4770557016040196543, guid: 36b39a3eb98a92548a0d1055f99e11f2, type: 3}
+  - {fileID: 4201207851534054827, guid: 7f27eca49a7ade24f9464aaf8ed9d911, type: 3}
+  - {fileID: 3119764208259183401, guid: a81e1fa08b00f3b4598d88789a3a5314, type: 3}
+  - {fileID: 3119764208259183401, guid: a81e1fa08b00f3b4598d88789a3a5314, type: 3}
+  - {fileID: 7450109316154329845, guid: d55fc10f3bd549a4e896c33de6c6b984, type: 3}
+  - {fileID: 7450109316154329845, guid: d55fc10f3bd549a4e896c33de6c6b984, type: 3}
+  - {fileID: 7450109316154329845, guid: d55fc10f3bd549a4e896c33de6c6b984, type: 3}
+  totalCards: 30

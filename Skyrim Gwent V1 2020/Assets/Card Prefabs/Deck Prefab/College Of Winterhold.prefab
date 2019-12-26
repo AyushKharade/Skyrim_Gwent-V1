@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da60d3b1c44883e4b8fceb6c85285200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeckName: Undead Draugrs
-  ID: 2
+  DeckName: College Of WInterhold
+  ID: 3
   description: College Of winterhold
   CardsDeck:
   - {fileID: 1828987790737253860, guid: bff140919db6b2444ba167e7a3733bf5, type: 3}
