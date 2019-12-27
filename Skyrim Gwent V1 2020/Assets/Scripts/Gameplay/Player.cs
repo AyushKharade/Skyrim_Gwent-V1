@@ -90,6 +90,9 @@ public class Player : MonoBehaviour
     int ScoreR3P1;
     int ScoreR3P2;
 
+
+    
+
     void Start()
     {
         // random turn
@@ -231,6 +234,11 @@ public class Player : MonoBehaviour
                 xOffset += 0.75f;
             }
         }
+
+        if (PlayerID == 1)
+            P1BFRef.InitSequence(drawSequence);
+        else if (PlayerID == 2)
+            P2BFRef.InitSequence(drawSequence);
     }
 
 
@@ -242,6 +250,35 @@ public class Player : MonoBehaviour
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
                 P1BFRef.AddUnitToFrontline(card);
+                
+
+                //if spy:
+                if (cardRef.info.GetSubUnitType() == "Spy")
+                {
+                    // set parent to other player, update card no. values
+                    card.transform.SetParent(p2HandRef);
+                    // place it on other battlefield
+                    P2BFRef.AddUnitToFrontline(card);
+                    // change turn inside if
+                    ChangeTurn();
+                    // loop and draw two cards from deck
+                    int maxCards = gameinfo.P1Deck.GetComponent<Deck>().totalCards;
+                    int c1Index=P1BFRef.RedrawCard(maxCards);
+                    int c2Index=P1BFRef.RedrawCard(maxCards);
+
+                    GameObject c1 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c1Index];
+                    GameObject c2 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c2Index];
+                    //
+                    Instantiate(c1, p1HandRef);
+                    Instantiate(c2, p1HandRef);
+
+                    P1TotalCards += 2;
+                    P1Cards += 2;
+
+                    // call rearrange function on hand cards
+                    P1BFRef.RearrangeHand(p1HandRef, -4.2f);
+                }
+
                 ChangeTurn();
 
                 P1Cards--;

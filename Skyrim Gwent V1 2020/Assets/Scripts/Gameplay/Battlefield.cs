@@ -68,6 +68,9 @@ public class Battlefield : MonoBehaviour
     public GameObject StormParticleSystem;
 
 
+    // store sequence of cards drawn to support re-draw and spy cards.
+    public List<int> drawnSequence;
+
     private void Start()
     {
         frontline = new LinkedList<GameObject>();
@@ -616,4 +619,41 @@ public class Battlefield : MonoBehaviour
         if(boosterCard!=null)
             boosterCard.GetComponent<Card>().SetCardStatus("Deployed");
     }
+
+    // for re-drawing, update sequence
+
+    public void InitSequence(List<int> list)
+    {
+        drawnSequence = list;
+    }
+
+    public int RedrawCard(int maxDeckSize)
+    {
+        int r;
+        while (true)
+        {
+            r = Random.Range(0,maxDeckSize);
+            if (!drawnSequence.Contains(r))
+            {
+                drawnSequence.Add(r);
+                return r;
+            }
+        }
+    }
+
+    // rearrange hand cards function
+    // x offset = -2, y take in as parameter
+    public void RearrangeHand(Transform HandRef, float yPos)
+    {
+        float x = -2;
+        int count = HandRef.childCount;
+        for (int i = 0; i < count; i++)
+        {
+            HandRef.GetChild(i).transform.position = new Vector3(x,yPos,0);
+            x += 0.75f;
+        }
+
+    }
+
+    
 }
