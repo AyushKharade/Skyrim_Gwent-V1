@@ -587,7 +587,31 @@ public class Battlefield : MonoBehaviour
         }
         else if (i == 3)
         {
-
+            if (!shadowBoost)
+            {
+                if (boosterCard != null)
+                {
+                    boosterCard.transform.Translate(new Vector3(0, shadowPosY, 0));
+                    boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
+                }
+                foreach (GameObject g in shadow)
+                {
+                    g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                    if (!storm)
+                        g.GetComponent<Card>().BuffColorEffect();
+                }
+                UpdateModifiedUnitScores(3);
+                vantageBoost = true;
+            }
+            else
+            {
+                // move so it wont bug the turn
+                if (boosterCard != null)
+                {
+                    boosterCard.transform.Translate(new Vector3(0, vantagePosY, 0));
+                    boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
+                }
+            }
         }
         if(boosterCard!=null)
             boosterCard.GetComponent<Card>().SetCardStatus("Deployed");

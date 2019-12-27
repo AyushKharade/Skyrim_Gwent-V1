@@ -397,6 +397,7 @@ public class Player : MonoBehaviour
                     P1BFRef.SetFrostbiteWeather();
                     P2BFRef.SetFrostbiteWeather();
                     card.transform.Translate(new Vector3(0, -2, 0));
+                    SFXManager.instance.Play("Frostbite_Weather");
                 }
                 else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
                 {
@@ -449,6 +450,7 @@ public class Player : MonoBehaviour
                     P2BFRef.SetFrostbiteWeather();
                     P1BFRef.SetFrostbiteWeather();
                     card.transform.Translate(new Vector3(0, 2, 0));
+                    SFXManager.instance.Play("Frostbite_Weather");
                 }
                 //else if baneaetherius
                 else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")

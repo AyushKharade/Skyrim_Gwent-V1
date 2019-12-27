@@ -16817,8 +16817,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Frostbite_Weather
-    clip: {fileID: 0}
-    volume: 0.65
+    clip: {fileID: 8300000, guid: 7a2ef63af5788a44eaa695ad3967359b, type: 3}
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
