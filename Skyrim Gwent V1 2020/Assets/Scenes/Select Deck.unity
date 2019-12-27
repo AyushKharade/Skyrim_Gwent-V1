@@ -236,6 +236,7 @@ MonoBehaviour:
     type: 3}
   Wilderness: {fileID: 5969686074367784359, guid: 48d64333ab3836b42ad4bee1ca0a0b5d,
     type: 3}
+  Thalmor: {fileID: 5969686074367784359, guid: 3bad9e48d01e46b4cb360375e9518b1a, type: 3}
 --- !u!4 &28843683
 Transform:
   m_ObjectHideFlags: 0
@@ -3079,6 +3080,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Wilderness
       m_Image: {fileID: 0}
+    - m_Text: Thalmor
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4265,6 +4268,8 @@ MonoBehaviour:
     - m_Text: College Of Winterhold
       m_Image: {fileID: 0}
     - m_Text: Wilderness
+      m_Image: {fileID: 0}
+    - m_Text: Thalmor
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
