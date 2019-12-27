@@ -108,6 +108,11 @@ public class Battlefield : MonoBehaviour
             UnitCard.GetComponent<Card>().info.AddDeBuff(100);
             UnitCard.GetComponent<Card>().DebuffColorEffect();
         }
+        if (frontlineBoost && !UnitCard.GetComponent<Card>().info.isHero)
+        {
+            UnitCard.GetComponent<Card>().info.AddBuff(UnitCard.GetComponent<Card>().info.strength);
+            UnitCard.GetComponent<Card>().BuffColorEffect();
+        }
         frontlineScore += UnitCard.GetComponent<Card>().info.strength;
 
 
@@ -155,6 +160,11 @@ public class Battlefield : MonoBehaviour
         {
             UnitCard.GetComponent<Card>().info.AddDeBuff(100);
             UnitCard.GetComponent<Card>().DebuffColorEffect();
+        }
+        if (shadowBoost && !UnitCard.GetComponent<Card>().info.isHero)
+        {
+            UnitCard.GetComponent<Card>().info.AddBuff(UnitCard.GetComponent<Card>().info.strength);
+            UnitCard.GetComponent<Card>().BuffColorEffect();
         }
         shadowScore += UnitCard.GetComponent<Card>().info.strength;
     }
@@ -382,6 +392,45 @@ public class Battlefield : MonoBehaviour
         if (storm)
             UpdateModifiedUnitScores(3);
 
+        // if any boosters were active, redo all the buffs:
+        if (frontlineBoost && frostbite)
+        {
+            //add buffs again.
+            foreach (GameObject g in frontline)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+
+                
+
+                //g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                //g.GetComponent<Card>().BuffColorEffect();
+            }
+            AddBooster(1, null);
+        }
+        if (baneAetherius && baneAetherius)
+        {
+            //add buffs again.
+            foreach (GameObject g in vantage)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+                //
+                //g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                //g.GetComponent<Card>().BuffColorEffect();
+            }
+            AddBooster(2, null);
+        }
+        if (shadowBoost && storm)
+        {
+            //add buffs again.
+            foreach (GameObject g in shadow)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+                //g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                //g.GetComponent<Card>().BuffColorEffect();
+            }
+            AddBooster(3, null);
+        }
+
 
         frostbite = false;
         baneAetherius = false;
@@ -481,19 +530,46 @@ public class Battlefield : MonoBehaviour
     {
         if (i == 1)        // frontline booster
         {
-
+            if (!frontlineBoost)
+            {
+                if (boosterCard != null)
+                {
+                    boosterCard.transform.Translate(new Vector3(0, frontlinePosY, 0));
+                    boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
+                }
+                foreach (GameObject g in frontline)
+                {
+                    g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                    if (!frostbite)
+                        g.GetComponent<Card>().BuffColorEffect();
+                }
+                UpdateModifiedUnitScores(1);
+                frontlineBoost = true;
+            }
+            else
+            {
+                // move so it wont bug the turn
+                if (boosterCard != null)
+                {
+                    boosterCard.transform.Translate(new Vector3(0, frontlinePosY, 0));
+                    boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
+                }
+            }
         }
         else if (i == 2)  // vantage booster
         {
             if (!vantageBoost)
             {
-                boosterCard.transform.Translate(new Vector3(0, vantagePosY, 0));
-                boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
-
+                if (boosterCard != null)
+                {
+                    boosterCard.transform.Translate(new Vector3(0, vantagePosY, 0));
+                    boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
+                }
                 foreach (GameObject g in vantage)
                 {
                     g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
-                    g.GetComponent<Card>().BuffColorEffect();
+                    if (!baneAetherius)
+                        g.GetComponent<Card>().BuffColorEffect();
                 }
                 UpdateModifiedUnitScores(2);
                 vantageBoost = true;
@@ -501,8 +577,11 @@ public class Battlefield : MonoBehaviour
             else
             {
                 // move so it wont bug the turn
-                boosterCard.transform.Translate(new Vector3(0, vantagePosY, 0));
-                boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
+                if (boosterCard != null)
+                {
+                    boosterCard.transform.Translate(new Vector3(0, vantagePosY, 0));
+                    boosterCard.transform.position = new Vector3(-1.5f, boosterCard.transform.position.y, 0);
+                }
             }
 
         }

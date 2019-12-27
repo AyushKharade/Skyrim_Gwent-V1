@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// for testing reload for new draw
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -151,6 +153,13 @@ public class Player : MonoBehaviour
 
         // Round UI (change to function
         RoundUI.text = "Round: " + round;
+
+
+        // for redrawing decks (testing)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("GwentBoard");
+        }
     }
 
 
@@ -412,7 +421,10 @@ public class Player : MonoBehaviour
 
                 // boosters:
                 else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
-                { }
+                {
+                    P1BFRef.AddBooster(1, card);
+                    SFXManager.instance.Play("Booster");
+                }
                 else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
                 {
                     //place at vantage booster offset.
@@ -462,7 +474,10 @@ public class Player : MonoBehaviour
 
                 // boosters:
                 else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
-                { }
+                {
+                    P2BFRef.AddBooster(1,card);
+                    SFXManager.instance.Play("Booster");
+                }
                 else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
                 {
                     //place at vantage booster offset.
