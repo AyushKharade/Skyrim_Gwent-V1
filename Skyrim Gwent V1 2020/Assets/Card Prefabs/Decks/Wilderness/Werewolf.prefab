@@ -1185,7 +1185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 7.796, y: 3.66227}
+  m_AnchoredPosition: {x: 7.7960205, y: 3.6622772}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6384895607591201378
@@ -1275,11 +1275,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info:
-    name: Fierce Sabrecat
-    strength: 7
-    originalStrength: 7
+    name: Werewolf
+    strength: 8
+    originalStrength: 8
     isHero: 0
-    trainingLevel: 2
+    trainingLevel: 3
     unitType: 0
     faction: 6
     subUnitType: 0
