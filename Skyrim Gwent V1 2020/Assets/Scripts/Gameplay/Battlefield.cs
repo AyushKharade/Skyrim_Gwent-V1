@@ -589,6 +589,7 @@ public class Battlefield : MonoBehaviour
         {
 
         }
-        boosterCard.GetComponent<Card>().SetCardStatus("Deployed");
+        if(boosterCard!=null)
+            boosterCard.GetComponent<Card>().SetCardStatus("Deployed");
     }
 }
