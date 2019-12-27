@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// for testing reload for new draw
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -51,8 +53,12 @@ public class Player : MonoBehaviour
 
 
     //temp card count:
-    int P1Cards = 10;
-    int P2Cards = 10;
+    public int P1Cards = 10;
+    public int P2Cards = 10;
+
+    public int P1TotalCards = 10;
+    public int P2TotalCards = 10;
+
 
     // game info ref
     GameStarter gameinfo;
@@ -147,6 +153,13 @@ public class Player : MonoBehaviour
 
         // Round UI (change to function
         RoundUI.text = "Round: " + round;
+
+
+        // for redrawing decks (testing)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("GwentBoard");
+        }
     }
 
 
@@ -253,17 +266,97 @@ public class Player : MonoBehaviour
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
                 P1BFRef.AddUnitToVantage(card);
+
+                //if healer, for now randomly redeploy a card into battlefield.
+                if (cardRef.info.GetSubUnitType() == "Healer")
+                {
+                    GameObject RedeployedUnit = P1BFRef.MedicReDeploy();
+                    if (RedeployedUnit != null)
+                    {
+                        Debug.Log("Redeploying Card. " + RedeployedUnit.GetComponent<Card>().info.name);
+                        // rotate and change status to hand for redeployment to work.
+                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
+                        RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);          // 4.4 & -4.2
+                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        P1Cards++;
+                        DeployUnitCard(RedeployedUnit);
+                        ChangeTurn();                                      // needed other same player gets the turn  again
+                        SFXManager.instance.Play("Medic_Redeploy");
+                    }
+
+                }
+
+                // necromancer
+                if (cardRef.info.GetSubUnitType() == "Necromancer")
+                {
+                    GameObject RedeployedUnit = P2BFRef.MedicReDeploy();          // use same function as medic, but dont forget to remove from other player's pile
+                    if (RedeployedUnit != null)
+                    {
+                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
+                        RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);
+                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        RedeployedUnit.transform.SetParent(p1HandRef);                    // change parent, so its a player 1 card now
+
+                        P1Cards++;
+                        P1TotalCards++;                             // these variables so flipdecks() dont bug out
+                        P2TotalCards--;
+
+                        DeployUnitCard(RedeployedUnit);
+                        ChangeTurn();                                      // needed otherwise same player gets the turn  again
+                    }
+                }
                 ChangeTurn();
 
                 P1Cards--;
                 if (P1Cards == 0)
                     ForcePass(1);
             }
+
             else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
             {
                 P2BFRef.AddUnitToVantage(card);
-                ChangeTurn();
+                //ChangeTurn();
 
+                //if healer, for now randomly redeploy a card into battlefield.
+                if (cardRef.info.GetSubUnitType() == "Healer")
+                {
+                    GameObject RedeployedUnit = P2BFRef.MedicReDeploy();
+                    if (RedeployedUnit != null)
+                    {
+                        //Debug.Log("Redeploying Card. " + RedeployedUnit.GetComponent<Card>().info.name);
+                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));        // rotate and change status to hand for redeployment to work.
+                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        RedeployedUnit.transform.position = new Vector3(0, 4.4f, 0);          // 4.4 & -4.2
+                        P2Cards++;              // because deploy function decrements
+                        DeployUnitCard(RedeployedUnit);
+                        ChangeTurn();
+
+                        SFXManager.instance.Play("Medic_Redeploy");
+                    }
+
+                }
+
+                // necromancer
+                if (cardRef.info.GetSubUnitType() == "Necromancer")
+                {
+                    GameObject RedeployedUnit = P1BFRef.MedicReDeploy();          // use same function as medic, but dont forget to remove from other player's pile
+                    if (RedeployedUnit != null)
+                    {
+                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
+                        RedeployedUnit.transform.position = new Vector3(0, 4.4f, 0);
+                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
+                        RedeployedUnit.transform.SetParent(p2HandRef);                    // change parent, so its a player 2 card now
+
+                        P2Cards++;
+                        P1TotalCards--;                             // these variables so flipdecks() dont bug out
+                        P2TotalCards++;
+
+                        DeployUnitCard(RedeployedUnit);
+                        ChangeTurn();                                      // needed otherwise same player gets the turn  again
+                    }
+                }
+
+                ChangeTurn();
                 P2Cards--;
                 if (P2Cards == 0)
                     ForcePass(2);
@@ -303,24 +396,44 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetFrostbiteWeather();
                     P2BFRef.SetFrostbiteWeather();
+                    card.transform.Translate(new Vector3(0, -2, 0));
+                    SFXManager.instance.Play("Frostbite_Weather");
                 }
-                //else if baneaetherius
                 else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
                 {
                     P1BFRef.SetBaneAetheriusWeather();
                     P2BFRef.SetBaneAetheriusWeather();
+                    card.transform.Translate(new Vector3(0, -2, 0));
                 }
                 else if (cardRef.info.GetSubUnitType() == "StormWeather")
                 {
                     P1BFRef.SetStormWeather();
                     P2BFRef.SetStormWeather();
+                    card.transform.Translate(new Vector3(0, -2, 0));
+                    SFXManager.instance.Play("Storm_Weather");
                 }
                 else if (cardRef.info.GetSubUnitType() == "ClearWeather")
                 {
                     P1BFRef.SetClearWeather();
                     P2BFRef.SetClearWeather();
+                    card.transform.Translate(new Vector3(0, -2, 0));
                 }
-                card.transform.Translate(new Vector3(0, -2, 0));
+
+
+                // boosters:
+                else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
+                {
+                    P1BFRef.AddBooster(1, card);
+                    SFXManager.instance.Play("Booster");
+                }
+                else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
+                {
+                    //place at vantage booster offset.
+                    // call function on battlefield.
+                    P1BFRef.AddBooster(2, card);
+                    SFXManager.instance.Play("Booster");
+                }
+
 
 
                 ChangeTurn();
@@ -336,24 +449,44 @@ public class Player : MonoBehaviour
                 {
                     P2BFRef.SetFrostbiteWeather();
                     P1BFRef.SetFrostbiteWeather();
+                    card.transform.Translate(new Vector3(0, 2, 0));
+                    SFXManager.instance.Play("Frostbite_Weather");
                 }
                 //else if baneaetherius
                 else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
                 {
                     P1BFRef.SetBaneAetheriusWeather();
                     P2BFRef.SetBaneAetheriusWeather();
+                    card.transform.Translate(new Vector3(0, 2, 0));
                 }
                 else if (cardRef.info.GetSubUnitType() == "StormWeather")
                 {
                     P1BFRef.SetStormWeather();
                     P2BFRef.SetStormWeather();
+                    card.transform.Translate(new Vector3(0, 2, 0));
+                    //audio
+                    SFXManager.instance.Play("Storm_Weather");
                 }
                 else if (cardRef.info.GetSubUnitType() == "ClearWeather")
                 {
                     P1BFRef.SetClearWeather();
                     P2BFRef.SetClearWeather();
+                    card.transform.Translate(new Vector3(0, 2, 0));
                 }
-                card.transform.Translate(new Vector3(0, 2, 0));
+
+                // boosters:
+                else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
+                {
+                    P2BFRef.AddBooster(1,card);
+                    SFXManager.instance.Play("Booster");
+                }
+                else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
+                {
+                    //place at vantage booster offset.
+                    // call function on battlefield.
+                    P2BFRef.AddBooster(2, card);
+                    SFXManager.instance.Play("Booster");
+                }
 
                 ChangeTurn();
 
@@ -362,6 +495,11 @@ public class Player : MonoBehaviour
                     ForcePass(2);
             }
         }
+
+        // no match for card type exception
+        else
+            Debug.Log("No match found for deploying this card: Info:, name: "+cardRef.info.name+", type: "+cardRef.info.GetUnitType()+
+                ", hand: "+card.transform.parent.name+", current turn: "+turn+", state: "+cardRef.GetCardStatus());
     }
 
 
@@ -510,6 +648,10 @@ public class Player : MonoBehaviour
         P1BFRef.ResetWeather();
         P2BFRef.ResetWeather();
 
+        //reset boosters
+        P1BFRef.ResetBoosters();
+        P2BFRef.ResetBoosters();
+
         RemoveDeployedCards();
         if (P1Cards == 0)
             ForcePass(1);
@@ -521,7 +663,7 @@ public class Player : MonoBehaviour
     {
         
         int count = 0;
-        while (count<10)
+        while (count<P1TotalCards)
         {
             if (p1HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
             {
@@ -539,7 +681,7 @@ public class Player : MonoBehaviour
         }
         //p2
         count = 0;
-        while (count < 10)
+        while (count < P2TotalCards)
         {
             if (p2HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
             {
@@ -583,6 +725,8 @@ public class Player : MonoBehaviour
             endgameScriptRef.SetWinner(2);
         else
             endgameScriptRef.SetWinner(1);
+
+        SFXManager.instance.Play("Endgame");
     }
 
     
@@ -625,7 +769,7 @@ public class Player : MonoBehaviour
             if (ID == 1)
             {
                 int count = 0;
-                while (count < 10)
+                while (count < P1TotalCards)
                 {
                     card = p1HandRef.GetChild(count).gameObject;
                     if (card.GetComponent<Card>().GetCardStatus() == "Hand")
@@ -636,7 +780,7 @@ public class Player : MonoBehaviour
             else if (ID == 2)
             {
                 int count = 0;
-                while (count < 10)
+                while (count < P2TotalCards)
                 {
                     card = p2HandRef.GetChild(count).gameObject;
                     if(card.GetComponent<Card>().GetCardStatus() =="Hand")

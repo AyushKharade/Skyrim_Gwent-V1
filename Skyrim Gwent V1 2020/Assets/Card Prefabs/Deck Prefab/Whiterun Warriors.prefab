@@ -85,4 +85,11 @@ MonoBehaviour:
   - {fileID: 4640913577218897170, guid: a938ebc6e41ae5f45963eb0a9fd22b76, type: 3}
   - {fileID: 4640913577218897170, guid: a938ebc6e41ae5f45963eb0a9fd22b76, type: 3}
   - {fileID: 5987606095863628381, guid: 4dd32441836631349970c3cc790220f6, type: 3}
-  totalCards: 38
+  - {fileID: 6996594338666974334, guid: 2f13fcb27e555e649be065ee3c5c97de, type: 3}
+  - {fileID: 6996594338666974334, guid: 2f13fcb27e555e649be065ee3c5c97de, type: 3}
+  - {fileID: 6996594338666974334, guid: 2f13fcb27e555e649be065ee3c5c97de, type: 3}
+  - {fileID: 6996594338666974334, guid: 2f13fcb27e555e649be065ee3c5c97de, type: 3}
+  - {fileID: 6996594338666974334, guid: 2f13fcb27e555e649be065ee3c5c97de, type: 3}
+  - {fileID: 6996594338666974334, guid: 2f13fcb27e555e649be065ee3c5c97de, type: 3}
+  - {fileID: 6996594338666974334, guid: 2f13fcb27e555e649be065ee3c5c97de, type: 3}
+  totalCards: 45
