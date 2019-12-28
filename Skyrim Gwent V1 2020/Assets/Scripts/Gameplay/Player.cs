@@ -249,18 +249,25 @@ public class Player : MonoBehaviour
         {
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
-                P1BFRef.AddUnitToFrontline(card);
-                
+
+                if (cardRef.info.GetSubUnitType() != "Spy")                              // special case
+                    P1BFRef.AddUnitToFrontline(card);
 
                 //if spy:
                 if (cardRef.info.GetSubUnitType() == "Spy")
                 {
                     // set parent to other player, update card no. values
+                    //card.transform.Rotate(new Vector3(0, 180, 0));                // dont need to rotate or change turn thrice for some reason??
+                    card.transform.position = new Vector3(0, 4.4f, 0);              // probably bec changeturn does work on p2 if turn is not 2
+                    card.GetComponent<Card>().SetCardStatus("Hand");
                     card.transform.SetParent(p2HandRef);
                     // place it on other battlefield
+                    P2TotalCards++;
+                    P1TotalCards--;
                     P2BFRef.AddUnitToFrontline(card);
                     // change turn inside if
-                    ChangeTurn();
+                    //ChangeTurn();
+
                     // loop and draw two cards from deck
                     int maxCards = gameinfo.P1Deck.GetComponent<Deck>().totalCards;
                     int c1Index=P1BFRef.RedrawCard(maxCards);
@@ -269,8 +276,11 @@ public class Player : MonoBehaviour
                     GameObject c1 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c1Index];
                     GameObject c2 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c2Index];
                     //
-                    Instantiate(c1, p1HandRef);
-                    Instantiate(c2, p1HandRef);
+                    GameObject c1Ref=Instantiate(c1, p1HandRef);
+                    GameObject c2Ref=Instantiate(c2, p1HandRef);
+
+                    c1Ref.transform.Rotate(new Vector3(0, 180, 0));
+                    c2Ref.transform.Rotate(new Vector3(0, 180, 0));
 
                     P1TotalCards += 2;
                     P1Cards += 2;
@@ -302,7 +312,8 @@ public class Player : MonoBehaviour
             // place on Vantage -- for now place spellswords on vantage too
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
-                P1BFRef.AddUnitToVantage(card);
+                if (cardRef.info.GetSubUnitType() != "Spy")                              // special case
+                    P1BFRef.AddUnitToVantage(card);
 
                 //if healer, for now randomly redeploy a card into battlefield.
                 if (cardRef.info.GetSubUnitType() == "Healer")
@@ -341,6 +352,43 @@ public class Player : MonoBehaviour
                         DeployUnitCard(RedeployedUnit);
                         ChangeTurn();                                      // needed otherwise same player gets the turn  again
                     }
+                }
+
+
+                //if spy:
+                if (cardRef.info.GetSubUnitType() == "Spy")
+                {
+                    // set parent to other player, update card no. values
+                    //card.transform.Rotate(new Vector3(0, 180, 0));
+                    card.transform.position = new Vector3(0, 4.4f, 0);
+                    card.GetComponent<Card>().SetCardStatus("Hand");
+                    card.transform.SetParent(p2HandRef);
+                    // place it on other battlefield
+                    P2TotalCards++;
+                    P1TotalCards--;
+                    P2BFRef.AddUnitToVantage(card);
+                    // change turn inside if
+                    //ChangeTurn();
+
+                    // loop and draw two cards from deck
+                    int maxCards = gameinfo.P1Deck.GetComponent<Deck>().totalCards;
+                    int c1Index = P1BFRef.RedrawCard(maxCards);
+                    int c2Index = P1BFRef.RedrawCard(maxCards);
+
+                    GameObject c1 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c1Index];
+                    GameObject c2 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c2Index];
+                    //
+                    GameObject c1Ref = Instantiate(c1, p1HandRef);
+                    GameObject c2Ref = Instantiate(c2, p1HandRef);
+
+                    c1Ref.transform.Rotate(new Vector3(0, 180, 0));
+                    c2Ref.transform.Rotate(new Vector3(0, 180, 0));
+
+                    P1TotalCards += 2;
+                    P1Cards += 2;
+
+                    // call rearrange function on hand cards
+                    P1BFRef.RearrangeHand(p1HandRef, -4.2f);
                 }
                 ChangeTurn();
 
@@ -406,7 +454,43 @@ public class Player : MonoBehaviour
             // place on shadow
             if (turn == 1 && card.transform.parent.name == "Player1_Hand")
             {
-                P1BFRef.AddUnitToShadow(card);
+                if (cardRef.info.GetSubUnitType() != "Spy")                              // special case
+                    P1BFRef.AddUnitToShadow(card);
+                //if spy:
+                if (cardRef.info.GetSubUnitType() == "Spy")
+                {
+                    // set parent to other player, update card no. values
+                    //card.transform.Rotate(new Vector3(0, 180, 0));
+                    card.transform.position = new Vector3(0, 4.4f, 0);
+                    card.GetComponent<Card>().SetCardStatus("Hand");
+                    card.transform.SetParent(p2HandRef);
+                    // place it on other battlefield
+                    P2TotalCards++;
+                    P1TotalCards--;
+                    P2BFRef.AddUnitToShadow(card);
+                    // change turn inside if
+                    //ChangeTurn();
+
+                    // loop and draw two cards from deck
+                    int maxCards = gameinfo.P1Deck.GetComponent<Deck>().totalCards;
+                    int c1Index = P1BFRef.RedrawCard(maxCards);
+                    int c2Index = P1BFRef.RedrawCard(maxCards);
+
+                    GameObject c1 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c1Index];
+                    GameObject c2 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c2Index];
+                    //
+                    GameObject c1Ref = Instantiate(c1, p1HandRef);
+                    GameObject c2Ref = Instantiate(c2, p1HandRef);
+
+                    c1Ref.transform.Rotate(new Vector3(0, 180, 0));
+                    c2Ref.transform.Rotate(new Vector3(0, 180, 0));
+
+                    P1TotalCards += 2;
+                    P1Cards += 2;
+
+                    // call rearrange function on hand cards
+                    P1BFRef.RearrangeHand(p1HandRef, -4.2f);
+                }
                 ChangeTurn();
 
                 P1Cards--;
