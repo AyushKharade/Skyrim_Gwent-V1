@@ -93,6 +93,14 @@ public class Player : MonoBehaviour
     public Text quoteDetails;
     GameObject quoteBox;
 
+    // deployment buttons
+    [Header("Clickable Buttons")]
+    public Button DeployFrontlineButton;
+    public Button DeployVantage_SpellswordButton;
+    public Button DeployVantageButton;
+    public Button DeployShadowButton;
+    public Button DeploySpecialButton;
+
     void Start()
     {
         // random turn
@@ -217,7 +225,51 @@ public class Player : MonoBehaviour
         if (!quoteBox.activeSelf)
         {
             quoteBox.SetActive(true);
-            quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Quotes;
+        }
+        quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Quotes;
+        Debug.Log("" + cardRef.GetComponent<Card>().info.Quotes);
+
+        // hide and show appropriate buttons
+        ManageDeployButtons(card);
+
+    }
+
+    void ManageDeployButtons(GameObject card)
+    {
+        DeployFrontlineButton.gameObject.SetActive(false);
+        DeployVantageButton.gameObject.SetActive(false);
+        DeployVantage_SpellswordButton.gameObject.SetActive(false);
+        DeployShadowButton.gameObject.SetActive(false);
+        DeploySpecialButton.gameObject.SetActive(false);
+
+        switch (card.GetComponent<Card>().info.GetUnitType())
+        {
+            case "Warrior":
+                {
+                    DeployFrontlineButton.gameObject.SetActive(true);
+                    break;
+                }
+            case "Spellsword":
+                {
+                    DeployFrontlineButton.gameObject.SetActive(true);
+                    DeployVantage_SpellswordButton.gameObject.SetActive(true);
+                    break;
+                }
+            case "Mage":
+                {
+                    DeployVantageButton.gameObject.SetActive(true);
+                    break;
+                }
+            case "Shadow":
+                {
+                    DeployShadowButton.gameObject.SetActive(true);
+                    break;
+                }
+            case "special":
+                {
+                    DeploySpecialButton.gameObject.SetActive(true);
+                    break;
+                }
         }
     }
 
