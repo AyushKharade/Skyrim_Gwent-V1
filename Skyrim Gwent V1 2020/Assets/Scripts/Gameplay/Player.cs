@@ -100,6 +100,7 @@ public class Player : MonoBehaviour
     public Button DeployVantageButton;
     public Button DeployShadowButton;
     public Button DeploySpecialButton;
+    public Button CloseButton;
 
     void Start()
     {
@@ -220,6 +221,8 @@ public class Player : MonoBehaviour
         //scale care huge
         Vector3 ogScale = cardRef.transform.localScale;
         cardRef.transform.localScale = new Vector3(ogScale.x * 2.5f, ogScale.y * 2.5f, ogScale.z);
+        cardRef.GetComponent<CardScaler>().displayCard = true;
+    
 
         // update quotebox
         if (!quoteBox.activeSelf)
@@ -241,6 +244,7 @@ public class Player : MonoBehaviour
         DeployVantage_SpellswordButton.gameObject.SetActive(false);
         DeployShadowButton.gameObject.SetActive(false);
         DeploySpecialButton.gameObject.SetActive(false);
+        CloseButton.gameObject.SetActive(true);
 
         switch (card.GetComponent<Card>().info.GetUnitType())
         {
@@ -265,7 +269,7 @@ public class Player : MonoBehaviour
                     DeployShadowButton.gameObject.SetActive(true);
                     break;
                 }
-            case "special":
+            default:
                 {
                     DeploySpecialButton.gameObject.SetActive(true);
                     break;
@@ -273,6 +277,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void CloseDetailsMenu()
+    {
+        Destroy(detailedDisplayRef.GetChild(0).gameObject);
+
+        DeployFrontlineButton.gameObject.SetActive(false);
+        DeployVantageButton.gameObject.SetActive(false);
+        DeployVantage_SpellswordButton.gameObject.SetActive(false);
+        DeployShadowButton.gameObject.SetActive(false);
+        DeploySpecialButton.gameObject.SetActive(false);
+        CloseButton.gameObject.SetActive(false);
+
+        cardDisplaying = false;
+        quoteBox.SetActive(false);
+    }
 
 
 

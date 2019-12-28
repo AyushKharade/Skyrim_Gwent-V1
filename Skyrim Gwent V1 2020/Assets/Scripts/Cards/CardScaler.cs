@@ -9,6 +9,7 @@ public class CardScaler : MonoBehaviour
 
     [HideInInspector]public bool underCursor;
     [HideInInspector]public bool deployed;
+    [HideInInspector]public bool displayCard;
     Vector3 originalScale;
     Vector3 cursorScale;
 
@@ -21,7 +22,7 @@ public class CardScaler : MonoBehaviour
 
     void Update()
     {
-        if (underCursor &&!deployed)
+        if (underCursor &&!deployed && !displayCard)
             ScaleUp();
         else
             ScaleDown();
