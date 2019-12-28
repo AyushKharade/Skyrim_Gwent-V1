@@ -207,34 +207,36 @@ public class Player : MonoBehaviour
     // display card magnified and in detail, along with their quote.
     void DisplayDetailsUnitCard(GameObject card)
     {
-        //check if theres a on display already.
-        if (detailedDisplayRef.childCount > 0)
-            Destroy(detailedDisplayRef.GetChild(0).gameObject);
-
-        // instantiate a copy in the detailed display area:
-        GameObject cardRef=Instantiate(card, detailedDisplayRef);
-        cardDisplaying = true;
-
-        //position
-        cardRef.transform.position = detailedDisplayRef.position;
-
-        //scale care huge
-        Vector3 ogScale = cardRef.transform.localScale;
-        cardRef.transform.localScale = new Vector3(ogScale.x * 2.5f, ogScale.y * 2.5f, ogScale.z);
-        cardRef.GetComponent<CardScaler>().displayCard = true;
-    
-
-        // update quotebox
-        if (!quoteBox.activeSelf)
+        if ((card.transform.parent.name=="Player1_Hand" && turn==1) || (card.transform.parent.name=="Player2_Hand" && turn==2))
         {
-            quoteBox.SetActive(true);
+            //check if theres a on display already.
+            if (detailedDisplayRef.childCount > 0)
+                Destroy(detailedDisplayRef.GetChild(0).gameObject);
+
+            // instantiate a copy in the detailed display area:
+            GameObject cardRef = Instantiate(card, detailedDisplayRef);
+            cardDisplaying = true;
+
+            //position
+            cardRef.transform.position = detailedDisplayRef.position;
+
+            //scale care huge
+            Vector3 ogScale = cardRef.transform.localScale;
+            cardRef.transform.localScale = new Vector3(ogScale.x * 2.5f, ogScale.y * 2.5f, ogScale.z);
+            cardRef.GetComponent<CardScaler>().displayCard = true;
+
+
+            // update quotebox
+            if (!quoteBox.activeSelf)
+            {
+                quoteBox.SetActive(true);
+            }
+            quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Quotes;
+            Debug.Log("" + cardRef.GetComponent<Card>().info.Quotes);
+
+            // hide and show appropriate buttons
+            ManageDeployButtons(card);
         }
-        quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Quotes;
-        Debug.Log("" + cardRef.GetComponent<Card>().info.Quotes);
-
-        // hide and show appropriate buttons
-        ManageDeployButtons(card);
-
     }
 
     void ManageDeployButtons(GameObject card)
