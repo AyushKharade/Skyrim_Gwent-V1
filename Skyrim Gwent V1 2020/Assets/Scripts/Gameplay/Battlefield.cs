@@ -5,13 +5,13 @@
  * this also takes care of UI
  * 
  * Takes care of weather cards.
+ * Takes care of booster cards
  */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//variables
 
 public class Battlefield : MonoBehaviour
 {
@@ -94,15 +94,14 @@ public class Battlefield : MonoBehaviour
     // public add cards to any fields
     public void AddUnitToFrontline(GameObject UnitCard)
     {
-
+        //set to deployed
         UnitCard.GetComponent<CardScaler>().deployed = true;                            // set cardrotator to deployed
         UnitCard.GetComponent<Card>().SetCardStatus("Deployed");                        // set status deployed
 
-        //Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
+        // move to actual position
         UnitCard.transform.Translate(new Vector3(0, frontlinePosY, 0));
         UnitCard.transform.position = new Vector3(frontlinePosX, UnitCard.transform.position.y, 0);
         frontlinePosX += additionOffsetX;
-
 
         frontline.AddLast(UnitCard);
         //adjust scores according to buffs or debuffs (Phase 2)
@@ -126,7 +125,6 @@ public class Battlefield : MonoBehaviour
         UnitCard.GetComponent<CardScaler>().deployed = true;                            // set cardrotator to deployed
         UnitCard.GetComponent<Card>().SetCardStatus("Deployed");                        // set status deployed
 
-        //Debug.Log("Unit Received: "+ UnitCard.GetComponent<Card>().info.name);
         UnitCard.transform.Translate(new Vector3(0, vantagePosY, 0));
         UnitCard.transform.position = new Vector3(vantagePosX, UnitCard.transform.position.y, 0);
         vantagePosX += additionOffsetX;
@@ -649,8 +647,11 @@ public class Battlefield : MonoBehaviour
         int count = HandRef.childCount;
         for (int i = 0; i < count; i++)
         {
-            HandRef.GetChild(i).transform.position = new Vector3(x,yPos,0);
-            x += 0.75f;
+            if (HandRef.GetChild(i).GetComponent<Card>().GetCardStatus() == "Hand")
+            {
+                HandRef.GetChild(i).transform.position = new Vector3(x, yPos, 0);
+                x += 0.75f;
+            }
         }
 
     }
