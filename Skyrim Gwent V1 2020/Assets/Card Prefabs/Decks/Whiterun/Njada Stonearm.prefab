@@ -539,7 +539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -6.64, y: 0.3}
+  m_AnchoredPosition: {x: -6.6400146, y: 0.30000305}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3905775126557706681
@@ -639,9 +639,11 @@ MonoBehaviour:
     subUnitType: 1
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"I''m still trying to figure out why Skjor let you in in the first place."'
   cardState: 5
   unitStrength: {fileID: 3905775126223130236}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &6089795683251397816
 BoxCollider2D:
   m_ObjectHideFlags: 0

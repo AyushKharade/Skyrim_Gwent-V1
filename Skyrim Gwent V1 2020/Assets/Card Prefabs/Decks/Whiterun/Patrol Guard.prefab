@@ -687,7 +687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -7.71, y: 0.32}
+  m_AnchoredPosition: {x: -7.710022, y: 0.32000732}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4107945514695907041
@@ -787,9 +787,11 @@ MonoBehaviour:
     subUnitType: 1
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"Can you enchant my sword? Dull old blade can barely cut butter."'
   cardState: 5
   unitStrength: {fileID: 4107945515567190308}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &7008853024141269071
 BoxCollider2D:
   m_ObjectHideFlags: 0

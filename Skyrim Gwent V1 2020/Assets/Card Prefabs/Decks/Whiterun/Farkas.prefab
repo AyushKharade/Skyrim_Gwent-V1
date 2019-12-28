@@ -1059,9 +1059,11 @@ MonoBehaviour:
     subUnitType: 0
     race: 1
     Ability_Details: Doubles Strength if place together with Vilkas
-    Quotes: 
+    Quotes: '"Skjor says I have the strength of Ysgramor, and my brother has his smarts."'
   cardState: 5
   unitStrength: {fileID: 5072491061708295522}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &-4875366090593149124
 BoxCollider2D:
   m_ObjectHideFlags: 0

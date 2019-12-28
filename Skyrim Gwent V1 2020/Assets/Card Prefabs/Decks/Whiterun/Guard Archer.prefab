@@ -1070,7 +1070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -8.659, y: 1.675}
+  m_AnchoredPosition: {x: -8.658997, y: 1.675003}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1530926620648133136
@@ -1170,9 +1170,11 @@ MonoBehaviour:
     subUnitType: 6
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"Is that fur.. Coming out of your ears?"'
   cardState: 5
   unitStrength: {fileID: 1530926619910903253}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &8613596659651493649
 BoxCollider2D:
   m_ObjectHideFlags: 0

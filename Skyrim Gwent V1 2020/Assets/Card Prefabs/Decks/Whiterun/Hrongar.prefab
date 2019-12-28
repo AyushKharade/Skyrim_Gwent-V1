@@ -1110,7 +1110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -5.671, y: -0.981}
+  m_AnchoredPosition: {x: -5.6710205, y: -0.9810028}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7332085895723348770
@@ -1210,9 +1210,12 @@ MonoBehaviour:
     subUnitType: 0
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"I''m not a man, I''m a weapon in human form. Just unsheathe me, and
+      point me at the enemy."'
   cardState: 5
   unitStrength: {fileID: 7332085895386674407}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &538066246039674403
 BoxCollider2D:
   m_ObjectHideFlags: 0

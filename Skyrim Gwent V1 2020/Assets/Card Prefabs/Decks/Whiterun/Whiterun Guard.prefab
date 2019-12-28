@@ -292,9 +292,11 @@ MonoBehaviour:
     subUnitType: 1
     race: 1
     Ability_Details: +1 to strength when place with other guards.
-    Quotes: 
+    Quotes: '"I was an adventurer like you, then i took an arrow to the knee."'
   cardState: 5
   unitStrength: {fileID: 7162381907703167550}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &4261474501956645717
 BoxCollider2D:
   m_ObjectHideFlags: 0

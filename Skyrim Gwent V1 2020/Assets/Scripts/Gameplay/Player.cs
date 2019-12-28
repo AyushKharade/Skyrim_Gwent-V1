@@ -54,8 +54,8 @@ public class Player : MonoBehaviour
     public int P1Cards = 10;
     public int P2Cards = 10;
 
-    public int P1TotalCards = 10;
-    public int P2TotalCards = 10;
+    int P1TotalCards = 10;
+    int P2TotalCards = 10;
 
 
     // game info ref
@@ -86,6 +86,12 @@ public class Player : MonoBehaviour
     int ScoreR3P1;
     int ScoreR3P2;
 
+    //detailed display
+    public Transform detailedDisplayRef;
+    bool cardDisplaying;
+
+    public Text quoteDetails;
+    GameObject quoteBox;
 
     void Start()
     {
@@ -127,6 +133,10 @@ public class Player : MonoBehaviour
         }
         // so players cant click right away
         TurnOnControlLock();
+
+
+        quoteBox = quoteDetails.transform.parent.gameObject;
+        quoteBox.SetActive(false);
     }
 
     private void InitializeGame()           // generate initial hand for both players
@@ -188,7 +198,27 @@ public class Player : MonoBehaviour
     // display card magnified and in detail, along with their quote.
     void DisplayDetailsUnitCard(GameObject card)
     {
+        //check if theres a on display already.
+        if (detailedDisplayRef.childCount > 0)
+            Destroy(detailedDisplayRef.GetChild(0).gameObject);
 
+        // instantiate a copy in the detailed display area:
+        GameObject cardRef=Instantiate(card, detailedDisplayRef);
+        cardDisplaying = true;
+
+        //position
+        cardRef.transform.position = detailedDisplayRef.position;
+
+        //scale care huge
+        Vector3 ogScale = cardRef.transform.localScale;
+        cardRef.transform.localScale = new Vector3(ogScale.x * 2.5f, ogScale.y * 2.5f, ogScale.z);
+
+        // update quotebox
+        if (!quoteBox.activeSelf)
+        {
+            quoteBox.SetActive(true);
+            quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Quotes;
+        }
     }
 
 

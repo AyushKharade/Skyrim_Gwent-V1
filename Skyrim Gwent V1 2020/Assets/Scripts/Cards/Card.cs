@@ -21,6 +21,8 @@ public class Card : MonoBehaviour
     public float moveSpeed;
     bool enableMovement;
 
+    public bool onDisplay;
+
     private void Start()
     {
         cardState = State.Hand;

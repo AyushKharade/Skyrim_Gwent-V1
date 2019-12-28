@@ -535,7 +535,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -8.713, y: -0.948}
+  m_AnchoredPosition: {x: -8.713013, y: -0.94799805}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2626187310039290754
@@ -635,9 +635,12 @@ MonoBehaviour:
     subUnitType: 1
     race: 1
     Ability_Details: Summons a Patrol Guard if available in the deck when deployed.
-    Quotes: 
+    Quotes: '"You''re not thinking of causing trouble here in this beautiful city,
+      now are you? ''Cause I''d strongly advise against such foolishness."'
   cardState: 5
   unitStrength: {fileID: 2626187310912672839}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &6791486032024225305
 BoxCollider2D:
   m_ObjectHideFlags: 0

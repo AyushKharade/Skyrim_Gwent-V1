@@ -71,6 +71,8 @@ public class Battlefield : MonoBehaviour
     // store sequence of cards drawn to support re-draw and spy cards.
     public List<int> drawnSequence;
 
+    
+
     private void Start()
     {
         frontline = new LinkedList<GameObject>();

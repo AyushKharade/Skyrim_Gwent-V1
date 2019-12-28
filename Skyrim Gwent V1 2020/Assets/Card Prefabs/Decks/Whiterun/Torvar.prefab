@@ -539,7 +539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -5.671, y: 0.3}
+  m_AnchoredPosition: {x: -5.6710205, y: 0.30000305}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1556891332975130106
@@ -639,9 +639,12 @@ MonoBehaviour:
     subUnitType: 1
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"A man of my station has many debts. I''m not much use at labor or learning,
+      but I can throw a punch with the best of ''em."'
   cardState: 5
   unitStrength: {fileID: 1556891332638454335}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &8587349963060713723
 BoxCollider2D:
   m_ObjectHideFlags: 0
