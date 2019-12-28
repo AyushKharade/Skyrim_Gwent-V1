@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
     int ScoreR3P2;
 
     //detailed display
+    public GameObject cardDeploying;
     public Transform detailedDisplayRef;
     bool cardDisplaying;
 
@@ -207,35 +208,39 @@ public class Player : MonoBehaviour
     // display card magnified and in detail, along with their quote.
     void DisplayDetailsUnitCard(GameObject card)
     {
-        if ((card.transform.parent.name=="Player1_Hand" && turn==1) || (card.transform.parent.name=="Player2_Hand" && turn==2))
+        if (card.GetComponent<Card>().GetCardStatus() =="Hand")
         {
-            //check if theres a on display already.
-            if (detailedDisplayRef.childCount > 0)
-                Destroy(detailedDisplayRef.GetChild(0).gameObject);
-
-            // instantiate a copy in the detailed display area:
-            GameObject cardRef = Instantiate(card, detailedDisplayRef);
-            cardDisplaying = true;
-
-            //position
-            cardRef.transform.position = detailedDisplayRef.position;
-
-            //scale care huge
-            Vector3 ogScale = cardRef.transform.localScale;
-            cardRef.transform.localScale = new Vector3(ogScale.x * 2.5f, ogScale.y * 2.5f, ogScale.z);
-            cardRef.GetComponent<CardScaler>().displayCard = true;
-
-
-            // update quotebox
-            if (!quoteBox.activeSelf)
+            if ((card.transform.parent.name == "Player1_Hand" && turn == 1) || (card.transform.parent.name == "Player2_Hand" && turn == 2))
             {
-                quoteBox.SetActive(true);
-            }
-            quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Quotes;
-            Debug.Log("" + cardRef.GetComponent<Card>().info.Quotes);
+                cardDeploying = card;
+                //check if theres a on display already.
+                if (detailedDisplayRef.childCount > 0)
+                    Destroy(detailedDisplayRef.GetChild(0).gameObject);
 
-            // hide and show appropriate buttons
-            ManageDeployButtons(card);
+                // instantiate a copy in the detailed display area:
+                GameObject cardRef = Instantiate(card, detailedDisplayRef);
+                cardDisplaying = true;
+
+                //position
+                cardRef.transform.position = detailedDisplayRef.position;
+
+                //scale care huge
+                Vector3 ogScale = cardRef.transform.localScale;
+                cardRef.transform.localScale = new Vector3(ogScale.x * 2.5f, ogScale.y * 2.5f, ogScale.z);
+                cardRef.GetComponent<CardScaler>().displayCard = true;
+
+
+                // update quotebox
+                if (!quoteBox.activeSelf)
+                {
+                    quoteBox.SetActive(true);
+                }
+                quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Quotes;
+                Debug.Log("" + cardRef.GetComponent<Card>().info.Quotes);
+
+                // hide and show appropriate buttons
+                ManageDeployButtons(card);
+            }
         }
     }
 
@@ -281,7 +286,9 @@ public class Player : MonoBehaviour
 
     public void CloseDetailsMenu()
     {
-        Destroy(detailedDisplayRef.GetChild(0).gameObject);
+        if(detailedDisplayRef.childCount>0)
+            Destroy(detailedDisplayRef.GetChild(0).gameObject);
+        cardDeploying = null;
 
         DeployFrontlineButton.gameObject.SetActive(false);
         DeployVantageButton.gameObject.SetActive(false);
@@ -292,11 +299,114 @@ public class Player : MonoBehaviour
 
         cardDisplaying = false;
         quoteBox.SetActive(false);
+        cardDeploying = null;
+    }
+
+
+    // Revamped smaller functions for deployment
+    //------------------------------------------------------------------------------
+    // actual deployment functions
+
+    public void DeployToFrontline()
+    {
+        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
+        if (turn == 1)
+        {
+            P1BFRef.AddUnitToFrontline(cardDeploying);
+            P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
+        else if (turn == 2)
+        {
+            P2BFRef.AddUnitToFrontline(cardDeploying);
+            P2Cards--;
+            if (P2Cards == 0)
+                ForcePass(2);
+        }
+
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+
+    public void DeployToVantage(string type)               // type could be regular, healer or necromancer
+    {
+        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
+        if (type == "Regular")
+        {
+            if (turn == 1)
+            {
+                P1BFRef.AddUnitToVantage(cardDeploying);
+                P1Cards--;
+                if (P1Cards == 0)
+                    ForcePass(1);
+            }
+            else if (turn == 2)
+            {
+                P2BFRef.AddUnitToVantage(cardDeploying);
+                P2Cards--;
+                if (P2Cards == 0)
+                    ForcePass(2);
+            }
+            
+        }
+        else if (type == "Healer")
+        {
+
+        }
+        else if (type == "Necromancer")
+        {
+
+        }
+
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+
+    public void DeployToShadow()
+    {
+        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
+        if (turn == 1)
+        {
+            P1BFRef.AddUnitToShadow(cardDeploying);
+            P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
+        else if (turn == 2)
+        {
+            P2BFRef.AddUnitToShadow(cardDeploying);
+            P2Cards--;
+            if (P2Cards == 0)
+                ForcePass(2);
+        }
+
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+    public void DeploySpy(int zone)
+    {
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+    public void DeploySpecial(string type)
+    {
+        ChangeTurn();
+        CloseDetailsMenu();
     }
 
 
 
 
+    //------------------------------------------------------------------------------
+
+
+        // old deployment code collapsed
+/*
     void DeployUnitCard(GameObject card)
     {
         Card cardRef = card.GetComponent<Card>();
@@ -790,10 +900,10 @@ public class Player : MonoBehaviour
             Debug.Log("No match found for deploying this card: Info:, name: "+cardRef.info.name+", type: "+cardRef.info.GetUnitType()+
                 ", hand: "+card.transform.parent.name+", current turn: "+turn+", state: "+cardRef.GetCardStatus());
     }
+    
 
 
-
-
+*/
 
 
 

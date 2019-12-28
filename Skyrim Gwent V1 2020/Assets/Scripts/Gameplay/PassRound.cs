@@ -40,6 +40,9 @@ public class PassRound : MonoBehaviour
 
         playableRef.ChangeTurn();
 
+        //revamped deployment
+        playableRef.CloseDetailsMenu();
+
     }
 
     public void Reset()
