@@ -396,10 +396,94 @@ public class Player : MonoBehaviour
         CloseDetailsMenu();
     }
 
-    public void DeploySpecial(string type)
+    public void DeploySpecialWeather(string type)
     {
+        switch (type)
+        {
+            case "FrostWeather":
+                {
+                    P1BFRef.SetFrostbiteWeather();
+                    P2BFRef.SetFrostbiteWeather();
+                    SFXManager.instance.Play("Frostbite_Weather");
+                    break;
+                }
+            case "BaneAetheriusWeather":
+                {
+                    P1BFRef.SetBaneAetheriusWeather();
+                    P2BFRef.SetBaneAetheriusWeather();
+                    break;
+                }
+            case "StormWeather":
+                {
+                    P1BFRef.SetStormWeather();
+                    P2BFRef.SetStormWeather();
+                    SFXManager.instance.Play("Storm_Weather");
+                    break;
+                }
+            case "ClearWeather":
+                {
+                    P1BFRef.SetClearWeather();
+                    P2BFRef.SetClearWeather();
+                    break;
+                }
+            default:
+                {
+                    Debug.Log("Not a valid weather card.");
+                    break;
+                }
+
+        }
+            // move card out of hand
+            // destroy:
+            if (turn == 1)
+                P1Cards--;
+            else
+                P2Cards--;
+            Destroy(cardDeploying.gameObject);
+        
         ChangeTurn();
         CloseDetailsMenu();
+    }
+
+    public void DeploySpecialBooster(string type)
+    {
+        // whose turn, and which type of booster
+        switch (type)
+        {
+            case "Booster_Frontline":
+                {
+                    if (turn == 1)
+                        P1BFRef.AddBooster(1, cardDeploying);
+                    else
+                        P2BFRef.AddBooster(1, cardDeploying);
+                    break;
+                }
+            case "Booster_Vantage":
+                {
+                    if (turn == 1)
+                        P1BFRef.AddBooster(2, cardDeploying);
+                    else
+                        P2BFRef.AddBooster(2, cardDeploying);
+                    break;
+                }
+            case "Booster_Shadow":
+                {
+                    if (turn == 1)
+                        P1BFRef.AddBooster(3, cardDeploying);
+                    else
+                        P2BFRef.AddBooster(3, cardDeploying);
+                    break;
+                }
+        }
+        if (turn == 1)
+            P1Cards--;
+        else
+            P2Cards--;
+
+        ChangeTurn();
+        CloseDetailsMenu();
+
+        SFXManager.instance.Play("Booster");
     }
 
     
@@ -520,6 +604,7 @@ public class Player : MonoBehaviour
             // Round UI (change to function
             RoundUI.text = "Round: " + round;
             Reinitialize();
+            SFXManager.instance.Play("EndOfRound");
         }
     }
 
@@ -729,7 +814,7 @@ public class Player : MonoBehaviour
             if (ID == 1)
             {
                 int count = 0;
-                while (count < P1TotalCards)
+                while (count < p1HandRef.childCount)
                 {
                     card = p1HandRef.GetChild(count).gameObject;
                     if (card.GetComponent<Card>().GetCardStatus() == "Hand")
@@ -740,7 +825,7 @@ public class Player : MonoBehaviour
             else if (ID == 2)
             {
                 int count = 0;
-                while (count < P2TotalCards)
+                while (count < p2HandRef.childCount)
                 {
                     card = p2HandRef.GetChild(count).gameObject;
                     if(card.GetComponent<Card>().GetCardStatus() =="Hand")

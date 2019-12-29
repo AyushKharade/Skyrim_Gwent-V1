@@ -385,9 +385,12 @@ public class Battlefield : MonoBehaviour
         if (storm)
             UpdateModifiedUnitScores(3);
 
+
+
         // if any boosters were active, redo all the buffs:
         if (frontlineBoost && frostbite)
         {
+            Debug.Log("Entered if(boost and weather) conditional when booster = "+frontlineBoost+" and weather: "+frostbite);
             //add buffs again.
             foreach (GameObject g in frontline)
             {
@@ -399,10 +402,12 @@ public class Battlefield : MonoBehaviour
                 //g.GetComponent<Card>().BuffColorEffect();
             }
             AddBooster(1, null);
+            UpdateModifiedUnitScores(1);
         }
-        if (baneAetherius && baneAetherius)
+        if (vantageBoost && baneAetherius)
         {
             //add buffs again.
+            Debug.Log("Entered if(boost and weather) conditional when booster = " + vantageBoost + " and weather: " + baneAetherius);
             foreach (GameObject g in vantage)
             {
                 g.GetComponent<Card>().info.ResetBuffs();
@@ -411,6 +416,7 @@ public class Battlefield : MonoBehaviour
                 //g.GetComponent<Card>().BuffColorEffect();
             }
             AddBooster(2, null);
+            UpdateModifiedUnitScores(2);
         }
         if (shadowBoost && storm)
         {
@@ -422,12 +428,13 @@ public class Battlefield : MonoBehaviour
                 //g.GetComponent<Card>().BuffColorEffect();
             }
             AddBooster(3, null);
+            UpdateModifiedUnitScores(3);
         }
-
 
         frostbite = false;
         baneAetherius = false;
         storm = false;
+
 
     }
 
@@ -594,7 +601,7 @@ public class Battlefield : MonoBehaviour
                         g.GetComponent<Card>().BuffColorEffect();
                 }
                 UpdateModifiedUnitScores(3);
-                vantageBoost = true;
+                shadowBoost = true;
             }
             else
             {

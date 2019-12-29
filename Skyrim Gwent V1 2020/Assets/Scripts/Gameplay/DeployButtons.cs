@@ -73,5 +73,17 @@ public class DeployButtons : MonoBehaviour
     public void DeploySpecial()
     {
         Debug.Log("Deploying Card to Special");
+        string str = PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType();
+        if (str == "FrostWeather" || str == "BaneAetheriusWeather" || str == "StormWeather" || str == "ClearWeather")
+        {
+            //Debug.Log("Deploying weather: "+str);
+            PlayableRef.DeploySpecialWeather(str);
+        }
+        else
+        {
+            //Debug.Log("Booster card selected.");
+            PlayableRef.DeploySpecialBooster(str);
+        }
+        //else its a booster 
     }
 }

@@ -817,6 +817,7 @@ MonoBehaviour:
     type: 3}
   endgamePrefab: {fileID: 368925907185256596, guid: 30e4468e73617a14f9b9bd5037212b43,
     type: 3}
+  cardDeploying: {fileID: 0}
   detailedDisplayRef: {fileID: 928825790}
   quoteDetails: {fileID: 1602566266}
   DeployFrontlineButton: {fileID: 232513944}
@@ -18209,12 +18210,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Booster
     clip: {fileID: 8300000, guid: eef04069db86ead4b9eb554c3d69f919, type: 3}
-    volume: 0.8
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
+  - name: EndOfRound
+    clip: {fileID: 8300000, guid: 361f2337bdd17d8458e7c0dc2d5f6337, type: 3}
     volume: 0.32
     pitch: 1
     loop: 0
