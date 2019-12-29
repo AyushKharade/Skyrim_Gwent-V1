@@ -80,8 +80,7 @@ public class Battlefield : MonoBehaviour
         shadow = new LinkedList<GameObject>();
         discardpile = new LinkedList<GameObject>();
 
-
-        // turn on weather particle systems:
+        // turn off weather particle systems:
         FrostParticleSystem.GetComponent<ParticleSystem>().Stop();
         BaneAetheriusParticleSystem.GetComponent<ParticleSystem>().Stop();
         StormParticleSystem.GetComponent<ParticleSystem>().Stop();
@@ -91,7 +90,6 @@ public class Battlefield : MonoBehaviour
     {
         UpdateScoreUI();
     }
-
 
     // public add cards to any fields
     public void AddUnitToFrontline(GameObject UnitCard)
@@ -118,8 +116,6 @@ public class Battlefield : MonoBehaviour
             UnitCard.GetComponent<Card>().BuffColorEffect();
         }
         frontlineScore += UnitCard.GetComponent<Card>().info.strength;
-
-
     }
 
     public void AddUnitToVantage(GameObject UnitCard)
@@ -173,9 +169,8 @@ public class Battlefield : MonoBehaviour
     }
 
 
-    private void MoveToDiscardPile()
-    { // move all cards in all decks to discard}
-
+    private void MoveToDiscardPile()             // move all cards in all decks to discard
+    {
         while (frontline.Count > 0)
         {
             if (!frontline.First.Value.GetComponent<Card>().info.isHero)
@@ -206,7 +201,6 @@ public class Battlefield : MonoBehaviour
         vantagePosX = -0.5f;
         shadowPosX = -0.5f;
     }
-
 
 
 
@@ -265,13 +259,11 @@ public class Battlefield : MonoBehaviour
     }
 
 
-
     // passing
     public void SetPassed()
     {
         playerPassed = true;
     }
-
 
     void UpdateModifiedUnitScores(int i)
     {
@@ -291,11 +283,9 @@ public class Battlefield : MonoBehaviour
             int tempScore = 0;
             foreach (GameObject g in vantage)
             {
-                //string strScore = g.GetComponent<Card>().unitStrength.text + "";
-                //tempScore += int.Parse(strScore);
                 tempScore += g.GetComponent<Card>().info.strength;
             }
-            Debug.Log("newly updated vantage score: " + tempScore);
+            //Debug.Log("newly updated vantage score: " + tempScore);
             //update
             vantageScore = tempScore;
             UpdateScoreUI();
