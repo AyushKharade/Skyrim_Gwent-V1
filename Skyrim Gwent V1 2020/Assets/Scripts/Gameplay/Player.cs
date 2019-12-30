@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 /*
  * This is the main gameplay loop, or the main game script.
  * It controls player inputs, game functions to advance games.
@@ -22,7 +21,6 @@ public class Player : MonoBehaviour
     bool controlLock;
     float controlLockTimer;
     float controlLockTime = 1.5f;
-
 
     [Range(1,2)]
     [HideInInspector]public int turn;
@@ -55,11 +53,7 @@ public class Player : MonoBehaviour
     //temp card count:
     public int P1Cards = 10;
     public int P2Cards = 10;
-
-    public int P1TotalCards = 10;
-    public int P2TotalCards = 10;
-
-
+    
     // game info ref
     GameStarter gameinfo;
 
@@ -73,10 +67,8 @@ public class Player : MonoBehaviour
     float p2DiscardXPos=5;
     float p2DiscardYPos=2.8f;
 
-
     // if hide
     public bool hideOpponentCards;
-
 
     //ref to popup message prefab
     public GameObject popupPrefab;
@@ -89,6 +81,23 @@ public class Player : MonoBehaviour
     int ScoreR2P2;
     int ScoreR3P1;
     int ScoreR3P2;
+
+    //detailed display
+    public GameObject cardDeploying;
+    public Transform detailedDisplayRef;
+    bool cardDisplaying;
+
+    public Text quoteDetails;
+    GameObject quoteBox;
+
+    // deployment buttons
+    [Header("Clickable Buttons")]
+    public Button DeployFrontlineButton;
+    public Button DeployVantage_SpellswordButton;
+    public Button DeployVantageButton;
+    public Button DeployShadowButton;
+    public Button DeploySpecialButton;
+    public Button CloseButton;
 
     void Start()
     {
@@ -128,15 +137,18 @@ public class Player : MonoBehaviour
             GameObject popup = Instantiate(popupPrefab);
             popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 goes first.");
         }
-        // so palyers cant click right away
+        // so players cant click right away
         TurnOnControlLock();
+
+
+        quoteBox = quoteDetails.transform.parent.gameObject;
+        quoteBox.SetActive(false);
     }
 
     private void InitializeGame()           // generate initial hand for both players
     {
         GenerateHand(1);
         GenerateHand(2);
-        // since prefabs are not being changed anymore, there is no need to resetdeck() if the two decks are the same
     }
 
 
@@ -152,7 +164,7 @@ public class Player : MonoBehaviour
             ControlLockCounter();
 
         // Round UI (change to function
-        RoundUI.text = "Round: " + round;
+        //RoundUI.text = "Round: " + round;
 
 
         // for redrawing decks (testing)
@@ -163,6 +175,8 @@ public class Player : MonoBehaviour
     }
 
 
+    // Mouse Input
+    //________________________________________________________________________________________________
     void GetCameraRaycast()
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -175,24 +189,485 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && hit.collider != null)
         {
             //place card
-            if(hit.collider.gameObject.GetComponent<Card>().GetCardStatus() == "Hand")
-                DeployUnitCard(hit.collider.gameObject);
+            if (hit.collider.gameObject.GetComponent<Card>().GetCardStatus() == "Hand")
+            {
+                DisplayDetailsUnitCard(hit.collider.gameObject);
+                //DeployUnitCard(hit.collider.gameObject);
+            }
         }
     }
 
-    // early debugger function
-    void DisplayRaycastTarget()
+
+
+    // Deployment functions
+    //_________________________________________________________________________________________________________________________
+    // display card magnified and in detail, along with their quote.
+    void DisplayDetailsUnitCard(GameObject card)
     {
-        if (raycastTarget != null)
-            Debug.Log("Card: " + raycastTarget.transform.name);
+        if (card.GetComponent<Card>().GetCardStatus() =="Hand")
+        {
+            if ((card.transform.parent.name == "Player1_Hand" && turn == 1) || (card.transform.parent.name == "Player2_Hand" && turn == 2))
+            {
+                cardDeploying = card;
+                //check if theres a on display already.
+                if (detailedDisplayRef.childCount > 0)
+                    Destroy(detailedDisplayRef.GetChild(0).gameObject);
+
+                // instantiate a copy in the detailed display area:
+                GameObject cardRef = Instantiate(card, detailedDisplayRef);
+                cardDisplaying = true;
+
+                //position
+                cardRef.transform.position = detailedDisplayRef.position;
+
+                //scale care huge
+                Vector3 ogScale = cardRef.transform.localScale;
+                cardRef.transform.localScale = new Vector3(ogScale.x * 2.5f, ogScale.y * 2.5f, ogScale.z);
+                cardRef.GetComponent<CardScaler>().displayCard = true;
+
+                // update quotebox
+                if (!quoteBox.activeSelf)
+                {
+                    quoteBox.SetActive(true);
+                }
+                if(card.GetComponent<Card>().info.GetUnitType()=="Special")
+                    quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Ability_Details;
+                else
+                    quoteDetails.text = "" + cardRef.GetComponent<Card>().info.Quotes;
+
+                //Debug.Log("" + cardRef.GetComponent<Card>().info.Quotes);
+
+                // hide and show appropriate buttons
+                ManageDeployButtons(card);
+            }
+        }
+    }
+
+    void ManageDeployButtons(GameObject card)
+    {
+        DeployFrontlineButton.gameObject.SetActive(false);
+        DeployVantageButton.gameObject.SetActive(false);
+        DeployVantage_SpellswordButton.gameObject.SetActive(false);
+        DeployShadowButton.gameObject.SetActive(false);
+        DeploySpecialButton.gameObject.SetActive(false);
+        CloseButton.gameObject.SetActive(true);
+
+        switch (card.GetComponent<Card>().info.GetUnitType())
+        {
+            case "Warrior":
+                {
+                    DeployFrontlineButton.gameObject.SetActive(true);
+                    break;
+                }
+            case "Spellsword":
+                {
+                    DeployFrontlineButton.gameObject.SetActive(true);
+                    DeployVantage_SpellswordButton.gameObject.SetActive(true);
+                    break;
+                }
+            case "Mage":
+                {
+                    DeployVantageButton.gameObject.SetActive(true);
+                    break;
+                }
+            case "Shadow":
+                {
+                    DeployShadowButton.gameObject.SetActive(true);
+                    break;
+                }
+            default:
+                {
+                    DeploySpecialButton.gameObject.SetActive(true);
+                    break;
+                }
+        }
+    }
+
+    public void CloseDetailsMenu()
+    {
+        if(detailedDisplayRef.childCount>0)
+            Destroy(detailedDisplayRef.GetChild(0).gameObject);
+        cardDeploying = null;
+
+        DeployFrontlineButton.gameObject.SetActive(false);
+        DeployVantageButton.gameObject.SetActive(false);
+        DeployVantage_SpellswordButton.gameObject.SetActive(false);
+        DeployShadowButton.gameObject.SetActive(false);
+        DeploySpecialButton.gameObject.SetActive(false);
+        CloseButton.gameObject.SetActive(false);
+
+        cardDisplaying = false;
+        quoteBox.SetActive(false);
+        cardDeploying = null;
     }
 
 
-    private void GenerateHand(int PlayerID)
+    // Revamped smaller functions for deployment
+    //------------------------------------------------------------------------------
+    // actual deployment functions
+
+    public void DeployToFrontline()
+    {
+        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
+        if (turn == 1)
+        {
+            P1BFRef.AddUnitToFrontline(cardDeploying);
+            P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
+        else if (turn == 2)
+        {
+            P2BFRef.AddUnitToFrontline(cardDeploying);
+            P2Cards--;
+            if (P2Cards == 0)
+                ForcePass(2);
+        }
+
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+
+    public void DeployToVantage(string type)               // type could be regular, healer or necromancer
+    {
+        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
+        if (type == "Regular")
+        {
+            if (turn == 1)
+            {
+                P1BFRef.AddUnitToVantage(cardDeploying);
+                P1Cards--;
+                if (P1Cards == 0)
+                    ForcePass(1);
+            }
+            else if (turn == 2)
+            {
+                P2BFRef.AddUnitToVantage(cardDeploying);
+                P2Cards--;
+                if (P2Cards == 0)
+                    ForcePass(2);
+            }
+            
+        }
+        else if (type == "Healer")
+        {
+
+        }
+        else if (type == "Necromancer")
+        {
+
+        }
+
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+
+    public void DeployToShadow()
+    {
+        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
+        if (turn == 1)
+        {
+            P1BFRef.AddUnitToShadow(cardDeploying);
+            P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
+        else if (turn == 2)
+        {
+            P2BFRef.AddUnitToShadow(cardDeploying);
+            P2Cards--;
+            if (P2Cards == 0)
+                ForcePass(2);
+        }
+
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+    public void DeploySpy(int zone)
+    {
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+    public void DeploySpecialWeather(string type)
+    {
+        switch (type)
+        {
+            case "FrostWeather":
+                {
+                    P1BFRef.SetFrostbiteWeather();
+                    P2BFRef.SetFrostbiteWeather();
+                    SFXManager.instance.Play("Frostbite_Weather");
+                    break;
+                }
+            case "BaneAetheriusWeather":
+                {
+                    P1BFRef.SetBaneAetheriusWeather();
+                    P2BFRef.SetBaneAetheriusWeather();
+                    break;
+                }
+            case "StormWeather":
+                {
+                    P1BFRef.SetStormWeather();
+                    P2BFRef.SetStormWeather();
+                    SFXManager.instance.Play("Storm_Weather");
+                    break;
+                }
+            case "ClearWeather":
+                {
+                    P1BFRef.SetClearWeather();
+                    P2BFRef.SetClearWeather();
+                    break;
+                }
+            default:
+                {
+                    Debug.Log("Not a valid weather card.");
+                    break;
+                }
+
+        }
+        // move card out of hand
+        if (turn == 1)
+        {
+            P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
+        else
+        {
+            P2Cards--;
+            if(P2Cards==0)
+                ForcePass(2);
+        }
+        // destroy:
+
+        Destroy(cardDeploying.gameObject);
+        
+        ChangeTurn();
+        CloseDetailsMenu();
+    }
+
+    public void DeploySpecialBooster(string type)
+    {
+        // whose turn, and which type of booster
+        switch (type)
+        {
+            case "Booster_Frontline":
+                {
+                    if (turn == 1)
+                        P1BFRef.AddBooster(1, cardDeploying);
+                    else
+                        P2BFRef.AddBooster(1, cardDeploying);
+                    break;
+                }
+            case "Booster_Vantage":
+                {
+                    if (turn == 1)
+                        P1BFRef.AddBooster(2, cardDeploying);
+                    else
+                        P2BFRef.AddBooster(2, cardDeploying);
+                    break;
+                }
+            case "Booster_Shadow":
+                {
+                    if (turn == 1)
+                        P1BFRef.AddBooster(3, cardDeploying);
+                    else
+                        P2BFRef.AddBooster(3, cardDeploying);
+                    break;
+                }
+        }
+        if (turn == 1)
+        {
+            P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
+        else
+        {
+            P2Cards--;
+            if (P2Cards == 0)
+                ForcePass(2);
+        }
+        
+
+        ChangeTurn();
+        CloseDetailsMenu();
+
+        SFXManager.instance.Play("Booster");
+    }
+
+    
+    //------------------------------------------------------------------------------
+
+    // Deployment Functions Above
+    //___________________________________________________________________________________________________________________
+    //
+    // Other Supporting Functions
+    //___________________________________________________________________________________________________________________
+    public void ChangeTurn()        // Changes the turn, also calls flip decks function, also ends round when both players pass
+    {
+        if (turn == 2)
+        {
+            if (!P1BFRef.playerPassed)
+            {
+                turn = 1;
+                FlipCardsInDeck(1);
+                FlipCardsInDeck(2);
+                TurnOnControlLock();
+                //
+                GameObject popup = Instantiate(popupPrefab);
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1's turn.");
+            }
+        }
+        else if (turn == 1)
+        {
+            if (!P2BFRef.playerPassed)
+            {
+                turn = 2;
+                FlipCardsInDeck(1);
+                FlipCardsInDeck(2);
+                TurnOnControlLock();
+                //
+                GameObject popup = Instantiate(popupPrefab);
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
+                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2's turn.");
+            }
+        }
+
+        
+        if (P1BFRef.playerPassed && P2BFRef.playerPassed)
+        {
+            if (!controlLock)                
+            {
+                //call end of round function
+                if(round==3 || round==2)
+                    Invoke("EndOfRound", 1f);       //need to delay function call otherwise wont register last deployed card.
+                else
+                    EndOfRound();
+                Debug.Log("End of round.");
+            }
+        }
+    }
+
+
+    void EndOfRound()               // is called when both players pass, and round ends, saves scores and changes lives count depending on round outcome
+    {
+        if (P1BFRef.totalScore > P2BFRef.totalScore)
+        {
+            Debug.Log("Player 1 Won round "+round);
+            p2Lives--;
+            //
+            GameObject popup = Instantiate(popupPrefab);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2f);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1 won the round.");
+        }
+        else if (P1BFRef.totalScore == P2BFRef.totalScore)
+        {
+            Debug.Log("Round "+round+" Tied");
+            p1Lives--;
+            p2Lives--;
+            //
+            GameObject popup = Instantiate(popupPrefab);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Round Draw.");
+        }
+        else if (P1BFRef.totalScore < P2BFRef.totalScore)
+        {
+            Debug.Log("Player 2 Won round "+round);
+            p1Lives--;
+            //
+            GameObject popup = Instantiate(popupPrefab);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2);
+            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 won the round.");
+        }
+        // update
+        RoundStatus();
+        UpdateLivesUI();
+    }
+
+    void RoundStatus()              // checks if match is over then calls Endgame(), other wise starts next round and calls reinit()
+    {
+        // check if anyone lost then end game
+        if (p1Lives == 0 && p2Lives == 0)
+        {
+            Debug.Log("Match Draw!");
+            gameEnded = true;
+            EndgameStats();
+        }
+        else if (p1Lives == 0)
+        {
+            Debug.Log("Player 2 Won the Match!!");
+            gameEnded = true;
+            EndgameStats();
+        }
+        else if (p2Lives == 0)
+        {
+            Debug.Log("Player 1 Won the Match!!");
+            gameEnded = true;
+            EndgameStats();
+        }
+        else
+        {
+            Debug.Log("Starting Next Round");
+            round++;
+            // Round UI (change to function
+            RoundUI.text = "Round: " + round;
+            Reinitialize();
+            SFXManager.instance.Play("EndOfRound");
+        }
+    }
+
+
+    void Reinitialize()             // resets everything, so that you can play next round, cleans up board, resets weather, scores, boosters, etc.
+    {
+        // move current cards to discard pile (done in battlefield)
+        // reset pass buttons and UI & score
+        P1Pass.gameObject.GetComponent<PassRound>().Reset();
+        P2Pass.gameObject.GetComponent<PassRound>().Reset();
+
+        //save scores
+        if (round - 1 == 1)
+        {
+            ScoreR1P1 = P1BFRef.totalScore;
+            ScoreR1P2 = P2BFRef.totalScore;
+        }
+        else if (round - 1 == 2)
+        {
+            ScoreR2P1 = P1BFRef.totalScore;
+            ScoreR2P2 = P2BFRef.totalScore;
+        }
+
+        //reset battlefield scripts
+        P1BFRef.Reset();
+        P2BFRef.Reset();
+
+        //reset weathers
+        P1BFRef.ResetWeather();
+        P2BFRef.ResetWeather();
+
+        //reset boosters
+        P1BFRef.ResetBoosters();
+        P2BFRef.ResetBoosters();
+
+        RemoveDeployedCards();
+        if (P1Cards == 0)
+            ForcePass(1);
+        if (P2Cards == 0)
+            ForcePass(2);
+    }
+
+
+    
+    private void GenerateHand(int PlayerID)     //generate hand function
     {
         int count = 10;
         float yOffset;
-        float xOffset=-2;
+        float xOffset = -2;
         GameObject deck;
 
         if (PlayerID == 1)
@@ -231,439 +706,22 @@ public class Player : MonoBehaviour
                 xOffset += 0.75f;
             }
         }
+
+        // save sequence to battlefield so further drawing is possible
+        if (PlayerID == 1)
+            P1BFRef.InitSequence(drawSequence);
+        else if (PlayerID == 2)
+            P2BFRef.InitSequence(drawSequence);
     }
 
 
-    void DeployUnitCard(GameObject card)
+
+    // can let battlefield do this instead, but find if you keep it here.
+    void RemoveDeployedCards()                  // moves all board (deployed cards) to discard pile (physically)
     {
-        Card cardRef = card.GetComponent<Card>();
-        if (cardRef.info.GetUnitType() == "Warrior" && cardRef.GetCardStatus() == "Hand")
-        {
-            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
-            {
-                P1BFRef.AddUnitToFrontline(card);
-                ChangeTurn();
-
-                P1Cards--;
-                if (P1Cards == 0)
-                    ForcePass(1);
-
-            }
-            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
-            {
-                P2BFRef.AddUnitToFrontline(card);
-                ChangeTurn();
-
-                P2Cards--;
-                if (P2Cards == 0)
-                    ForcePass(2);
-            }
-        }
-
-        else if ((cardRef.info.GetUnitType() == "Mage" || cardRef.info.GetUnitType() == "Spellsword") && cardRef.GetCardStatus() == "Hand")
-        {
-            // place on Vantage -- for now place spellswords on vantage too
-            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
-            {
-                P1BFRef.AddUnitToVantage(card);
-
-                //if healer, for now randomly redeploy a card into battlefield.
-                if (cardRef.info.GetSubUnitType() == "Healer")
-                {
-                    GameObject RedeployedUnit = P1BFRef.MedicReDeploy();
-                    if (RedeployedUnit != null)
-                    {
-                        Debug.Log("Redeploying Card. " + RedeployedUnit.GetComponent<Card>().info.name);
-                        // rotate and change status to hand for redeployment to work.
-                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
-                        RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);          // 4.4 & -4.2
-                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
-                        P1Cards++;
-                        DeployUnitCard(RedeployedUnit);
-                        ChangeTurn();                                      // needed other same player gets the turn  again
-                        SFXManager.instance.Play("Medic_Redeploy");
-                    }
-
-                }
-
-                // necromancer
-                if (cardRef.info.GetSubUnitType() == "Necromancer")
-                {
-                    GameObject RedeployedUnit = P2BFRef.MedicReDeploy();          // use same function as medic, but dont forget to remove from other player's pile
-                    if (RedeployedUnit != null)
-                    {
-                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
-                        RedeployedUnit.transform.position = new Vector3(0, -4.2f, 0);
-                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
-                        RedeployedUnit.transform.SetParent(p1HandRef);                    // change parent, so its a player 1 card now
-
-                        P1Cards++;
-                        P1TotalCards++;                             // these variables so flipdecks() dont bug out
-                        P2TotalCards--;
-
-                        DeployUnitCard(RedeployedUnit);
-                        ChangeTurn();                                      // needed otherwise same player gets the turn  again
-                    }
-                }
-                ChangeTurn();
-
-                P1Cards--;
-                if (P1Cards == 0)
-                    ForcePass(1);
-            }
-
-            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
-            {
-                P2BFRef.AddUnitToVantage(card);
-                //ChangeTurn();
-
-                //if healer, for now randomly redeploy a card into battlefield.
-                if (cardRef.info.GetSubUnitType() == "Healer")
-                {
-                    GameObject RedeployedUnit = P2BFRef.MedicReDeploy();
-                    if (RedeployedUnit != null)
-                    {
-                        //Debug.Log("Redeploying Card. " + RedeployedUnit.GetComponent<Card>().info.name);
-                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));        // rotate and change status to hand for redeployment to work.
-                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
-                        RedeployedUnit.transform.position = new Vector3(0, 4.4f, 0);          // 4.4 & -4.2
-                        P2Cards++;              // because deploy function decrements
-                        DeployUnitCard(RedeployedUnit);
-                        ChangeTurn();
-
-                        SFXManager.instance.Play("Medic_Redeploy");
-                    }
-
-                }
-
-                // necromancer
-                if (cardRef.info.GetSubUnitType() == "Necromancer")
-                {
-                    GameObject RedeployedUnit = P1BFRef.MedicReDeploy();          // use same function as medic, but dont forget to remove from other player's pile
-                    if (RedeployedUnit != null)
-                    {
-                        RedeployedUnit.transform.Rotate(new Vector3(0, 180, 0));
-                        RedeployedUnit.transform.position = new Vector3(0, 4.4f, 0);
-                        RedeployedUnit.GetComponent<Card>().SetCardStatus("Hand");
-                        RedeployedUnit.transform.SetParent(p2HandRef);                    // change parent, so its a player 2 card now
-
-                        P2Cards++;
-                        P1TotalCards--;                             // these variables so flipdecks() dont bug out
-                        P2TotalCards++;
-
-                        DeployUnitCard(RedeployedUnit);
-                        ChangeTurn();                                      // needed otherwise same player gets the turn  again
-                    }
-                }
-
-                ChangeTurn();
-                P2Cards--;
-                if (P2Cards == 0)
-                    ForcePass(2);
-            }
-        }
-
-
-        else if (cardRef.info.GetUnitType() == "Shadow" && cardRef.GetCardStatus() == "Hand")
-        {
-            // place on shadow
-            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
-            {
-                P1BFRef.AddUnitToShadow(card);
-                ChangeTurn();
-
-                P1Cards--;
-                if (P1Cards == 0)
-                    ForcePass(1);
-            }
-            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
-            {
-                P2BFRef.AddUnitToShadow(card);
-                ChangeTurn();
-
-                P2Cards--;
-                if (P2Cards == 0)
-                    ForcePass(2);
-            }
-        }
-
-        //weather -- make sure to set card to discard later
-        else if (cardRef.info.GetUnitType() == "Special")
-        {
-            if (turn == 1 && card.transform.parent.name == "Player1_Hand")
-            {
-                if (cardRef.info.GetSubUnitType() == "FrostWeather")
-                {
-                    P1BFRef.SetFrostbiteWeather();
-                    P2BFRef.SetFrostbiteWeather();
-                    card.transform.Translate(new Vector3(0, -2, 0));
-                    SFXManager.instance.Play("Frostbite_Weather");
-                }
-                else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
-                {
-                    P1BFRef.SetBaneAetheriusWeather();
-                    P2BFRef.SetBaneAetheriusWeather();
-                    card.transform.Translate(new Vector3(0, -2, 0));
-                }
-                else if (cardRef.info.GetSubUnitType() == "StormWeather")
-                {
-                    P1BFRef.SetStormWeather();
-                    P2BFRef.SetStormWeather();
-                    card.transform.Translate(new Vector3(0, -2, 0));
-                    SFXManager.instance.Play("Storm_Weather");
-                }
-                else if (cardRef.info.GetSubUnitType() == "ClearWeather")
-                {
-                    P1BFRef.SetClearWeather();
-                    P2BFRef.SetClearWeather();
-                    card.transform.Translate(new Vector3(0, -2, 0));
-                }
-
-
-                // boosters:
-                else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
-                {
-                    P1BFRef.AddBooster(1, card);
-                    SFXManager.instance.Play("Booster");
-                }
-                else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
-                {
-                    //place at vantage booster offset.
-                    // call function on battlefield.
-                    P1BFRef.AddBooster(2, card);
-                    SFXManager.instance.Play("Booster");
-                }
-
-
-
-                ChangeTurn();
-
-                P1Cards--;
-                if (P1Cards == 0)
-                    ForcePass(1);
-            }
-            //for player 2
-            else if (turn == 2 && card.transform.parent.name == "Player2_Hand")
-            {
-                if (cardRef.info.GetSubUnitType() == "FrostWeather")
-                {
-                    P2BFRef.SetFrostbiteWeather();
-                    P1BFRef.SetFrostbiteWeather();
-                    card.transform.Translate(new Vector3(0, 2, 0));
-                    SFXManager.instance.Play("Frostbite_Weather");
-                }
-                //else if baneaetherius
-                else if (cardRef.info.GetSubUnitType() == "BaneAetheriusWeather")
-                {
-                    P1BFRef.SetBaneAetheriusWeather();
-                    P2BFRef.SetBaneAetheriusWeather();
-                    card.transform.Translate(new Vector3(0, 2, 0));
-                }
-                else if (cardRef.info.GetSubUnitType() == "StormWeather")
-                {
-                    P1BFRef.SetStormWeather();
-                    P2BFRef.SetStormWeather();
-                    card.transform.Translate(new Vector3(0, 2, 0));
-                    //audio
-                    SFXManager.instance.Play("Storm_Weather");
-                }
-                else if (cardRef.info.GetSubUnitType() == "ClearWeather")
-                {
-                    P1BFRef.SetClearWeather();
-                    P2BFRef.SetClearWeather();
-                    card.transform.Translate(new Vector3(0, 2, 0));
-                }
-
-                // boosters:
-                else if (cardRef.info.GetSubUnitType() == "Booster_Frontline")
-                {
-                    P2BFRef.AddBooster(1,card);
-                    SFXManager.instance.Play("Booster");
-                }
-                else if (cardRef.info.GetSubUnitType() == "Booster_Vantage")
-                {
-                    //place at vantage booster offset.
-                    // call function on battlefield.
-                    P2BFRef.AddBooster(2, card);
-                    SFXManager.instance.Play("Booster");
-                }
-
-                ChangeTurn();
-
-                P2Cards--;
-                if (P2Cards == 0)
-                    ForcePass(2);
-            }
-        }
-
-        // no match for card type exception
-        else
-            Debug.Log("No match found for deploying this card: Info:, name: "+cardRef.info.name+", type: "+cardRef.info.GetUnitType()+
-                ", hand: "+card.transform.parent.name+", current turn: "+turn+", state: "+cardRef.GetCardStatus());
-    }
-
-
-    public void ChangeTurn()
-    {
-        if (turn == 2)
-        {
-            if (!P1BFRef.playerPassed)
-            {
-                turn = 1;
-                FlipCardsInDeck(1);
-                FlipCardsInDeck(2);
-                TurnOnControlLock();
-                //
-                GameObject popup = Instantiate(popupPrefab);
-                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
-                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1's turn.");
-
-            }
-        }
-        else if (turn == 1)
-        {
-            if (!P2BFRef.playerPassed)
-            {
-                turn = 2;
-                FlipCardsInDeck(1);
-                FlipCardsInDeck(2);
-                TurnOnControlLock();
-                //
-                GameObject popup = Instantiate(popupPrefab);
-                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(1);
-                popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2's turn.");
-            }
-        }
-
-        
-        if (P1BFRef.playerPassed && P2BFRef.playerPassed)
-        {
-            if (!controlLock)                
-            {
-                //call end of round function
-                if(round==3 || round==2)
-                    Invoke("EndOfRound", 1f);       //need to delay function call otherwise wont register last deployed card.
-                else
-                    EndOfRound();
-                Debug.Log("End of round.");
-            }
-           
-        }
-        
-    }
-
-
-    void EndOfRound()
-    {
-        if (P1BFRef.totalScore > P2BFRef.totalScore)
-        {
-            Debug.Log("Player 1 Won round "+round);
-            p2Lives--;
-            //
-            GameObject popup = Instantiate(popupPrefab);
-            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2f);
-            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 1 won the round.");
-
-
-        }
-        else if (P1BFRef.totalScore == P2BFRef.totalScore)
-        {
-            Debug.Log("Round "+round+" Tied");
-            p1Lives--;
-            p2Lives--;
-            //
-            GameObject popup = Instantiate(popupPrefab);
-            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2);
-            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Round Draw.");
-        }
-        else if (P1BFRef.totalScore < P2BFRef.totalScore)
-        {
-            Debug.Log("Player 2 Won round "+round);
-            p1Lives--;
-            //
-            GameObject popup = Instantiate(popupPrefab);
-            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetExpireTimer(2);
-            popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2 won the round.");
-        }
-
-        // update
-        RoundStatus();
-        UpdateLivesUI();
-    }
-
-    void RoundStatus()
-    {
-        // check if anyone lost then end game
-        if (p1Lives == 0 && p2Lives == 0)
-        {
-            Debug.Log("Match Draw!");
-            gameEnded = true;
-            EndgameStats();
-        }
-        else if (p1Lives == 0)
-        {
-            Debug.Log("Player 2 Won the Match!!");
-            gameEnded = true;
-            EndgameStats();
-        }
-        else if (p2Lives == 0)
-        {
-            Debug.Log("Player 1 Won the Match!!");
-            gameEnded = true;
-            EndgameStats();
-        }
-        else
-        {
-            Debug.Log("Starting Next Round");
-            round++;
-            Reinitialize();
-        }
-    }
-
-
-    void Reinitialize()
-    {
-        // move current cards to discard pile (done in battlefield)
-        // reset pass buttons and UI & score
-        P1Pass.gameObject.GetComponent<PassRound>().Reset();
-        P2Pass.gameObject.GetComponent<PassRound>().Reset();
-
-        //save scores
-        if (round - 1 == 1)
-        {
-            ScoreR1P1 = P1BFRef.totalScore;
-            ScoreR1P2 = P2BFRef.totalScore;
-        }
-        else if (round - 1 == 2)
-        {
-            ScoreR2P1 = P1BFRef.totalScore;
-            ScoreR2P2 = P2BFRef.totalScore;
-        }
-
-        //reset battlefield scripts
-        P1BFRef.Reset();
-        P2BFRef.Reset();
-
-        //reset weathers
-        P1BFRef.ResetWeather();
-        P2BFRef.ResetWeather();
-
-        //reset boosters
-        P1BFRef.ResetBoosters();
-        P2BFRef.ResetBoosters();
-
-        RemoveDeployedCards();
-        if (P1Cards == 0)
-            ForcePass(1);
-        if (P2Cards == 0)
-            ForcePass(2);
-    }
-
-    void RemoveDeployedCards()
-    {
-        
         int count = 0;
-        while (count<P1TotalCards)
+        //while (count<P1TotalCards)
+        while (count<p1HandRef.childCount)
         {
             if (p1HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
             {
@@ -672,8 +730,6 @@ public class Player : MonoBehaviour
                 card.GetComponent<Card>().SetCardStatus("Discard");
                 card.transform.Rotate(new Vector3(0,180,0));
                 card.transform.position = new Vector3(p1DiscardXPos,p1DiscardYPos);
-
-                //Debug.Log("Destroyed one card: "+p1HandRef.GetChild(count).GetComponent<Card>().name);
                 count++;
             }
             else
@@ -681,7 +737,8 @@ public class Player : MonoBehaviour
         }
         //p2
         count = 0;
-        while (count < P2TotalCards)
+        //while (count < P2TotalCards)
+        while (count < p2HandRef.childCount)
         {
             if (p2HandRef.GetChild(count).GetComponent<Card>().GetCardStatus() == "Deployed")
             {
@@ -690,7 +747,6 @@ public class Player : MonoBehaviour
                 card.GetComponent<Card>().SetCardStatus("Discard");
                 card.transform.Rotate(new Vector3(0, 180, 0));
                 card.transform.position = new Vector3(p2DiscardXPos, p2DiscardYPos);
-                //Debug.Log("Destroyed one card: " + p1HandRef.GetChild(count).GetComponent<Card>().name);
                 count++;
             }
             else
@@ -699,7 +755,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void EndgameStats()
+    void EndgameStats()             // shows end of game stats on screen, each round scores and who won
     {
         if (round == 2)
         {
@@ -716,6 +772,7 @@ public class Player : MonoBehaviour
         //instantiate prefab and send info
         GameObject temp=Instantiate(endgamePrefab);
         Endgame endgameScriptRef=temp.transform.GetChild(0).GetComponent<Endgame>();
+
         endgameScriptRef.SetP1Scores(ScoreR1P1,ScoreR2P1,ScoreR3P1);
         endgameScriptRef.SetP2Scores(ScoreR1P2,ScoreR2P2,ScoreR3P2);
 
@@ -729,10 +786,12 @@ public class Player : MonoBehaviour
         SFXManager.instance.Play("Endgame");
     }
 
+    //____________________________________________________________________________________________________________________________________________
+    // Other helper functions below
     
 
-    // extra
-    void CardScaling()
+ 
+    void CardScaling()              // scales card on which you hover mouse to make it clear what you are selecting
     {
         if (raycastTarget != null)
             raycastTarget.GetComponent<CardScaler>().underCursor = true;
@@ -761,7 +820,7 @@ public class Player : MonoBehaviour
             P2Pass.gameObject.GetComponent<PassRound>().Pass();
     }
 
-    void FlipCardsInDeck(int ID)
+    void FlipCardsInDeck(int ID)               // flips cards 180 degree when its not your turn
     {
         if (hideOpponentCards)
         {
@@ -769,7 +828,7 @@ public class Player : MonoBehaviour
             if (ID == 1)
             {
                 int count = 0;
-                while (count < P1TotalCards)
+                while (count < p1HandRef.childCount)
                 {
                     card = p1HandRef.GetChild(count).gameObject;
                     if (card.GetComponent<Card>().GetCardStatus() == "Hand")
@@ -780,7 +839,7 @@ public class Player : MonoBehaviour
             else if (ID == 2)
             {
                 int count = 0;
-                while (count < P2TotalCards)
+                while (count < p2HandRef.childCount)
                 {
                     card = p2HandRef.GetChild(count).gameObject;
                     if(card.GetComponent<Card>().GetCardStatus() =="Hand")
@@ -793,7 +852,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void UpdateLivesUI()
+    void UpdateLivesUI()                        // ui lives (gems) on screen
     {
         //p1
         if (p1Lives == 1)
@@ -825,27 +884,15 @@ public class Player : MonoBehaviour
 
 
 
-    // random but unique sequence for drawing cards
-    List<int> GenerateRandomIndices(int deckSize)
+    List<int> GenerateRandomIndices(int deckSize)               // used by GenerateHand() to use a unique sequence of indices which is used to draw cards
     {
-        // to replace old card drawing:
         List<int> sequence = new List<int>();
-
         while (sequence.Count < 10)
         {
             int temp = Random.Range(0,deckSize);
             if (!sequence.Contains(temp))
                 sequence.Add(temp);
         }
-
-        /*
-        string str="";
-        Debug.Log("Displaying all sequence.");
-        foreach (int a in sequence)
-            str += (a+" ");
-
-        Debug.Log(str);
-        */
         return sequence;
 
     }

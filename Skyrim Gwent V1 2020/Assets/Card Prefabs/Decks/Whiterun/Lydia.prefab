@@ -1033,7 +1033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -4.725, y: 0.3}
+  m_AnchoredPosition: {x: -4.7249756, y: 0.30000305}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6037598074877542626
@@ -1133,9 +1133,11 @@ MonoBehaviour:
     subUnitType: 0
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"I m sworn to carry your burdens."'
   cardState: 5
   unitStrength: {fileID: 6037598074543130407}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &3566444454611512803
 BoxCollider2D:
   m_ObjectHideFlags: 0

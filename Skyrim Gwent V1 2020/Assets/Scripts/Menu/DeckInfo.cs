@@ -12,6 +12,7 @@ public class DeckInfo : MonoBehaviour
     public GameObject DraugrDeck;
     public GameObject College_of_Winterhold;
     public GameObject Wilderness;
+    public GameObject Thalmor;
     // others when they are available.
 
    
@@ -36,7 +37,13 @@ public class DeckInfo : MonoBehaviour
                     //break;
                 }
             case "Wilderness":
-                return Wilderness;
+                {
+                    return Wilderness;
+                }
+            case "Thalmor":
+                {
+                    return Thalmor;
+                }
         }
         return null;
     }

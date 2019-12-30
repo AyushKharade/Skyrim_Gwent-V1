@@ -11,7 +11,7 @@ public class CardInfo
 
     public enum Race { Imperial, Nord, Redguard, Khajit, Argonian, Wood_Elf, Dark_Elf, Vampire, Breton, Draugr, Summon, Creatures };
 
-    public enum Faction { Whiterun, Riften, Dark_Brotherhood, Draugr, College_Of_Winterhold, Thieves_Guild, Wilderness};
+    public enum Faction { Whiterun, Riften, Dark_Brotherhood, Draugr, College_Of_Winterhold, Thieves_Guild, Wilderness, Thalmor};
 
 
     public enum TrainingLevel { Novice, Apprentice, Adept, Expert, Master};

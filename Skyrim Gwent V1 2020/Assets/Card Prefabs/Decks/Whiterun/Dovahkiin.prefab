@@ -1187,7 +1187,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.69, y: -0.894}
+  m_AnchoredPosition: {x: -0.69000244, y: -0.8939972}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7474699039442502048
@@ -1287,9 +1287,11 @@ MonoBehaviour:
     subUnitType: 0
     race: 1
     Ability_Details: Thu'um
-    Quotes: Fus Roh Dahh
+    Quotes: '"Fus Roh Dahh"'
   cardState: 5
   unitStrength: {fileID: 7474699038705436261}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &2167705879999933273
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -763,7 +763,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -5.663, y: -2.41}
+  m_AnchoredPosition: {x: -5.663025, y: -2.4100037}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8314932989452486228
@@ -863,9 +863,11 @@ MonoBehaviour:
     subUnitType: 9
     race: 1
     Ability_Details: Redeploy a card from the discard pile
-    Quotes: 
+    Quotes: '"Patience. The body needs time to mend."'
   cardState: 5
   unitStrength: {fileID: 8314932989652844945}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &3557582364469968562
 BoxCollider2D:
   m_ObjectHideFlags: 0

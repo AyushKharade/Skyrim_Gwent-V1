@@ -11,25 +11,50 @@ public class Card : MonoBehaviour
     public State cardState = new State();
 
     //UI References:
-    
     public Text unitStrength;
     Vector4 originalColor;
+
+    // For moving cards when deployed
+    Vector3 originalPosition;
+    Vector3 newPosition;
+
+    public float moveSpeed;
+    bool enableMovement;
+
+    public bool onDisplay;
 
     private void Start()
     {
         cardState = State.Hand;
         originalColor = unitStrength.color;
+        originalPosition = transform.position;
     }
 
     private void Update()
     {
         UI_Update();
+        if (originalPosition != newPosition && enableMovement)
+            CardMovement();
     }
 
     public void UI_Update()
     {
         unitStrength.text = "" + info.strength;
     }
+
+    void CardMovement()
+    {
+        // move towards new position
+        //get direction
+        Vector3 dir = newPosition - originalPosition;
+        transform.Translate(dir*moveSpeed*Time.deltaTime);
+    }
+
+
+
+
+
+
 
     // strength text color
     public void DebuffColorEffect()
@@ -48,7 +73,7 @@ public class Card : MonoBehaviour
     }
 
 
-
+    //----------------------------------------------------------------
     //getters
     public string GetCardStatus()
     {
@@ -74,9 +99,10 @@ public class Card : MonoBehaviour
             cardState = State.Deck;
         else
             Debug.Log("Invalid state parameter.");
-
-        //Debug.Log("Done changed state to: "+ cardState);
-        
     }
 
+    public void SetDestination(Vector3 dest)
+    {
+        newPosition = dest;
+    }
 }

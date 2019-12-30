@@ -307,7 +307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -10.666, y: 1.675}
+  m_AnchoredPosition: {x: -10.666016, y: 1.675003}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8397144754581515497
@@ -407,9 +407,11 @@ MonoBehaviour:
     subUnitType: 6
     race: 5
     Ability_Details: 
-    Quotes: 
+    Quotes: '"Do you hunt? The plains outside Whiterun are ripe with game."'
   cardState: 5
   unitStrength: {fileID: 8397144754915961644}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &1603267766829367784
 BoxCollider2D:
   m_ObjectHideFlags: 0

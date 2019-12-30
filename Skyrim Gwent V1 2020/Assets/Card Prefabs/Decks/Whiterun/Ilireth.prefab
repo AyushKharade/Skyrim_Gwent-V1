@@ -787,9 +787,12 @@ MonoBehaviour:
     subUnitType: 1
     race: 6
     Ability_Details: Summons all Whiterun guards available if any in the deck.
-    Quotes: 
+    Quotes: '"Oh yes, there have been attempts on the Jarl''s life. More than one
+      would-be assassin has met his end at the tip of my blade."'
   cardState: 5
   unitStrength: {fileID: 4221713336545212612}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &2163168695147398533
 BoxCollider2D:
   m_ObjectHideFlags: 0

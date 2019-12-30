@@ -113,7 +113,12 @@ public class GameStarter : MonoBehaviour
                     P1DeckName = "Wilderness";
                     break;
                 }
-           
+            case 5:
+                {
+                    P1DeckName = "Thalmor";
+                    break;
+                }
+
         }
         //p2
         switch (P2DeckUI.value)
@@ -136,6 +141,11 @@ public class GameStarter : MonoBehaviour
             case 4:
                 {
                     P2DeckName = "Wilderness";
+                    break;
+                }
+            case 5:
+                {
+                    P2DeckName = "Thalmor";
                     break;
                 }
         }

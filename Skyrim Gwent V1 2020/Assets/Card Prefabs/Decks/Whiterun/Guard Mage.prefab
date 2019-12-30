@@ -613,7 +613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -7.66, y: -2.41}
+  m_AnchoredPosition: {x: -7.659973, y: -2.4100037}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8021353383503556967
@@ -713,9 +713,11 @@ MonoBehaviour:
     subUnitType: 4
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"Hail Summoner, conjure me a warm bed will you?"'
   cardState: 5
   unitStrength: {fileID: 8021353384374843042}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &3272449345156827521
 BoxCollider2D:
   m_ObjectHideFlags: 0

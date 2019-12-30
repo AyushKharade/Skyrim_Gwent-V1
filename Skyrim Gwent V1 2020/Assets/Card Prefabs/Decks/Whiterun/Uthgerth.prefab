@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5.49, y: -6.18}
+  m_AnchoredPosition: {x: 5.48999, y: -6.1799927}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6157192114025581525
@@ -255,9 +255,12 @@ MonoBehaviour:
     subUnitType: 0
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"Wanna hear a bit of Nord wisdom? You don''t really know a woman until
+      you''ve had a strong drink and a fistfight with her."'
   cardState: 5
   unitStrength: {fileID: 6157192114896997392}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &-7649182704615654671
 BoxCollider2D:
   m_ObjectHideFlags: 0
