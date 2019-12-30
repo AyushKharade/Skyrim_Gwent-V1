@@ -99,6 +99,8 @@ public class Card : MonoBehaviour
             cardState = State.Deck;
         else
             Debug.Log("Invalid state parameter.");
+
+        //Debug.Log("Card Status of "+info.name+" Changed to :"+GetCardStatus());
     }
 
     public void SetDestination(Vector3 dest)

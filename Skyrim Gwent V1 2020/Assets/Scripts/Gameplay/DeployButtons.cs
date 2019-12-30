@@ -46,6 +46,7 @@ public class DeployButtons : MonoBehaviour
                 PlayableRef.DeployToFrontline();
             }
         }
+        
     }
 
     public void DeployVantage()
@@ -55,10 +56,15 @@ public class DeployButtons : MonoBehaviour
         {
             PlayableRef.DeploySpy("Vantage");
         }
+        else if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Healer")
+        {
+            PlayableRef.DeployHealer();
+        }
+        //else if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Necromancer") { }
         else
         {
             // regular function call.
-            PlayableRef.DeployToVantage("Regular");
+            PlayableRef.DeployToVantage();
         }
     }
 

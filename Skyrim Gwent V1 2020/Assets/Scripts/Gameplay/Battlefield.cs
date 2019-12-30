@@ -546,7 +546,7 @@ public class Battlefield : MonoBehaviour
 
 
     // medic and necromancer cards
-
+    /*
     public GameObject MedicReDeploy()
     {
         //return a random card (random for now) from discard pile.
@@ -607,7 +607,25 @@ public class Battlefield : MonoBehaviour
         else
             return null;
     }
+    */
 
+        // new healer function, send back entire linked list, so player can move cards onto screen, make them clickable.
+    public LinkedList<GameObject> FetchDiscardPile()
+    {
+        return discardpile;
+    }
+
+    public void RestoreDiscardPile(LinkedList<GameObject> temp, float DiscardX, float DiscardY)
+    {
+        foreach (GameObject g in temp)
+        {
+            // set them back to same place
+            g.transform.Rotate(new Vector3(0,180,0));
+            g.GetComponent<Card>().SetCardStatus("Discard");
+            g.GetComponent<CardScaler>().deployed = true;
+            g.transform.position = new Vector3(DiscardX, DiscardY, 0);
+        }
+    }
 
     // booster functions:
     public void AddBooster(int i, GameObject boosterCard)
@@ -727,7 +745,6 @@ public class Battlefield : MonoBehaviour
     public void RearrangeHand(Transform HandRef, float yPos)
     {
         float x = -3;
-        Debug.Log("Rearranging a hand of "+HandRef.childCount+" cards. in hand: "+HandRef.name);
         for (int i = 0; i < HandRef.childCount; i++)
         {
             if (HandRef.GetChild(i).GetComponent<Card>().GetCardStatus() == "Hand")
@@ -736,14 +753,6 @@ public class Battlefield : MonoBehaviour
                 HandRef.GetChild(i).transform.position = new Vector3(x, yPos, 0);
                 x += 0.75f;
             }
-            else
-            {
-                Debug.Log("Not arranged "+HandRef.GetChild(i).transform.name+" because state is: "+
-                    HandRef.GetChild(i).gameObject.GetComponent<Card>().GetCardStatus());
-            }
         }
-
     }
-
-    
 }
