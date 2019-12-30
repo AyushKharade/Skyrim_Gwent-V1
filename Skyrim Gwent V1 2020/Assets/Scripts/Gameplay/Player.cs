@@ -401,12 +401,20 @@ public class Player : MonoBehaviour
     {
         int whoseTurn = turn;
         // check if discard contents >0 and increment p1cards++ before deploy, otherwise, it will force pass, when p1-- and before p1++
+        // doing card increment here to avoid force passing, if last deployed card was healer or necromancer
+        if (whoseTurn == 1 && P1BFRef.discardpile.Count > 0)
+            P1Cards++;
+        else if (whoseTurn == 2 && P2BFRef.discardpile.Count > 0)
+            P2Cards++;
+
+
+
         DeployToVantage();
         if (whoseTurn == 1)
         {
             if (P1BFRef.discardpile.Count > 0)
             {
-                P1Cards++;                     // to compensate for an extra deployment
+                //P1Cards++;                     // to compensate for an extra deployment, done above
                 ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
                 redeployLLRef = P1BFRef.FetchDiscardPile();
                 // move all cards onto screen.
@@ -425,9 +433,10 @@ public class Player : MonoBehaviour
         // player 2
         else if (whoseTurn == 2)
         {
-            P2Cards++;                     // to compensate for an extra deployment
+            
             if (P2BFRef.discardpile.Count > 0)
             {
+                //P2Cards++;                     // to compensate for an extra deployment
                 ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
                 redeployLLRef = P2BFRef.FetchDiscardPile();
                 // move all cards onto screen.
@@ -452,13 +461,21 @@ public class Player : MonoBehaviour
     public void DeployNecromancer()
     {
         int whoseTurn = turn;
+
+        if (whoseTurn == 1 && P1BFRef.discardpile.Count > 0)
+            P1Cards++;
+        else if (whoseTurn == 2 && P2BFRef.discardpile.Count > 0)
+            P2Cards++;
+
+
+
         DeployToVantage();
         if (whoseTurn == 1)
         {
 
             if (P2BFRef.discardpile.Count > 0)
             {
-                P1Cards++;                     // to compensate for an extra deployment
+                //P1Cards++;                     // to compensate for an extra deployment
                 ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
                 redeployLLRef = P2BFRef.FetchDiscardPile();
                 // move all cards onto screen.
@@ -479,7 +496,7 @@ public class Player : MonoBehaviour
         {
             if (P2BFRef.discardpile.Count > 0)
             {
-                P2Cards++;                     // to compensate for an extra deployment
+                //P2Cards++;                     // to compensate for an extra deployment
                 ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
                 redeployLLRef = P1BFRef.FetchDiscardPile();
                 // move all cards onto screen.
