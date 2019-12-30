@@ -339,24 +339,9 @@ public class Player : MonoBehaviour
             ResetRedeployment(turn);
             SFXManager.instance.Play("Medic_Redeploy");
         }
-        //necromancer deployment:
-        /*
-        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Dead")
-        {
-            if (turn == 1)
-                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, -4.2f);
-            else if (turn == 2)
-                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, 4.4f);
-
-            ResetRedeployment(turn);
-            //SFXManager.instance.Play("Medic_Redeploy");
-        }
-        */
-
-
-
-            // if too op, and you dont want re-used cards to be reused further, dont set them to deployed
-            //regular deployment
+   
+        // if too op, and you dont want re-used cards to be reused further, dont set them to deployed
+        //regular deployment
         cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");              
         if (turn == 1)
         {
@@ -380,7 +365,8 @@ public class Player : MonoBehaviour
 
     public void DeployToVantage()               // type could be regular, healer or necromancer
     {
-        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected")
+        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected"
+            || cardDeploying.GetComponent<Card>().GetCardStatus() == "Dead")
         {
             if (turn == 1)
                 cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, -4.2f);
@@ -390,6 +376,7 @@ public class Player : MonoBehaviour
             ResetRedeployment(turn);
             SFXManager.instance.Play("Medic_Redeploy");
         }
+
         cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
         if (turn == 1)
         {
@@ -417,7 +404,6 @@ public class Player : MonoBehaviour
         DeployToVantage();
         if (whoseTurn == 1)
         {
-            
             if (P1BFRef.discardpile.Count > 0)
             {
                 P1Cards++;                     // to compensate for an extra deployment
@@ -469,7 +455,7 @@ public class Player : MonoBehaviour
         DeployToVantage();
         if (whoseTurn == 1)
         {
-            
+
             if (P2BFRef.discardpile.Count > 0)
             {
                 P1Cards++;                     // to compensate for an extra deployment
@@ -489,11 +475,33 @@ public class Player : MonoBehaviour
                 }
             }
         }
+        else if (whoseTurn == 2)
+        {
+            if (P2BFRef.discardpile.Count > 0)
+            {
+                P2Cards++;                     // to compensate for an extra deployment
+                ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
+                redeployLLRef = P1BFRef.FetchDiscardPile();
+                // move all cards onto screen.
+                //redeployOverlay.SetActive(true);
+                redeployingBool = true;
+                foreach (GameObject g in redeployLLRef)
+                {
+                    g.transform.SetParent(p2HandRef);
+                    g.transform.Rotate(new Vector3(0, 180, 0));
+                    g.transform.position = redeployTransform.position;
+                    g.GetComponent<Card>().SetCardStatus("Dead");                // just so we can track that player can only re-deploy discard card.
+                    g.GetComponent<CardScaler>().deployed = false;
+                    redeployTransform.Translate(new Vector3(redeployOffset, 0, 0));
+                }
+            }
+        }
     }
 
     public void DeployToShadow()
     {
-        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected")
+        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected"
+            || cardDeploying.GetComponent<Card>().GetCardStatus() == "Dead")
         {
             if (turn == 1)
                 cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, -4.2f);
@@ -525,7 +533,8 @@ public class Player : MonoBehaviour
 
     public void DeploySpy(string zone)
     {
-        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected")
+        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected"
+            || cardDeploying.GetComponent<Card>().GetCardStatus() == "Dead")
         {
             if (turn == 1)
                 cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, -4.2f);
@@ -737,13 +746,6 @@ public class Player : MonoBehaviour
         redeployLLRef.Remove(cardDeploying);
         if (id == 1)
         {
-            /*
-            for (int i = 0; i < p1HandRef.childCount; i++)
-            {
-                if (p1HandRef.GetChild(i).GetComponent<Card>().GetCardStatus() == "Dead")
-                    p1HandRef.GetChild(i).SetParent(p2HandRef);
-            }
-            */
             foreach (GameObject g in redeployLLRef)
             {
                 if (g.GetComponent<Card>().GetCardStatus() == "Dead")
@@ -752,13 +754,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            /*
-            for (int i = 0; i < p2HandRef.childCount; i++)
-            {
-                if (p2HandRef.GetChild(i).GetComponent<Card>().GetCardStatus() == "Dead")
-                    p2HandRef.GetChild(i).SetParent(p1HandRef);
-            }
-            */
             foreach (GameObject g in redeployLLRef)
             {
                 if (g.GetComponent<Card>().GetCardStatus() == "Dead")
@@ -780,6 +775,12 @@ public class Player : MonoBehaviour
                 P2BFRef.RestoreDiscardPile(redeployLLRef, p1DiscardXPos, p1DiscardYPos);
             else if (id == 1)
                 P1BFRef.RestoreDiscardPile(redeployLLRef, p2DiscardXPos, p2DiscardYPos);
+
+            // originally below
+            //if (id == 1)
+            //    P2BFRef.RestoreDiscardPile(redeployLLRef, p1DiscardXPos, p1DiscardYPos);
+            //else if (id == 2)
+            //    P1BFRef.RestoreDiscardPile(redeployLLRef, p2DiscardXPos, p2DiscardYPos);
         }
     
         redeployingBool = false;
