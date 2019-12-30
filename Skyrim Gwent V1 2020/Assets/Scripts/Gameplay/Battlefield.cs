@@ -726,14 +726,20 @@ public class Battlefield : MonoBehaviour
     // x offset = -2, y take in as parameter
     public void RearrangeHand(Transform HandRef, float yPos)
     {
-        float x = -2;
-        int count = HandRef.childCount;
-        for (int i = 0; i < count; i++)
+        float x = -3;
+        Debug.Log("Rearranging a hand of "+HandRef.childCount+" cards. in hand: "+HandRef.name);
+        for (int i = 0; i < HandRef.childCount; i++)
         {
             if (HandRef.GetChild(i).GetComponent<Card>().GetCardStatus() == "Hand")
             {
+                //Debug.Log("Rearranging transform index: " + i);
                 HandRef.GetChild(i).transform.position = new Vector3(x, yPos, 0);
                 x += 0.75f;
+            }
+            else
+            {
+                Debug.Log("Not arranged "+HandRef.GetChild(i).transform.name+" because state is: "+
+                    HandRef.GetChild(i).gameObject.GetComponent<Card>().GetCardStatus());
             }
         }
 

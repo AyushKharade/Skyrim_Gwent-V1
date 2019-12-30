@@ -1056,12 +1056,14 @@ MonoBehaviour:
     trainingLevel: 4
     unitType: 3
     faction: 4
-    subUnitType: 2
+    subUnitType: 10
     race: 5
     Ability_Details: Master Illusionist
     Quotes: 
   cardState: 5
   unitStrength: {fileID: 6875203210817211926}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &2112788373857956149
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1102,6 +1104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &6875203211154680695
 GameObject:
   m_ObjectHideFlags: 0

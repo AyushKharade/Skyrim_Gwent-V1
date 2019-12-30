@@ -386,8 +386,92 @@ public class Player : MonoBehaviour
         CloseDetailsMenu();
     }
 
-    public void DeploySpy(int zone)
+    public void DeploySpy(string zone)
     {
+        if (turn == 1)
+        {
+            cardDeploying.transform.position = new Vector3(0, 4.4f, 0);
+            cardDeploying.transform.SetParent(p2HandRef);
+            switch (zone)
+            {
+                case "Frontline":
+                    {
+                        P2BFRef.AddUnitToFrontline(cardDeploying);
+                        break;
+                    }
+                case "Vantage":
+                    {
+                        P2BFRef.AddUnitToVantage(cardDeploying);
+                        break;
+                    }
+                case "Shadow":
+                    {
+                        P2BFRef.AddUnitToShadow(cardDeploying);
+                        break;
+                    }
+            }
+            int maxCards = gameinfo.P1Deck.GetComponent<Deck>().totalCards;
+
+            int c1Index = P1BFRef.RedrawCard(maxCards);
+            int c2Index = P1BFRef.RedrawCard(maxCards);
+
+            GameObject c1 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c1Index];
+            GameObject c2 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c2Index];
+            //
+            GameObject c1Ref = Instantiate(c1, p1HandRef);
+            GameObject c2Ref = Instantiate(c2, p1HandRef);
+            P1Cards += 1;
+
+            // manually change state to hand because its still deck when you call rearrange
+            c1Ref.GetComponent<Card>().SetCardStatus("Hand");
+            c2Ref.GetComponent<Card>().SetCardStatus("Hand");
+
+            // call rearrange function on hand cards
+            P1BFRef.RearrangeHand(p1HandRef, -4.2f);
+        }
+        // player 2's spies
+        else if (turn == 2)
+        {
+            cardDeploying.transform.position = new Vector3(0, -4.2f, 0);
+            cardDeploying.transform.SetParent(p1HandRef);
+            switch (zone)
+            {
+                case "Frontline":
+                    {
+                        P1BFRef.AddUnitToFrontline(cardDeploying);
+                        break;
+                    }
+                case "Vantage":
+                    {
+                        P1BFRef.AddUnitToVantage(cardDeploying);
+                        break;
+                    }
+                case "Shadow":
+                    {
+                        P1BFRef.AddUnitToShadow(cardDeploying);
+                        break;
+                    }
+            }
+            int maxCards = gameinfo.P2Deck.GetComponent<Deck>().totalCards;
+
+            int c1Index = P2BFRef.RedrawCard(maxCards);
+            int c2Index = P2BFRef.RedrawCard(maxCards);
+
+            GameObject c1 = gameinfo.P2Deck.GetComponent<Deck>().CardsDeck[c1Index];
+            GameObject c2 = gameinfo.P2Deck.GetComponent<Deck>().CardsDeck[c2Index];
+            //
+            GameObject c1Ref = Instantiate(c1, p2HandRef);
+            GameObject c2Ref = Instantiate(c2, p2HandRef);
+            P2Cards += 1;
+
+            // manually change state to hand because its still deck when you call rearrange
+            c1Ref.GetComponent<Card>().SetCardStatus("Hand");
+            c2Ref.GetComponent<Card>().SetCardStatus("Hand");
+
+            // call rearrange function on hand cards
+            P2BFRef.RearrangeHand(p2HandRef, 4.4f);
+        }
+
         ChangeTurn();
         CloseDetailsMenu();
     }
