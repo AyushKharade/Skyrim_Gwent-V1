@@ -183,18 +183,24 @@ public class Battlefield : MonoBehaviour
     {
         while (frontline.Count > 0)
         {
+            frontline.First.Value.GetComponent<Card>().info.ResetBuffs();      // added because redeploying after removed booster affected cards, buffs stil stay
+            frontline.First.Value.GetComponent<Card>().ResetBuffColorEffect();
             if (!frontline.First.Value.GetComponent<Card>().info.isHero)
                 discardpile.AddLast(frontline.First.Value);                 // dont save hero cards, you cannot redeploy them, incase it stays, destroy them
             frontline.RemoveFirst();
         }
         while (vantage.Count > 0)
         {
+            vantage.First.Value.GetComponent<Card>().info.ResetBuffs();
+            vantage.First.Value.GetComponent<Card>().ResetBuffColorEffect();
             if (!vantage.First.Value.GetComponent<Card>().info.isHero)
                 discardpile.AddLast(vantage.First.Value);
             vantage.RemoveFirst();
         }
         while (shadow.Count > 0)
         {
+            shadow.First.Value.GetComponent<Card>().info.ResetBuffs();
+            shadow.First.Value.GetComponent<Card>().ResetBuffColorEffect();
             if (!shadow.First.Value.GetComponent<Card>().info.isHero)
                 discardpile.AddLast(shadow.First.Value);
             shadow.RemoveFirst();

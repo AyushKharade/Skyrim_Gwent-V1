@@ -60,7 +60,10 @@ public class DeployButtons : MonoBehaviour
         {
             PlayableRef.DeployHealer();
         }
-        //else if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Necromancer") { }
+        else if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Necromancer")
+        {
+            PlayableRef.DeployNecromancer();
+        }
         else
         {
             // regular function call.
