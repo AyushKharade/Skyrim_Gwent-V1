@@ -53,11 +53,7 @@ public class Player : MonoBehaviour
     //temp card count:
     public int P1Cards = 10;
     public int P2Cards = 10;
-
-    int P1TotalCards = 10;
-    int P2TotalCards = 10;
-
-
+    
     // game info ref
     GameStarter gameinfo;
 
@@ -433,13 +429,22 @@ public class Player : MonoBehaviour
                 }
 
         }
-            // move card out of hand
-            // destroy:
-            if (turn == 1)
-                P1Cards--;
-            else
-                P2Cards--;
-            Destroy(cardDeploying.gameObject);
+        // move card out of hand
+        if (turn == 1)
+        {
+            P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
+        else
+        {
+            P2Cards--;
+            if(P2Cards==0)
+                ForcePass(2);
+        }
+        // destroy:
+
+        Destroy(cardDeploying.gameObject);
         
         ChangeTurn();
         CloseDetailsMenu();
@@ -476,9 +481,18 @@ public class Player : MonoBehaviour
                 }
         }
         if (turn == 1)
+        {
             P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
         else
+        {
             P2Cards--;
+            if (P2Cards == 0)
+                ForcePass(2);
+        }
+        
 
         ChangeTurn();
         CloseDetailsMenu();

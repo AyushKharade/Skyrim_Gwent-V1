@@ -113,7 +113,11 @@ public class Battlefield : MonoBehaviour
         if (frontlineBoost && !UnitCard.GetComponent<Card>().info.isHero)
         {
             UnitCard.GetComponent<Card>().info.AddBuff(UnitCard.GetComponent<Card>().info.strength);
-            UnitCard.GetComponent<Card>().BuffColorEffect();
+            if (!frostbite)
+                UnitCard.GetComponent<Card>().BuffColorEffect();
+            else
+                UnitCard.GetComponent<Card>().DebuffColorEffect();
+
         }
         frontlineScore += UnitCard.GetComponent<Card>().info.strength;
     }
@@ -137,7 +141,10 @@ public class Battlefield : MonoBehaviour
         if (vantageBoost && !UnitCard.GetComponent<Card>().info.isHero)
         {
             UnitCard.GetComponent<Card>().info.AddBuff(UnitCard.GetComponent<Card>().info.strength);
-            UnitCard.GetComponent<Card>().BuffColorEffect();
+            if (!baneAetherius)
+                UnitCard.GetComponent<Card>().BuffColorEffect();
+            else
+                UnitCard.GetComponent<Card>().DebuffColorEffect();
         }
         vantageScore += UnitCard.GetComponent<Card>().info.strength;
     }
@@ -163,7 +170,10 @@ public class Battlefield : MonoBehaviour
         if (shadowBoost && !UnitCard.GetComponent<Card>().info.isHero)
         {
             UnitCard.GetComponent<Card>().info.AddBuff(UnitCard.GetComponent<Card>().info.strength);
-            UnitCard.GetComponent<Card>().BuffColorEffect();
+            if (!storm)
+                UnitCard.GetComponent<Card>().BuffColorEffect();
+            else
+                UnitCard.GetComponent<Card>().DebuffColorEffect();
         }
         shadowScore += UnitCard.GetComponent<Card>().info.strength;
     }
@@ -216,33 +226,101 @@ public class Battlefield : MonoBehaviour
     {
         // if any weather was active, make sure to reset all buffs on the cards in that zone
         // iterate and call reset functions on card & info
-        if (frostbite || frontlineBoost)
+        if (frostbite && frontlineBoost)
+        {
+            foreach (GameObject g in frontline)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+                //g.GetComponent<Card>().info.strength = g.GetComponent<Card>().info.originalStrength;
+                g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                g.GetComponent<Card>().BuffColorEffect();
+                
+
+                //manual buffing booster
+                
+                
+                // calling function
+                //frontlineBoost = false;             // disable so that addbooster() can work again
+                //AddBooster(1, null);
+                UpdateModifiedUnitScores(1);
+            }
+        }
+        else if (frostbite)
         {
             foreach (GameObject g in frontline)
             {
                 g.GetComponent<Card>().info.ResetBuffs();
                 g.GetComponent<Card>().ResetBuffColorEffect();
-                g.GetComponent<Card>().UI_Update();
+                UpdateModifiedUnitScores(1);
             }
         }
-        if (baneAetherius || vantageBoost)
+
+
+        // vantage
+        if (baneAetherius && vantageBoost)
+        {
+            foreach (GameObject g in vantage)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+                //g.GetComponent<Card>().info.strength = g.GetComponent<Card>().info.originalStrength;
+                g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                g.GetComponent<Card>().BuffColorEffect();
+
+
+                //manual buffing booster
+
+
+                // calling function
+                //vantageBoost = false;             // disable so that addbooster() can work again
+                //AddBooster(2, null);
+                UpdateModifiedUnitScores(2);
+            }
+        }
+        else if (baneAetherius)
         {
             foreach (GameObject g in vantage)
             {
                 g.GetComponent<Card>().info.ResetBuffs();
                 g.GetComponent<Card>().ResetBuffColorEffect();
-                g.GetComponent<Card>().UI_Update();
+                UpdateModifiedUnitScores(2);
             }
         }
-        if (storm || shadowBoost)
+
+
+
+        // shadow
+        if (storm && shadowBoost)
+        {
+            foreach (GameObject g in shadow)
+            {
+                g.GetComponent<Card>().info.ResetBuffs();
+                //g.GetComponent<Card>().info.strength = g.GetComponent<Card>().info.originalStrength;
+                g.GetComponent<Card>().info.AddBuff(g.GetComponent<Card>().info.strength);
+                g.GetComponent<Card>().BuffColorEffect();
+
+
+                //manual buffing booster
+
+
+                // calling function
+                //shadowBoost = false;             // disable so that addbooster() can work again
+                //AddBooster(3, null);
+                UpdateModifiedUnitScores(3);
+            }
+        }
+        else if (storm)
         {
             foreach (GameObject g in shadow)
             {
                 g.GetComponent<Card>().info.ResetBuffs();
                 g.GetComponent<Card>().ResetBuffColorEffect();
-                g.GetComponent<Card>().UI_Update();
+                UpdateModifiedUnitScores(3);
             }
         }
+
+
+
+
     }
 
 
@@ -316,6 +394,8 @@ public class Battlefield : MonoBehaviour
                 if (!g.GetComponent<Card>().info.isHero)
                 {
                     g.GetComponent<Card>().info.AddDeBuff(100);
+                    if(frontlineBoost && g.GetComponent<Card>().info.originalStrength > 0)
+                        g.GetComponent<Card>().info.AddBuff(1);
                     // call update ui score on card
                     g.GetComponent<Card>().UI_Update();
                     g.GetComponent<Card>().DebuffColorEffect();
@@ -337,6 +417,8 @@ public class Battlefield : MonoBehaviour
                 if (!g.GetComponent<Card>().info.isHero)
                 {
                     g.GetComponent<Card>().info.AddDeBuff(100);
+                    if (vantageBoost && g.GetComponent<Card>().info.originalStrength > 0)
+                        g.GetComponent<Card>().info.AddBuff(1);
                     // call update ui score on card
                     g.GetComponent<Card>().UI_Update();
                     g.GetComponent<Card>().DebuffColorEffect();
@@ -358,6 +440,8 @@ public class Battlefield : MonoBehaviour
                 if (!g.GetComponent<Card>().info.isHero)
                 {
                     g.GetComponent<Card>().info.AddDeBuff(100);
+                    if (shadowBoost && g.GetComponent<Card>().info.originalStrength>0)
+                        g.GetComponent<Card>().info.AddBuff(1);
                     // call update ui score on card
                     g.GetComponent<Card>().UI_Update();
                     g.GetComponent<Card>().DebuffColorEffect();
@@ -386,7 +470,7 @@ public class Battlefield : MonoBehaviour
             UpdateModifiedUnitScores(3);
 
 
-
+        /* done in a different function called reset weather debuffs)
         // if any boosters were active, redo all the buffs:
         if (frontlineBoost && frostbite)
         {
@@ -430,7 +514,7 @@ public class Battlefield : MonoBehaviour
             AddBooster(3, null);
             UpdateModifiedUnitScores(3);
         }
-
+        */
         frostbite = false;
         baneAetherius = false;
         storm = false;
