@@ -27,6 +27,7 @@ public class Loading : MonoBehaviour
 
     void LoadGame()
     {
-        SceneManager.LoadScene("GwentBoard");
+        //SceneManager.LoadScene("GwentBoard");
+        SceneManager.LoadScene("Redraw2");
     }
 }

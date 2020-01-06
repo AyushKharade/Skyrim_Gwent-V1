@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScreen.unity
     guid: 28f6d6e4257a9144da5b9c7934a899bd
   - enabled: 1
+    path: Assets/Scenes/Redraw2.unity
+    guid: b1f2e571076810844a942085dbe33488
+  - enabled: 1
     path: Assets/Scenes/GwentBoard.unity
     guid: a21a6e9468ec50e4db6461497398ed46
   - enabled: 1
