@@ -700,7 +700,8 @@ public class Player : MonoBehaviour
         }
         // destroy:
 
-        Destroy(cardDeploying.gameObject);
+        if(cardDeploying!=null)
+            Destroy(cardDeploying.gameObject);
         
         ChangeTurn();
         CloseDetailsMenu();
@@ -936,9 +937,12 @@ public class Player : MonoBehaviour
             Debug.Log("Starting Next Round");
             round++;
             // Round UI (change to function
-            RoundUI.text = "Round: " + round;
-            Reinitialize();
-            SFXManager.instance.Play("EndOfRound");
+            if (round != 4)
+            {
+                RoundUI.text = "Round: " + round;
+                Reinitialize();
+                SFXManager.instance.Play("EndOfRound");
+            }
         }
     }
 
