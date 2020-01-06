@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Redraw2 : MonoBehaviour
 {
     public int turn = 1;
+    int redrawsAllowed = 2;
 
     public Transform p1Ref;
     public Transform p2Ref;
@@ -17,6 +19,16 @@ public class Redraw2 : MonoBehaviour
     public List<int> P2Draw;
 
     bool ReadyToPlay;
+    bool p1Ready;
+    bool p2Ready;
+
+    //UI
+    public Button StartButton;
+    public Button P1ReadyButton;
+    public Button P2ReadyButton;
+
+    public Text RedrawRemainingP1;
+    public Text RedrawRemainingP2;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +36,14 @@ public class Redraw2 : MonoBehaviour
         gameinfo = GameObject.FindGameObjectWithTag("GameInfo").GetComponent<GameStarter>();
         GenerateHand(1);
         GenerateHand(2);
+
+        // flip p2 first
+        FlipCards(p2Ref);
+
+
+        //UI
+        StartButton.interactable = false;
+        P2ReadyButton.interactable = false;
     }
 
     // Update is called once per frame
@@ -51,7 +71,7 @@ public class Redraw2 : MonoBehaviour
         // input
         if (Input.GetMouseButtonDown(0) && hit.collider != null)
         {
-            Debug.Log("Called redraw on "+raycastTarget.GetComponent<Card>().info.name+" for player turn "+turn);
+            //Debug.Log("Called redraw on "+raycastTarget.GetComponent<Card>().info.name+" for player turn "+turn);
             Redraw(hit.collider.gameObject);
         }
     }
@@ -92,11 +112,33 @@ public class Redraw2 : MonoBehaviour
 
                     //replace old index
                     P1Draw[drawIndex] = r;
+                    redrawsAllowed--;
+                    RedrawRemainingP1.text = "Player 1 redraw cards ("+(2-redrawsAllowed)+"/2)";
+                    if (redrawsAllowed == 0)
+                    {
+                        if (turn == 1)
+                        {
+                            turn = 2;
+                            redrawsAllowed = 2;
+                        }
+                        Debug.Log("Player 2's Turn");
+                    }
                     break;
                 }
         }
         }
     }
+
+
+    // flip cards
+    void FlipCards(Transform HandRef)
+    {
+        for (int i = 0; i < HandRef.childCount;i++)
+        {
+            HandRef.GetChild(i).transform.Rotate(new Vector3(0, 180, 0));
+        }
+    }
+
 
 
     // copied function for drawing from player

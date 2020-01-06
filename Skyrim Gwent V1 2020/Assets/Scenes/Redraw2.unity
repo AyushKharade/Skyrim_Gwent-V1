@@ -773,8 +773,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de21e903bd63ad4084d20f96fc28ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turn: 1
   p1Ref: {fileID: 563262815}
   p2Ref: {fileID: 753032113}
+  P1Draw: 
+  P2Draw: 
+  StartButton: {fileID: 2077461044}
+  P1ReadyButton: {fileID: 392138659}
+  P2ReadyButton: {fileID: 1468559279}
+  RedrawRemainingP1: {fileID: 1862410231}
+  RedrawRemainingP2: {fileID: 2093228238}
 --- !u!1 &1468559277
 GameObject:
   m_ObjectHideFlags: 0

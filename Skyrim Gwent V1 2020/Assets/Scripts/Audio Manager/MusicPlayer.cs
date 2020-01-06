@@ -101,7 +101,7 @@ public class MusicPlayer : MonoBehaviour
     void MenuMusic()
     {
         int rand = Random.Range(1, 10);
-        if (rand < 5)
+        if (rand <= 3)
         {
             AudioManager.instance.Play("SkyrimTheme");
             playTime = AudioManager.instance.sounds[0].clip.length + 5;
@@ -109,10 +109,18 @@ public class MusicPlayer : MonoBehaviour
             playingSceneName = sceneName;
             musicID = 0;
         }
-        else
+        else if (rand <= 6)
         {
             AudioManager.instance.Play("Witcher3_Wolven_Storm");
             playTime = AudioManager.instance.sounds[1].clip.length + 5;
+            playing = true;
+            playingSceneName = sceneName;
+            musicID = 1;
+        }
+        else
+        {
+            AudioManager.instance.Play("Toss_a_coin");
+            playTime = AudioManager.instance.sounds[2].clip.length + 5;
             playing = true;
             playingSceneName = sceneName;
             musicID = 1;
