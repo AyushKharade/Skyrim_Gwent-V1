@@ -13,8 +13,8 @@ public class Redraw2 : MonoBehaviour
     GameStarter gameinfo;
     GameObject raycastTarget;
 
-    List<int> P1Draw;
-    List<int> P2Draw;
+    public List<int> P1Draw;
+    public List<int> P2Draw;
 
     bool ReadyToPlay;
 
@@ -34,6 +34,10 @@ public class Redraw2 : MonoBehaviour
             GetCameraRaycast();
             CardScaling();
         }
+        else
+        {
+            //enable start button
+        }
     }
 
     void GetCameraRaycast()
@@ -48,6 +52,7 @@ public class Redraw2 : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && hit.collider != null)
         {
             Debug.Log("Called redraw on "+raycastTarget.GetComponent<Card>().info.name+" for player turn "+turn);
+            Redraw(hit.collider.gameObject);
         }
     }
 
@@ -56,6 +61,41 @@ public class Redraw2 : MonoBehaviour
     {
         if (raycastTarget != null)
             raycastTarget.GetComponent<CardScaler>().underCursor = true;
+    }
+
+
+
+    void Redraw(GameObject Target)
+    {
+        if (turn == 1)
+        {
+            // save child index in hierarchy
+            int drawIndex = Target.transform.GetSiblingIndex();
+            //Debug.Log("Sibling index for " + Target.GetComponent<Card>().info.name + ": " + drawIndex);
+            while (true)
+            {
+                // re-generate new index for replacement card.
+
+                int r = Random.Range(0, gameinfo.P1Deck.GetComponent<Deck>().totalCards);
+                if (!P1Draw.Contains(r))
+                {
+                    GameObject newCard = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[r];
+                    GameObject newCardRef=Instantiate(newCard,p1Ref);
+
+                    //save old card position.
+                    Vector3 pos = Target.transform.position;
+                    Destroy(Target.gameObject);
+                    newCardRef.transform.position = pos;
+                    float scaleFactor = newCardRef.transform.localScale.x;
+                    newCardRef.transform.localScale=new Vector3(1.5f*scaleFactor, 1.5f * scaleFactor, 1.5f * scaleFactor);
+                    newCardRef.transform.SetSiblingIndex(drawIndex);
+
+                    //replace old index
+                    P1Draw[drawIndex] = r;
+                    break;
+                }
+        }
+        }
     }
 
 
