@@ -111,7 +111,7 @@ public class MusicPlayer : MonoBehaviour
         }
         else if (rand <= 6)
         {
-            AudioManager.instance.Play("Witcher3_Wolven_Storm");
+            AudioManager.instance.Play("Wake_The_White_Wolf");
             playTime = AudioManager.instance.sounds[1].clip.length + 5;
             playing = true;
             playingSceneName = sceneName;
@@ -123,7 +123,7 @@ public class MusicPlayer : MonoBehaviour
             playTime = AudioManager.instance.sounds[2].clip.length + 5;
             playing = true;
             playingSceneName = sceneName;
-            musicID = 1;
+            musicID = 2;
         }
     }
 
@@ -140,7 +140,6 @@ public class MusicPlayer : MonoBehaviour
         else if (sceneName == "GwentBoard")
         {
             GameplayMusic();
-             
         }
     }
 
@@ -152,18 +151,19 @@ public class MusicPlayer : MonoBehaviour
 
     void GameplayMusic()
     {
+        if (!playing)
+        {
+            // randomly play from track 1 to track 9
+            int randInt = Random.Range(1, 11);
+            string trackName = "Game" + randInt;
 
-        // randomly play from track 1 to track 9
-        int randInt = Random.Range(1,11);
-        string trackName = "Game" + randInt;
-
-        // array code is always game 'n'+2
-        AudioManager.instance.Play(trackName);
-        playTime = AudioManager.instance.sounds[randInt+2].clip.length + 1.5f;
-        playing = true;
-        playingSceneName = sceneName;
-        musicID = randInt;
-
+            // array code is always game 'n'+2
+            AudioManager.instance.Play(trackName);
+            playTime = AudioManager.instance.sounds[randInt + 2].clip.length + 1.5f;
+            playing = true;
+            playingSceneName = sceneName;
+            musicID = randInt;
+        }
     }
 
 

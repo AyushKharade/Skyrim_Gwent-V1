@@ -1075,8 +1075,8 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Witcher3_Wolven_Storm
-    clip: {fileID: 8300000, guid: 6bf24440171aca9489a15964dcfac0e2, type: 3}
+  - name: Wake_The_White_Wolf
+    clip: {fileID: 8300000, guid: 56651087c8b00184b9c7d418c954bb81, type: 3}
     volume: 0.42
     pitch: 1
     loop: 0

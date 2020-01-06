@@ -842,7 +842,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 4
 --- !u!1 &6875203210873977442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,8 +1050,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info:
     name: Drevis Neloren
-    strength: 8
-    originalStrength: 8
+    strength: 4
+    originalStrength: 4
     isHero: 0
     trainingLevel: 4
     unitType: 3
@@ -1059,7 +1059,7 @@ MonoBehaviour:
     subUnitType: 10
     race: 5
     Ability_Details: Master Illusionist
-    Quotes: 
+    Quotes: '"Confound it all. I was quite sure I was invisible, or at least transparent."'
   cardState: 5
   unitStrength: {fileID: 6875203210817211926}
   moveSpeed: 0
@@ -1170,7 +1170,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: -5543907989166885866, guid: c4729ae33b641c8428a6d78ca1a1e8a7,
+  m_Sprite: {fileID: -4640251737515451562, guid: c4729ae33b641c8428a6d78ca1a1e8a7,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 1

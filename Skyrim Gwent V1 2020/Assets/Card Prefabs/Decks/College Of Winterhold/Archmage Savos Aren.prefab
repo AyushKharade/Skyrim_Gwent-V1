@@ -415,7 +415,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -146, y: -252}
+  m_AnchoredPosition: {x: -129, y: -230}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4897192490160641880
@@ -448,7 +448,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: dddfc821a2932644aab2836d1a88a292, type: 3}
-    m_FontSize: 17
+    m_FontSize: 31
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -459,7 +459,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Archmage Savos Aren
+  m_Text: Savos Aren
 --- !u!1 &4897192490197316578
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,7 +655,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5.155, y: 9.146}
+  m_AnchoredPosition: {x: 5.1550293, y: 9.145996}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4897192490399609897
@@ -758,6 +758,8 @@ MonoBehaviour:
     Quotes: 
   cardState: 5
   unitStrength: {fileID: 4897192490197316588}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &129992715938663631
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -798,6 +800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &4897192490499858855
 GameObject:
   m_ObjectHideFlags: 0

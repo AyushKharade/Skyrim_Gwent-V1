@@ -177,5 +177,14 @@ public class GameStarter : MonoBehaviour
         else
             P2DrawSequence = sequence;
     }
+
+    public List<int> GetDrawSequence(int id)
+    {
+        if (id == 1)
+            return P1DrawSequence;
+        else
+            return P2DrawSequence;
+
+    }
     
 }

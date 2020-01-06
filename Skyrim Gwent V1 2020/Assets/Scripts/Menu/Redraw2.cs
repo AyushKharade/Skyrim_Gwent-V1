@@ -89,7 +89,7 @@ public class Redraw2 : MonoBehaviour
     {
         Debug.Log("Calling Redraw");
         int drawIndex;
-        if (turn == 1)
+        if (turn == 1 && redrawsAllowed>0)
         {
             drawIndex = Target.transform.GetSiblingIndex();
             while (true)
@@ -125,7 +125,7 @@ public class Redraw2 : MonoBehaviour
 
             }
         }
-        else if (turn == 2)
+        else if (turn == 2 && redrawsAllowed>0)
         {
             drawIndex = Target.transform.GetSiblingIndex();
             while (true)

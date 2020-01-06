@@ -673,9 +673,13 @@ MonoBehaviour:
     race: 6
     Ability_Details: Allows to ressurrect a fallen enemy when deployed. Resurrects
       the original Malyn Varen, the next round (Strength 7)
-    Quotes: 
+    Quotes: '"Who are you to challenge me? I have conquered mortality itself. I''ve
+      spat in the eyes of the Daedric Lords. This is my realm now. I''ve sacrificed
+      too much to let you take it from me!"'
   cardState: 5
   unitStrength: {fileID: 2774816683446384538}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &7258008343508437177
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -716,6 +720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &2774816683112223483
 GameObject:
   m_ObjectHideFlags: 0

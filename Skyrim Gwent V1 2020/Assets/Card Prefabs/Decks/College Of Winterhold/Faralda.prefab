@@ -216,9 +216,11 @@ MonoBehaviour:
     subUnitType: 2
     race: 5
     Ability_Details: 
-    Quotes: 
+    Quotes: '"Tolfdir as Master Wizard. Certainly didn''t anticipate that."'
   cardState: 5
   unitStrength: {fileID: 1169347358582906904}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &5909243922728771387
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -259,6 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &1169347358249272697
 GameObject:
   m_ObjectHideFlags: 0

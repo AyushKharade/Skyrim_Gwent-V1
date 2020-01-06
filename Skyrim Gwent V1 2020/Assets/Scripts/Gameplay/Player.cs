@@ -985,7 +985,7 @@ public class Player : MonoBehaviour
             ForcePass(2);
     }
 
-
+    
     
     private void GenerateHand(int PlayerID)     //generate hand function
     {
@@ -993,20 +993,22 @@ public class Player : MonoBehaviour
         float yOffset;
         float xOffset = -2;
         GameObject deck;
+        List<int> drawSequence;
 
         if (PlayerID == 1)
         {
             deck = gameinfo.P1Deck;
             yOffset = -4.2f;
+            drawSequence = gameinfo.GetDrawSequence(1);
         }
         else
         {
             deck = gameinfo.P2Deck;
             yOffset = 4.4f;
+            drawSequence = gameinfo.GetDrawSequence(2);
         }
 
         int maxCards = deck.GetComponent<Deck>().totalCards;
-        List<int> drawSequence = GenerateRandomIndices(maxCards);       // for spy cards, save this sequence
 
         for (int i = 0; i < count; i++)
         {
@@ -1038,7 +1040,7 @@ public class Player : MonoBehaviour
             P2BFRef.InitSequence(drawSequence);
     }
 
-
+    
 
     // can let battlefield do this instead, but find if you keep it here.
     void RemoveDeployedCards()                  // moves all board (deployed cards) to discard pile (physically)
@@ -1207,7 +1209,7 @@ public class Player : MonoBehaviour
     }
 
 
-
+    /*
     List<int> GenerateRandomIndices(int deckSize)               // used by GenerateHand() to use a unique sequence of indices which is used to draw cards
     {
         List<int> sequence = new List<int>();
@@ -1220,4 +1222,5 @@ public class Player : MonoBehaviour
         return sequence;
 
     }
+    */
 }

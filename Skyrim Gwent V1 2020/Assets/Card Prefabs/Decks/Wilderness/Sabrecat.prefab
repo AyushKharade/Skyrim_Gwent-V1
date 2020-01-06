@@ -610,7 +610,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5.771, y: 3.66227}
+  m_AnchoredPosition: {x: 5.770996, y: 3.6622772}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6711977934801646836
@@ -713,6 +713,8 @@ MonoBehaviour:
     Quotes: 
   cardState: 5
   unitStrength: {fileID: 6711977935673094961}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &2816895735491961199
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -753,6 +755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &6711977934968742266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,4 +1330,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Mammoth
+  m_Text: Sabrecat

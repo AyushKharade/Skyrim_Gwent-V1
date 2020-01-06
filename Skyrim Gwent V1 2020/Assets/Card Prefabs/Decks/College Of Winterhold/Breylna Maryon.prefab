@@ -687,7 +687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -1.43, y: 11.82}
+  m_AnchoredPosition: {x: -1.4299927, y: 11.820007}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6016243795641521711
@@ -787,9 +787,12 @@ MonoBehaviour:
     subUnitType: 2
     race: 6
     Ability_Details: 
-    Quotes: 
+    Quotes: '"Before you even ask, yes I have an ancestry steeped in magic, and no
+      I don''t want to talk about it."'
   cardState: 5
   unitStrength: {fileID: 6016243795976065514}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &1244819697037176521
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -830,6 +833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &6016243795808650145
 GameObject:
   m_ObjectHideFlags: 0
