@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Redraw2 : MonoBehaviour
 {
@@ -54,10 +55,6 @@ public class Redraw2 : MonoBehaviour
             GetCameraRaycast();
             CardScaling();
         }
-        else
-        {
-            //enable start button
-        }
     }
 
     void GetCameraRaycast()
@@ -71,8 +68,11 @@ public class Redraw2 : MonoBehaviour
         // input
         if (Input.GetMouseButtonDown(0) && hit.collider != null)
         {
-            //Debug.Log("Called redraw on "+raycastTarget.GetComponent<Card>().info.name+" for player turn "+turn);
-            Redraw(hit.collider.gameObject);
+            if (turn == 1 && hit.collider.transform.parent.name == "P1Hand"
+                ||
+                turn == 2 && hit.collider.transform.parent.name == "P2Hand")
+                Redraw(hit.collider.gameObject);
+
         }
     }
 
@@ -87,46 +87,79 @@ public class Redraw2 : MonoBehaviour
 
     void Redraw(GameObject Target)
     {
+        Debug.Log("Calling Redraw");
+        int drawIndex;
         if (turn == 1)
         {
-            // save child index in hierarchy
-            int drawIndex = Target.transform.GetSiblingIndex();
-            //Debug.Log("Sibling index for " + Target.GetComponent<Card>().info.name + ": " + drawIndex);
+            drawIndex = Target.transform.GetSiblingIndex();
             while (true)
             {
-                // re-generate new index for replacement card.
-
                 int r = Random.Range(0, gameinfo.P1Deck.GetComponent<Deck>().totalCards);
                 if (!P1Draw.Contains(r))
                 {
                     GameObject newCard = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[r];
-                    GameObject newCardRef=Instantiate(newCard,p1Ref);
+                    GameObject newCardRef = Instantiate(newCard, p1Ref);
 
                     //save old card position.
                     Vector3 pos = Target.transform.position;
                     Destroy(Target.gameObject);
                     newCardRef.transform.position = pos;
                     float scaleFactor = newCardRef.transform.localScale.x;
-                    newCardRef.transform.localScale=new Vector3(1.5f*scaleFactor, 1.5f * scaleFactor, 1.5f * scaleFactor);
+                    newCardRef.transform.localScale = new Vector3(1.5f * scaleFactor, 1.5f * scaleFactor, 1.5f * scaleFactor);
                     newCardRef.transform.SetSiblingIndex(drawIndex);
 
                     //replace old index
                     P1Draw[drawIndex] = r;
                     redrawsAllowed--;
-                    RedrawRemainingP1.text = "Player 1 redraw cards ("+(2-redrawsAllowed)+"/2)";
+                    RedrawRemainingP1.text = "Player 1 redraw cards (" + (2 - redrawsAllowed) + "/2)";
                     if (redrawsAllowed == 0)
                     {
                         if (turn == 1)
                         {
-                            turn = 2;
-                            redrawsAllowed = 2;
+                            RedrawRemainingP1.text = "Press Ready.";
                         }
                         Debug.Log("Player 2's Turn");
                     }
                     break;
                 }
+
+            }
         }
+        else if (turn == 2)
+        {
+            drawIndex = Target.transform.GetSiblingIndex();
+            while (true)
+            {
+                int r = Random.Range(0, gameinfo.P2Deck.GetComponent<Deck>().totalCards);
+                if (!P2Draw.Contains(r))
+                {
+                    GameObject newCard = gameinfo.P2Deck.GetComponent<Deck>().CardsDeck[r];
+                    GameObject newCardRef = Instantiate(newCard, p2Ref);
+
+                    //save old card position.
+                    Vector3 pos = Target.transform.position;
+                    Destroy(Target.gameObject);
+                    newCardRef.transform.position = pos;
+                    float scaleFactor = newCardRef.transform.localScale.x;
+                    newCardRef.transform.localScale = new Vector3(1.5f * scaleFactor, 1.5f * scaleFactor, 1.5f * scaleFactor);
+                    newCardRef.transform.SetSiblingIndex(drawIndex);
+
+                    //replace old index
+                    P2Draw[drawIndex] = r;
+                    redrawsAllowed--;
+                    RedrawRemainingP2.text = "Player 1 redraw cards (" + (2 - redrawsAllowed) + "/2)";
+                    if (redrawsAllowed == 0)
+                    {
+                        RedrawRemainingP2.text = "Press Ready.";
+                        Debug.Log("Ready To Play!");
+                    }
+                    break;
+                }
+
+            }
         }
+        
+
     }
 
 
@@ -218,5 +251,46 @@ public class Redraw2 : MonoBehaviour
         return sequence;
 
     }
+
+
+
+    // button functions
+
+    public void P1Ready()
+    {
+        //assuming it was turn 1, otherwise this button wont be available.
+        turn = 2;
+        redrawsAllowed = 2;
+        P1ReadyButton.interactable = false;
+        P2ReadyButton.interactable = true;
+        p1Ready = true;
+        FlipCards(p1Ref);
+        FlipCards(p2Ref);
+    }
+
+    public void P2Ready()
+    {
+        //assuming it was turn 1, otherwise this button wont be available.
+        P2ReadyButton.interactable = false;
+        p2Ready = true;
+        FlipCards(p2Ref);
+        if (p1Ready && p2Ready)
+        {
+            ReadyToPlay = true;
+            StartButton.interactable = true;
+        }
+    }
+
+    public void StartGame()
+    {
+        //send draw sequences to GameInfo, load gwent board.
+        gameinfo.SetDrawSequence(1, P1Draw);
+        gameinfo.SetDrawSequence(2, P2Draw);
+        Debug.Log("And the Game shall Begin.");
+
+        //load board scene
+        SceneManager.LoadScene("GwentBoard");
+    }
+
 
 }
