@@ -548,6 +548,7 @@ public class Player : MonoBehaviour
                 ForcePass(2);
         }
 
+        SFXManager.instance.Play("Shadow_Deploy");
         ChangeTurn();
         CloseDetailsMenu();
     }
@@ -667,6 +668,7 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetBaneAetheriusWeather();
                     P2BFRef.SetBaneAetheriusWeather();
+                    SFXManager.instance.Play("BaneAetherius_Weather");
                     break;
                 }
             case "StormWeather":
@@ -680,6 +682,7 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetClearWeather();
                     P2BFRef.SetClearWeather();
+                    SFXManager.instance.Play("Clear_Weather");
                     break;
                 }
             default:

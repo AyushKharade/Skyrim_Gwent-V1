@@ -18737,7 +18737,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: BaneAetherius_Weather
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: ae685b4e8841f594a903384eb7ee94a8, type: 3}
     volume: 0.57
     pitch: 1
     loop: 0
@@ -18778,14 +18778,20 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
+  - name: Clear_Weather
+    clip: {fileID: 8300000, guid: 014b09f5a6805924a95f82d5412c2d34, type: 3}
     volume: 0.32
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
+  - name: Hero_Deploy
+    clip: {fileID: 8300000, guid: 119b5a8b084cb874db8ae5ace01b010e, type: 3}
+    volume: 0.32
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Shadow_Deploy
+    clip: {fileID: 8300000, guid: b6c19858f62e72f45839a3b25acb4de8, type: 3}
     volume: 0.32
     pitch: 1
     loop: 0
