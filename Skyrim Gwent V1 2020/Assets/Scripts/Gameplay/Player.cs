@@ -49,6 +49,9 @@ public class Player : MonoBehaviour
     Button P1Pass;
     Button P2Pass;
 
+    // card count
+    public Text P1CardCount;
+    public Text P2CardCount;
 
     //temp card count:
     public int P1Cards = 10;
@@ -110,6 +113,7 @@ public class Player : MonoBehaviour
     bool redeployingBool;
 
     LinkedList<GameObject> redeployLLRef;
+
 
     void Start()
     {
@@ -859,6 +863,10 @@ public class Player : MonoBehaviour
                 popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2's turn.");
             }
         }
+
+        // update card count UI
+        P1CardCount.text = "" + P1Cards;
+        P2CardCount.text = "" + P2Cards;
 
         
         if (P1BFRef.playerPassed && P2BFRef.playerPassed)
