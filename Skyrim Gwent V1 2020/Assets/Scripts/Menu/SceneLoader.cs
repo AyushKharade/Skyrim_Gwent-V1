@@ -35,7 +35,8 @@ public class SceneLoader : MonoBehaviour
 
     public void RetryGwentGame()
     {
-        SceneManager.LoadScene("GwentBoard");
+        //SceneManager.LoadScene("GwentBoard");
+        SceneManager.LoadScene("Redraw2");
     }
 
     // start game:

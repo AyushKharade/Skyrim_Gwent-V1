@@ -540,7 +540,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.51, y: 9.146}
+  m_AnchoredPosition: {x: -0.51000977, y: 9.145996}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2742944370084111614
@@ -640,9 +640,12 @@ MonoBehaviour:
     subUnitType: 9
     race: 1
     Ability_Details: 
-    Quotes: 
+    Quotes: '"Restoration is a perfectly valid school of magic. And don''t let anyone
+      tell you otherwise!"'
   cardState: 5
   unitStrength: {fileID: 2742944369346880315}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &7217973256426773528
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -683,6 +686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &2742944370084365914
 GameObject:
   m_ObjectHideFlags: 0

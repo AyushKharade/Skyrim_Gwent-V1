@@ -22,10 +22,10 @@ public class Player : MonoBehaviour
     float controlLockTimer;
     float controlLockTime = 1.5f;
 
-    [Range(1,2)]
-    [HideInInspector]public int turn;
+    [Range(1, 2)]
+    public int turn;
     [Range(1, 3)]
-    public int round=1;
+    public int round = 1;
 
     public int p1Lives = 2;
     public int p2Lives = 2;
@@ -44,16 +44,19 @@ public class Player : MonoBehaviour
     public Image P2HP2;
 
     // references to pass buttons
-    public Button P1PassRef; 
+    public Button P1PassRef;
     public Button P2PassRef;
     Button P1Pass;
     Button P2Pass;
 
+    // card count
+    public Text P1CardCount;
+    public Text P2CardCount;
 
     //temp card count:
     public int P1Cards = 10;
     public int P2Cards = 10;
-    
+
     // game info ref
     GameStarter gameinfo;
 
@@ -62,10 +65,10 @@ public class Player : MonoBehaviour
     public Transform p2HandRef;
 
     // discard pile offset
-    float p1DiscardXPos=5;
-    float p1DiscardYPos=-2.8f;
-    float p2DiscardXPos=5;
-    float p2DiscardYPos=2.8f;
+    float p1DiscardXPos = 5;
+    float p1DiscardYPos = -2.8f;
+    float p2DiscardXPos = 5;
+    float p2DiscardYPos = 2.8f;
 
     // if hide
     public bool hideOpponentCards;
@@ -99,11 +102,24 @@ public class Player : MonoBehaviour
     public Button DeploySpecialButton;
     public Button CloseButton;
 
+
+    // redeoplying cards
+    [Header("Card Redeployment")]
+    public Transform redeployTransform;
+    Vector3 redeployOgPosition;
+    public GameObject redeployOverlay;
+    float redeployOffset = 1.5f;
+
+    bool redeployingBool;
+
+    LinkedList<GameObject> redeployLLRef;
+
+
     void Start()
     {
         // random turn
-        int randNo = Random.Range(0,100);
-        turn = (randNo % 2)+1;
+        int randNo = Random.Range(0, 100);
+        turn = (randNo % 2) + 1;
 
         // get references to battlefield objects
         P1BFRef = P1Battlefield.GetComponent<Battlefield>();
@@ -119,7 +135,7 @@ public class Player : MonoBehaviour
         //init
         InitializeGame();
         if (hideOpponentCards)
-        { 
+        {
             if (turn == 2)
                 FlipCardsInDeck(1);
             else
@@ -143,6 +159,10 @@ public class Player : MonoBehaviour
 
         quoteBox = quoteDetails.transform.parent.gameObject;
         quoteBox.SetActive(false);
+
+        //redeploy overlay
+        redeployOverlay.SetActive(false);
+        redeployOgPosition = redeployTransform.position;
     }
 
     private void InitializeGame()           // generate initial hand for both players
@@ -162,10 +182,6 @@ public class Player : MonoBehaviour
         }
         else if (controlLock)
             ControlLockCounter();
-
-        // Round UI (change to function
-        //RoundUI.text = "Round: " + round;
-
 
         // for redrawing decks (testing)
         if (Input.GetKeyDown(KeyCode.R))
@@ -188,11 +204,18 @@ public class Player : MonoBehaviour
         // input
         if (Input.GetMouseButtonDown(0) && hit.collider != null)
         {
-            //place card
-            if (hit.collider.gameObject.GetComponent<Card>().GetCardStatus() == "Hand")
+            if (!redeployingBool)
             {
-                DisplayDetailsUnitCard(hit.collider.gameObject);
-                //DeployUnitCard(hit.collider.gameObject);
+                //Regular deployment
+                if (hit.collider.gameObject.GetComponent<Card>().GetCardStatus() == "Hand")
+                    DisplayDetailsUnitCard(hit.collider.gameObject);
+            }
+            else
+            {
+                // discard pile re-deployemnt
+                if (hit.collider.gameObject.GetComponent<Card>().GetCardStatus() == "Resurrected" 
+                    || hit.collider.gameObject.GetComponent<Card>().GetCardStatus() == "Dead")
+                    DisplayDetailsUnitCard(hit.collider.gameObject);
             }
         }
     }
@@ -204,7 +227,7 @@ public class Player : MonoBehaviour
     // display card magnified and in detail, along with their quote.
     void DisplayDetailsUnitCard(GameObject card)
     {
-        if (card.GetComponent<Card>().GetCardStatus() =="Hand")
+        if (card.GetComponent<Card>().GetCardStatus() == "Hand" || card.GetComponent<Card>().GetCardStatus() == "Resurrected" || card.GetComponent<Card>().GetCardStatus() == "Dead")
         {
             if ((card.transform.parent.name == "Player1_Hand" && turn == 1) || (card.transform.parent.name == "Player2_Hand" && turn == 2))
             {
@@ -239,6 +262,7 @@ public class Player : MonoBehaviour
 
                 // hide and show appropriate buttons
                 ManageDeployButtons(card);
+                
             }
         }
     }
@@ -308,7 +332,21 @@ public class Player : MonoBehaviour
 
     public void DeployToFrontline()
     {
-        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
+        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected"
+            || cardDeploying.GetComponent<Card>().GetCardStatus() == "Dead")
+        {
+            if (turn == 1)
+                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, -4.2f);
+            else if (turn == 2)
+                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, 4.4f);
+
+            ResetRedeployment(turn);
+            SFXManager.instance.Play("Medic_Redeploy");
+        }
+   
+        // if too op, and you dont want re-used cards to be reused further, dont set them to deployed
+        //regular deployment
+        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");              
         if (turn == 1)
         {
             P1BFRef.AddUnitToFrontline(cardDeploying);
@@ -329,43 +367,171 @@ public class Player : MonoBehaviour
     }
 
 
-    public void DeployToVantage(string type)               // type could be regular, healer or necromancer
+    public void DeployToVantage()               // type could be regular, healer or necromancer
     {
-        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
-        if (type == "Regular")
+        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected"
+            || cardDeploying.GetComponent<Card>().GetCardStatus() == "Dead")
         {
             if (turn == 1)
-            {
-                P1BFRef.AddUnitToVantage(cardDeploying);
-                P1Cards--;
-                if (P1Cards == 0)
-                    ForcePass(1);
-            }
-            else if (turn == 2)
-            {
-                P2BFRef.AddUnitToVantage(cardDeploying);
-                P2Cards--;
-                if (P2Cards == 0)
-                    ForcePass(2);
-            }
-            
-        }
-        else if (type == "Healer")
-        {
+                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, -4.2f);
+            else if(turn==2)
+                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, 4.4f);
 
+            ResetRedeployment(turn);
+            SFXManager.instance.Play("Medic_Redeploy");
         }
-        else if (type == "Necromancer")
-        {
 
+        cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
+        if (turn == 1)
+        {
+            P1BFRef.AddUnitToVantage(cardDeploying);
+            P1Cards--;
+            if (P1Cards == 0)
+                ForcePass(1);
+        }
+        else if (turn == 2)
+        {
+            P2BFRef.AddUnitToVantage(cardDeploying);
+            P2Cards--;
+            if (P2Cards == 0)
+                ForcePass(2);
         }
 
         ChangeTurn();
         CloseDetailsMenu();
     }
 
+    public void DeployHealer()
+    {
+        int whoseTurn = turn;
+        // check if discard contents >0 and increment p1cards++ before deploy, otherwise, it will force pass, when p1-- and before p1++
+        // doing card increment here to avoid force passing, if last deployed card was healer or necromancer
+        if (whoseTurn == 1 && P1BFRef.discardpile.Count > 0)
+            P1Cards++;
+        else if (whoseTurn == 2 && P2BFRef.discardpile.Count > 0)
+            P2Cards++;
+
+
+
+        DeployToVantage();
+        if (whoseTurn == 1)
+        {
+            if (P1BFRef.discardpile.Count > 0)
+            {
+                //P1Cards++;                     // to compensate for an extra deployment, done above
+                ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
+                redeployLLRef = P1BFRef.FetchDiscardPile();
+                // move all cards onto screen.
+                //redeployOverlay.SetActive(true);
+                redeployingBool = true;
+                foreach (GameObject g in redeployLLRef)
+                {
+                    g.transform.Rotate(new Vector3(0, 180, 0));
+                    g.transform.position = redeployTransform.position;
+                    g.GetComponent<Card>().SetCardStatus("Resurrected");                // just so we can track that player can only re-deploy discard card.
+                    g.GetComponent<CardScaler>().deployed = false;
+                    redeployTransform.Translate(new Vector3(redeployOffset, 0, 0));
+                }
+            }
+        }
+        // player 2
+        else if (whoseTurn == 2)
+        {
+            
+            if (P2BFRef.discardpile.Count > 0)
+            {
+                //P2Cards++;                     // to compensate for an extra deployment
+                ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
+                redeployLLRef = P2BFRef.FetchDiscardPile();
+                // move all cards onto screen.
+                //redeployOverlay.SetActive(true);
+                redeployingBool = true;
+                foreach (GameObject g in redeployLLRef)
+                {
+                    g.transform.Rotate(new Vector3(0, 180, 0));
+                    g.transform.position = redeployTransform.position;
+                    g.GetComponent<Card>().SetCardStatus("Resurrected");                // just so we can track that player can only re-deploy discard card.
+                    g.GetComponent<CardScaler>().deployed = false;
+                    redeployTransform.Translate(new Vector3(redeployOffset, 0, 0));
+                }
+            }
+        }
+
+        //ChangeTurn();            
+        // otherwise, dont change turn, force player to re-deploy a card from show options, not let them click normal cards this time.
+    }
+
+
+    public void DeployNecromancer()
+    {
+        int whoseTurn = turn;
+
+        if (whoseTurn == 1 && P1BFRef.discardpile.Count > 0)
+            P1Cards++;
+        else if (whoseTurn == 2 && P2BFRef.discardpile.Count > 0)
+            P2Cards++;
+
+
+
+        DeployToVantage();
+        if (whoseTurn == 1)
+        {
+
+            if (P2BFRef.discardpile.Count > 0)
+            {
+                //P1Cards++;                     // to compensate for an extra deployment
+                ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
+                redeployLLRef = P2BFRef.FetchDiscardPile();
+                // move all cards onto screen.
+                //redeployOverlay.SetActive(true);
+                redeployingBool = true;
+                foreach (GameObject g in redeployLLRef)
+                {
+                    g.transform.SetParent(p1HandRef);
+                    g.transform.Rotate(new Vector3(0, 180, 0));
+                    g.transform.position = redeployTransform.position;
+                    g.GetComponent<Card>().SetCardStatus("Dead");                // just so we can track that player can only re-deploy discard card.
+                    g.GetComponent<CardScaler>().deployed = false;
+                    redeployTransform.Translate(new Vector3(redeployOffset, 0, 0));
+                }
+            }
+        }
+        else if (whoseTurn == 2)
+        {
+            if (P2BFRef.discardpile.Count > 0)
+            {
+                //P2Cards++;                     // to compensate for an extra deployment
+                ChangeTurn();            // let same player have turn again, otherwise, deploytovantage will change turn to other player.
+                redeployLLRef = P1BFRef.FetchDiscardPile();
+                // move all cards onto screen.
+                //redeployOverlay.SetActive(true);
+                redeployingBool = true;
+                foreach (GameObject g in redeployLLRef)
+                {
+                    g.transform.SetParent(p2HandRef);
+                    g.transform.Rotate(new Vector3(0, 180, 0));
+                    g.transform.position = redeployTransform.position;
+                    g.GetComponent<Card>().SetCardStatus("Dead");                // just so we can track that player can only re-deploy discard card.
+                    g.GetComponent<CardScaler>().deployed = false;
+                    redeployTransform.Translate(new Vector3(redeployOffset, 0, 0));
+                }
+            }
+        }
+    }
 
     public void DeployToShadow()
     {
+        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected"
+            || cardDeploying.GetComponent<Card>().GetCardStatus() == "Dead")
+        {
+            if (turn == 1)
+                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, -4.2f);
+            else if(turn==2)
+                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, 4.4f);
+
+            ResetRedeployment(turn);
+            SFXManager.instance.Play("Medic_Redeploy");
+        }
         cardDeploying.GetComponent<Card>().SetCardStatus("Deployed");
         if (turn == 1)
         {
@@ -382,12 +548,107 @@ public class Player : MonoBehaviour
                 ForcePass(2);
         }
 
+        SFXManager.instance.Play("Shadow_Deploy");
         ChangeTurn();
         CloseDetailsMenu();
     }
 
-    public void DeploySpy(int zone)
+    public void DeploySpy(string zone)
     {
+        if (cardDeploying.GetComponent<Card>().GetCardStatus() == "Resurrected"
+            || cardDeploying.GetComponent<Card>().GetCardStatus() == "Dead")
+        {
+            if (turn == 1)
+                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, -4.2f);
+            else if(turn==2)
+                cardDeploying.transform.position = new Vector2(cardDeploying.transform.position.x, 4.4f);
+
+            ResetRedeployment(turn);
+        }
+        if (turn == 1)
+        {
+            cardDeploying.transform.position = new Vector3(0, 4.4f, 0);
+            cardDeploying.transform.SetParent(p2HandRef);
+            switch (zone)
+            {
+                case "Frontline":
+                    {
+                        P2BFRef.AddUnitToFrontline(cardDeploying);
+                        break;
+                    }
+                case "Vantage":
+                    {
+                        P2BFRef.AddUnitToVantage(cardDeploying);
+                        break;
+                    }
+                case "Shadow":
+                    {
+                        P2BFRef.AddUnitToShadow(cardDeploying);
+                        break;
+                    }
+            }
+            int maxCards = gameinfo.P1Deck.GetComponent<Deck>().totalCards;
+
+            int c1Index = P1BFRef.RedrawCard(maxCards);
+            int c2Index = P1BFRef.RedrawCard(maxCards);
+
+            GameObject c1 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c1Index];
+            GameObject c2 = gameinfo.P1Deck.GetComponent<Deck>().CardsDeck[c2Index];
+            //
+            GameObject c1Ref = Instantiate(c1, p1HandRef);
+            GameObject c2Ref = Instantiate(c2, p1HandRef);
+            P1Cards += 1;
+
+            // manually change state to hand because its still deck when you call rearrange
+            c1Ref.GetComponent<Card>().SetCardStatus("Hand");
+            c2Ref.GetComponent<Card>().SetCardStatus("Hand");
+
+            // call rearrange function on hand cards
+            P1BFRef.RearrangeHand(p1HandRef, -4.2f);
+        }
+        // player 2's spies
+        else if (turn == 2)
+        {
+            cardDeploying.transform.position = new Vector3(0, -4.2f, 0);
+            cardDeploying.transform.SetParent(p1HandRef);
+            switch (zone)
+            {
+                case "Frontline":
+                    {
+                        P1BFRef.AddUnitToFrontline(cardDeploying);
+                        break;
+                    }
+                case "Vantage":
+                    {
+                        P1BFRef.AddUnitToVantage(cardDeploying);
+                        break;
+                    }
+                case "Shadow":
+                    {
+                        P1BFRef.AddUnitToShadow(cardDeploying);
+                        break;
+                    }
+            }
+            int maxCards = gameinfo.P2Deck.GetComponent<Deck>().totalCards;
+
+            int c1Index = P2BFRef.RedrawCard(maxCards);
+            int c2Index = P2BFRef.RedrawCard(maxCards);
+
+            GameObject c1 = gameinfo.P2Deck.GetComponent<Deck>().CardsDeck[c1Index];
+            GameObject c2 = gameinfo.P2Deck.GetComponent<Deck>().CardsDeck[c2Index];
+            //
+            GameObject c1Ref = Instantiate(c1, p2HandRef);
+            GameObject c2Ref = Instantiate(c2, p2HandRef);
+            P2Cards += 1;
+
+            // manually change state to hand because its still deck when you call rearrange
+            c1Ref.GetComponent<Card>().SetCardStatus("Hand");
+            c2Ref.GetComponent<Card>().SetCardStatus("Hand");
+
+            // call rearrange function on hand cards
+            P2BFRef.RearrangeHand(p2HandRef, 4.4f);
+        }
+
         ChangeTurn();
         CloseDetailsMenu();
     }
@@ -407,6 +668,7 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetBaneAetheriusWeather();
                     P2BFRef.SetBaneAetheriusWeather();
+                    SFXManager.instance.Play("BaneAetherius_Weather");
                     break;
                 }
             case "StormWeather":
@@ -420,6 +682,7 @@ public class Player : MonoBehaviour
                 {
                     P1BFRef.SetClearWeather();
                     P2BFRef.SetClearWeather();
+                    SFXManager.instance.Play("Clear_Weather");
                     break;
                 }
             default:
@@ -444,7 +707,8 @@ public class Player : MonoBehaviour
         }
         // destroy:
 
-        Destroy(cardDeploying.gameObject);
+        if(cardDeploying!=null)
+            Destroy(cardDeploying.gameObject);
         
         ChangeTurn();
         CloseDetailsMenu();
@@ -500,6 +764,70 @@ public class Player : MonoBehaviour
         SFXManager.instance.Play("Booster");
     }
 
+
+    // helper for healer & necromancer
+    public void ResetRedeployment(int id)
+    {
+        redeployLLRef.Remove(cardDeploying);
+        if (id == 1)
+        {
+            foreach (GameObject g in redeployLLRef)
+            {
+                if (g.GetComponent<Card>().GetCardStatus() == "Dead")
+                    g.transform.SetParent(p2HandRef);
+            }
+        }
+        else
+        {
+            foreach (GameObject g in redeployLLRef)
+            {
+                if (g.GetComponent<Card>().GetCardStatus() == "Dead")
+                    g.transform.SetParent(p1HandRef);
+            }
+        }
+
+        
+        if (cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Healer")
+        {
+            if (id == 1)
+                P1BFRef.RestoreDiscardPile(redeployLLRef, p1DiscardXPos, p1DiscardYPos);
+            else if (id == 2)
+                P2BFRef.RestoreDiscardPile(redeployLLRef, p2DiscardXPos, p2DiscardYPos);
+        }
+        else // its a necromancer
+        {
+            if (id == 2)
+                P2BFRef.RestoreDiscardPile(redeployLLRef, p1DiscardXPos, p1DiscardYPos);
+            else if (id == 1)
+                P1BFRef.RestoreDiscardPile(redeployLLRef, p2DiscardXPos, p2DiscardYPos);
+
+            // originally below
+            //if (id == 1)
+            //    P2BFRef.RestoreDiscardPile(redeployLLRef, p1DiscardXPos, p1DiscardYPos);
+            //else if (id == 2)
+            //    P1BFRef.RestoreDiscardPile(redeployLLRef, p2DiscardXPos, p2DiscardYPos);
+        }
+    
+        redeployingBool = false;
+        redeployTransform.position = redeployOgPosition;
+
+        // for debugging checking discard piles:
+        
+        Debug.Log("Check Contents of Discard Pile: P1");
+        LinkedList<GameObject> temp = P1BFRef.FetchDiscardPile();
+        foreach (GameObject g in temp)
+        {
+            Debug.Log("Card: "+g.GetComponent<Card>().info.name);
+        }
+
+        Debug.Log("Player 2's discard pile");
+        temp = P2BFRef.FetchDiscardPile();
+        foreach (GameObject g in temp)
+        {
+            Debug.Log("Card: " + g.GetComponent<Card>().info.name);
+        }
+        
+    }
     
     //------------------------------------------------------------------------------
 
@@ -538,6 +866,10 @@ public class Player : MonoBehaviour
                 popup.transform.GetChild(0).gameObject.GetComponent<PopupMessage>().SetMessage("Player 2's turn.");
             }
         }
+
+        // update card count UI
+        P1CardCount.text = "" + P1Cards;
+        P2CardCount.text = "" + P2Cards;
 
         
         if (P1BFRef.playerPassed && P2BFRef.playerPassed)
@@ -616,9 +948,12 @@ public class Player : MonoBehaviour
             Debug.Log("Starting Next Round");
             round++;
             // Round UI (change to function
-            RoundUI.text = "Round: " + round;
-            Reinitialize();
-            SFXManager.instance.Play("EndOfRound");
+            if (round != 4)
+            {
+                RoundUI.text = "Round: " + round;
+                Reinitialize();
+                SFXManager.instance.Play("EndOfRound");
+            }
         }
     }
 
@@ -661,7 +996,7 @@ public class Player : MonoBehaviour
             ForcePass(2);
     }
 
-
+    
     
     private void GenerateHand(int PlayerID)     //generate hand function
     {
@@ -669,20 +1004,22 @@ public class Player : MonoBehaviour
         float yOffset;
         float xOffset = -2;
         GameObject deck;
+        List<int> drawSequence;
 
         if (PlayerID == 1)
         {
             deck = gameinfo.P1Deck;
             yOffset = -4.2f;
+            drawSequence = gameinfo.GetDrawSequence(1);
         }
         else
         {
             deck = gameinfo.P2Deck;
             yOffset = 4.4f;
+            drawSequence = gameinfo.GetDrawSequence(2);
         }
 
         int maxCards = deck.GetComponent<Deck>().totalCards;
-        List<int> drawSequence = GenerateRandomIndices(maxCards);       // for spy cards, save this sequence
 
         for (int i = 0; i < count; i++)
         {
@@ -714,7 +1051,7 @@ public class Player : MonoBehaviour
             P2BFRef.InitSequence(drawSequence);
     }
 
-
+    
 
     // can let battlefield do this instead, but find if you keep it here.
     void RemoveDeployedCards()                  // moves all board (deployed cards) to discard pile (physically)
@@ -883,7 +1220,7 @@ public class Player : MonoBehaviour
     }
 
 
-
+    /*
     List<int> GenerateRandomIndices(int deckSize)               // used by GenerateHand() to use a unique sequence of indices which is used to draw cards
     {
         List<int> sequence = new List<int>();
@@ -896,4 +1233,5 @@ public class Player : MonoBehaviour
         return sequence;
 
     }
+    */
 }

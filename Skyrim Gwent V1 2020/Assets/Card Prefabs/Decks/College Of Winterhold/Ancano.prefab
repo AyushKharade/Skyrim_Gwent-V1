@@ -1072,7 +1072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.214, y: 9.146}
+  m_AnchoredPosition: {x: 4.2139893, y: 9.145996}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4118361524285670314
@@ -1172,9 +1172,12 @@ MonoBehaviour:
     subUnitType: 4
     race: 5
     Ability_Details: 
-    Quotes: 
+    Quotes: '"I had hoped your scholars would be on a level comparable with my own
+      colleagues. They are not."'
   cardState: 5
   unitStrength: {fileID: 4118361523414254703}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &8871205937428052812
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1215,6 +1218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &5820612466529978521
 GameObject:
   m_ObjectHideFlags: 0

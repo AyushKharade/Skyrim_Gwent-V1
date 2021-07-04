@@ -831,9 +831,12 @@ MonoBehaviour:
     subUnitType: 5
     race: 8
     Ability_Details: 
-    Quotes: 
+    Quotes: '"There are few places where one can pursue my type of work without fear
+      of persecution."'
   cardState: 5
   unitStrength: {fileID: 7315679881673469076}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &2863450606152717239
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -874,6 +877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &7315679882150078530
 GameObject:
   m_ObjectHideFlags: 0

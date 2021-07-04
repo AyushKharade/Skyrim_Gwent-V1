@@ -11,10 +11,16 @@ public class Loading : MonoBehaviour
     float loadingTime;
     float Timer;
 
+    public Text Hint;
+
+    public string[] hints;
+
+
     //public string[] Tips;
     void Start()
     {
-        loadingTime = Random.Range(1,2.5f);
+        loadingTime = Random.Range(2.5f,4.5f);
+        Hint.text = hints[Random.Range(0, hints.Length)];
     }
 
     // Update is called once per frame
@@ -27,6 +33,7 @@ public class Loading : MonoBehaviour
 
     void LoadGame()
     {
-        SceneManager.LoadScene("GwentBoard");
+        //SceneManager.LoadScene("GwentBoard");
+        SceneManager.LoadScene("Redraw2");
     }
 }

@@ -18,6 +18,10 @@ public class GameStarter : MonoBehaviour
     public GameObject P1Deck;
     public GameObject P2Deck;
 
+    // re-draw 2 functionality
+    List<int> P1DrawSequence;
+    List<int> P2DrawSequence;
+
     string P1Name;
     string P2Name;
 
@@ -165,5 +169,22 @@ public class GameStarter : MonoBehaviour
             PlayUIRef.interactable = false;
     }
 
+
+    public void SetDrawSequence(int id, List<int> sequence)
+    {
+        if (id == 1)
+            P1DrawSequence = sequence;
+        else
+            P2DrawSequence = sequence;
+    }
+
+    public List<int> GetDrawSequence(int id)
+    {
+        if (id == 1)
+            return P1DrawSequence;
+        else
+            return P2DrawSequence;
+
+    }
     
 }

@@ -192,7 +192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 2.358, y: 11.82}
+  m_AnchoredPosition: {x: 2.3579712, y: 11.820007}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3703478908668864929
@@ -292,9 +292,11 @@ MonoBehaviour:
     subUnitType: 4
     race: 5
     Ability_Details: 
-    Quotes: 
+    Quotes: '"I left Winterhold for some time, and returned to stay here at the inn."'
   cardState: 5
   unitStrength: {fileID: 3703478909003279972}
+  moveSpeed: 0
+  onDisplay: 0
 --- !u!61 &8169221044923060551
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -335,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   underCursor: 0
   deployed: 0
+  displayCard: 0
 --- !u!1 &3703478908836199471
 GameObject:
   m_ObjectHideFlags: 0

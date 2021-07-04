@@ -183,18 +183,24 @@ public class Battlefield : MonoBehaviour
     {
         while (frontline.Count > 0)
         {
+            frontline.First.Value.GetComponent<Card>().info.ResetBuffs();      // added because redeploying after removed booster affected cards, buffs stil stay
+            frontline.First.Value.GetComponent<Card>().ResetBuffColorEffect();
             if (!frontline.First.Value.GetComponent<Card>().info.isHero)
                 discardpile.AddLast(frontline.First.Value);                 // dont save hero cards, you cannot redeploy them, incase it stays, destroy them
             frontline.RemoveFirst();
         }
         while (vantage.Count > 0)
         {
+            vantage.First.Value.GetComponent<Card>().info.ResetBuffs();
+            vantage.First.Value.GetComponent<Card>().ResetBuffColorEffect();
             if (!vantage.First.Value.GetComponent<Card>().info.isHero)
                 discardpile.AddLast(vantage.First.Value);
             vantage.RemoveFirst();
         }
         while (shadow.Count > 0)
         {
+            shadow.First.Value.GetComponent<Card>().info.ResetBuffs();
+            shadow.First.Value.GetComponent<Card>().ResetBuffColorEffect();
             if (!shadow.First.Value.GetComponent<Card>().info.isHero)
                 discardpile.AddLast(shadow.First.Value);
             shadow.RemoveFirst();
@@ -546,7 +552,7 @@ public class Battlefield : MonoBehaviour
 
 
     // medic and necromancer cards
-
+    /*
     public GameObject MedicReDeploy()
     {
         //return a random card (random for now) from discard pile.
@@ -607,7 +613,25 @@ public class Battlefield : MonoBehaviour
         else
             return null;
     }
+    */
 
+        // new healer function, send back entire linked list, so player can move cards onto screen, make them clickable.
+    public LinkedList<GameObject> FetchDiscardPile()
+    {
+        return discardpile;
+    }
+
+    public void RestoreDiscardPile(LinkedList<GameObject> temp, float DiscardX, float DiscardY)
+    {
+        foreach (GameObject g in temp)
+        {
+            // set them back to same place
+            g.transform.Rotate(new Vector3(0,180,0));
+            g.GetComponent<Card>().SetCardStatus("Discard");
+            g.GetComponent<CardScaler>().deployed = true;
+            g.transform.position = new Vector3(DiscardX, DiscardY, 0);
+        }
+    }
 
     // booster functions:
     public void AddBooster(int i, GameObject boosterCard)
@@ -726,18 +750,15 @@ public class Battlefield : MonoBehaviour
     // x offset = -2, y take in as parameter
     public void RearrangeHand(Transform HandRef, float yPos)
     {
-        float x = -2;
-        int count = HandRef.childCount;
-        for (int i = 0; i < count; i++)
+        float x = -3;
+        for (int i = 0; i < HandRef.childCount; i++)
         {
             if (HandRef.GetChild(i).GetComponent<Card>().GetCardStatus() == "Hand")
             {
+                //Debug.Log("Rearranging transform index: " + i);
                 HandRef.GetChild(i).transform.position = new Vector3(x, yPos, 0);
                 x += 0.75f;
             }
         }
-
     }
-
-    
 }

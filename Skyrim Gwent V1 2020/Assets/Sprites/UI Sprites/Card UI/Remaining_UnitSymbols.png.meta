@@ -23,6 +23,9 @@ TextureImporter:
   - first:
       213: -6163884747879205052
     second: Necromancer
+  - first:
+      213: -8710050393777752078
+    second: CardsLeft
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -249,6 +252,27 @@ TextureImporter:
       bones: []
       spriteID: 7d6f4743b6195ee46be6ebd2d33dab23
       internalID: -6163884747879205052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CardsLeft
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 64
+        width: 121
+        height: 175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a5081d3290418d45a8448970be0277b
+      internalID: -8710050393777752078
       vertices: []
       indices: 
       edges: []

@@ -37,32 +37,47 @@ public class DeployButtons : MonoBehaviour
         if (PlayableRef != null)
         {
             if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Spy")
-            { }
+            {
+                PlayableRef.DeploySpy("Frontline");
+            }
             else
             {
                 // regular function call.
                 PlayableRef.DeployToFrontline();
             }
         }
+        
     }
 
     public void DeployVantage()
     {
-        Debug.Log("Deploying Card to Vantage");
+        //Debug.Log("Deploying Card to Vantage");
         if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Spy")
-        { }
+        {
+            PlayableRef.DeploySpy("Vantage");
+        }
+        else if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Healer")
+        {
+            PlayableRef.DeployHealer();
+        }
+        else if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Necromancer")
+        {
+            PlayableRef.DeployNecromancer();
+        }
         else
         {
             // regular function call.
-            PlayableRef.DeployToVantage("Regular");
+            PlayableRef.DeployToVantage();
         }
     }
 
     public void DeployShadow()
     {
-        Debug.Log("Deploying Card to Shadow");
+        //Debug.Log("Deploying Card to Shadow");
         if (PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType() == "Spy")
-        { }
+        {
+            PlayableRef.DeploySpy("Shadow");
+        }
         else
         {
             // regular function call.
@@ -72,18 +87,11 @@ public class DeployButtons : MonoBehaviour
 
     public void DeploySpecial()
     {
-        Debug.Log("Deploying Card to Special");
+        //Debug.Log("Deploying Card to Special");
         string str = PlayableRef.cardDeploying.GetComponent<Card>().info.GetSubUnitType();
         if (str == "FrostWeather" || str == "BaneAetheriusWeather" || str == "StormWeather" || str == "ClearWeather")
-        {
-            //Debug.Log("Deploying weather: "+str);
             PlayableRef.DeploySpecialWeather(str);
-        }
         else
-        {
-            //Debug.Log("Booster card selected.");
             PlayableRef.DeploySpecialBooster(str);
-        }
-        //else its a booster 
     }
 }
